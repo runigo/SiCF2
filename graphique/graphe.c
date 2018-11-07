@@ -31,9 +31,19 @@ termes.
 
 #include "graphe.h"
 
-int grapheCreation(grapheT * graphe, int nombre)
+int grapheInitialise(grapheT * graphe)
 	{
 		//		Création du graphe
+
+			// Positions des mobiles
+		int abscisse[NOMBRE_MAX];
+		int ordonnee[NOMBRE_MAX];
+		int droite[NOMBRE_MAX];
+
+		int zoneX; // Espace disponible pour le système
+		int zoneY;
+
+		float facteur; // Rapport de taille entre le système et le graphe
 
 	pointsT *iter;
 	(*graphe).premier=NULL;

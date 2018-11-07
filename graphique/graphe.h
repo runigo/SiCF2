@@ -33,26 +33,23 @@ termes.
 #ifndef _GRAPHE_
 #define _GRAPHE_
 
-#include "point.h"
+#include "../donnees/constantes.h"
+#include <SDL2/SDL.h>
 
-typedef struct GrapheT grapheT;
-	struct GrapheT
+typedef struct Graphe graphe;
+	struct Graphe
 		{
-			// Mobiles
-		int abscisse[NOMBRE_MAX];
-		int ordonnee[NOMBRE_MAX];
-		int droite[NOMBRE_MAX];
+		SDL_Point point[N];
 
-		int zoneX;
-		int zoneY;
+		int nombre; // Nombre de point
 
-		float facteur; // Rapport de taille entre le système et le graphe
+		int yZero; // Positon de l'origine
+		int xZero; // Positon de l'origine
 
+		int largeur; // axe x
+		int hauteur; // axe y
 		};
 
-int grapheCreation(grapheT * graphe, int nombre);
-//int grapheInitialise(grapheT * graphe, int rouge, int bleu, int vert, int fond);
-void grapheSuppression(grapheT * graphe);
-void grapheChangeSupport(grapheT * graphe);
+int grapheInitialise(grapheT * graphe);
 
 #endif

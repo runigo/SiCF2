@@ -1,10 +1,10 @@
 /*
 Copyright novembre 2018, Stephan Runigo
 runigo@free.fr
-SiGP 2.2.2  simulateur de gaz parfait
-Ce logiciel est un programme informatique servant à simuler un gaz et à
-en donner une représentation graphique. Il permet d'observer une détente
-de Joule ainsi que des transferts thermiques avec des thermostats.
+SiCF 2.0  simulateur de chaîne de pendules
+Ce logiciel est un programme informatique servant à simuler l'équation
+d'une corde vibrante, à calculer sa transformée de fourier, et à donner
+une représentation graphique de ces fonctions.
 Ce logiciel est régi par la licence CeCILL soumise au droit français et
 respectant les principes de diffusion des logiciels libres. Vous pouvez
 utiliser, modifier et/ou redistribuer ce programme sous les conditions
@@ -270,7 +270,7 @@ int graphiqueCommandes(graphiqueT * graphique, commandesT * commandes)
 	{
 		// Image de fond
 	SDL_Rect coordonnee = {0, 0, (*graphique).largeur, (*graphique).hauteur};
-	SDL_RenderCopy((*graphique).rendu, (*graphique).SiGP, NULL, &coordonnee);
+	SDL_RenderCopy((*graphique).rendu, (*graphique).imageFond, NULL, &coordonnee);
 	
 		// Commandes sélectionées
 	int centrage = 5;
@@ -404,3 +404,49 @@ void graphiqueDessineGraphe(graphiqueT * graphique, grapheT * graphe)
 	return;
 	}
 
+int graphiqueDessineCorde(graphe * graph)
+	{
+	int i, x, y, X, Y;
+	//Uint32 clrFond = SDL_MapRGB(affichage->format, (*graph).fond, (*graph).fond, (*graph).fond);
+	Uint32 couleur = SDL_MapRGB(affichage->format, (*graph).rouge, (*graph).bleu, (*graph).vert);
+	//Uint32 couleurNouveau = SDL_MapRGB(affichage->format, (*graph).rouge/2, (*graph).bleu/2, (*graph).vert/2);
+	for(i=1;i<N;i++)
+		{
+	/*	X = (*graph).ancienAbscisse[i-1];
+		Y = (*graph).ancienOrdonnee[i-1];
+		x = (*graph).ancienAbscisse[i];
+		y = (*graph).ancienOrdonnee[i];
+		graphiqueLigneDroite(X, Y, x, y, couleurAncien);
+		graphiqueLigneDroite(X, Y+1, x, y+1, couleurAncien); */
+		X = (*graph).nouvelAbscisse[i-1];
+		Y = (*graph).nouvelOrdonnee[i-1];
+		x = (*graph).nouvelAbscisse[i];
+		y = (*graph).nouvelOrdonnee[i];
+		graphiqueLigneDroite(X, Y, x, y, couleur);
+		graphiqueLigneDroite(X, Y+1, x, y+1, couleur);
+		}
+
+	return 0;
+	}
+
+int graphiqueDessineSpectre(graphe * spectr)
+	{
+	int i, x, y, X, Y;
+	//Uint32 clrFond = SDL_MapRGB(affichage->format, (*spectr).fond, (*spectr).fond, (*spectr).fond);
+	Uint32 couleur = SDL_MapRGB(affichage->format, (*spectr).vert, (*spectr).rouge, (*spectr).bleu);
+	for(i=0;i<N;i++)
+		{
+		X=(*spectr).fixeAbscisse[i];
+		Y=(*spectr).fixeOrdonnee[i];
+	/*	x=(*spectr).ancienAbscisse[i];
+		y=(*spectr).ancienOrdonnee[i];
+		graphiqueLigneDroite(X, Y, x, y, clrFond); */
+		x=(*spectr).nouvelAbscisse[i];
+		y=(*spectr).nouvelOrdonnee[i];
+		graphiqueLigneDroite(X, Y, x, y, couleur);
+		}
+
+	return 0;
+	}
+
+//////////////////////////////////////////////////////////////////////////////////////

@@ -1,10 +1,10 @@
 /*
-Copyright novembre 2018, Stephan Runigo
+Copyright octobre 2018, Stephan Runigo
 runigo@free.fr
-SiCF 2.0  simulateur de chaîne de pendules
-Ce logiciel est un programme informatique servant à simuler l'équation
-d'une corde vibrante, à calculer sa transformée de fourier, et à donner
-une représentation graphique de ces fonctions.
+SiGP 2.2  simulateur de gaz parfait
+Ce logiciel est un programme informatique servant à simuler un gaz et à
+en donner une représentation graphique. Il permet d'observer une détente
+de Joule ainsi que des transferts thermiques avec des thermostats.
 Ce logiciel est régi par la licence CeCILL soumise au droit français et
 respectant les principes de diffusion des logiciels libres. Vous pouvez
 utiliser, modifier et/ou redistribuer ce programme sous les conditions
@@ -30,57 +30,34 @@ pris connaissance de la licence CeCILL, et que vous en avez accepté les
 termes.
 */
 
-#ifndef _GRAPHIQUE_
-#define _GRAPHIQUE_
+#ifndef _CAPTEURS_
+#define _CAPTEURS_
 
-#include "graphe.h"
-#include "commandes.h"
-#include "interface.h"
+#include "../donnees/constantes.h"
+#include <SDL2/SDL.h>
 
+typedef struct CapteurT capteurT;
+	struct CapteurT
+		{
+		SDL_Point gauche[DUREE_CAPTEURS];
+		SDL_Point droite[DUREE_CAPTEURS];
+		//SDL_Point moyenne[DUREE_CAPTEURS];
 
-struct GraphiqueT {
+		int yZero; // Positon de l'origine
+		int xZero; // Positon de l'origine
 
-	SDL_Renderer *rendu;
+		int largeur; // axe x
+		int hauteur; // axe y
+		};
 
-	SDL_Color orange;
-	SDL_Color orangeF;
+typedef struct CapteursT capteursT;
+	struct CapteursT
+		{
+		capteurT capteur[CAPTEURS];
+		};
 
-	SDL_Color vert;
-	SDL_Color vertF;
+int capteursInitialise(capteursT * capteurs);
 
-	SDL_Color gris;
-	SDL_Color grisF;
-
-	SDL_Color cyan;
-	SDL_Color aubergine;
-
-	SDL_Color gauche;
-	SDL_Color droite;
-
-	SDL_Texture *particule;
-
-	SDL_Texture *lumiereVerte;
-	SDL_Texture *lumiereRouge;
-	SDL_Texture *lumiereOrange;
-	SDL_Texture *lumiereJaune;
-	SDL_Texture *imageFond;
-
-	int taille; // Diamètre des particules
-
-	int largeur;
-	int hauteur;
-
-};
-typedef struct GraphiqueT graphiqueT;
-
-int graphiqueDestruction(graphiqueT * graphique);
-int graphiqueInitialisation(graphiqueT * graphique, interfaceT * interface, int taille, int fond);
-
-int graphiqueNettoyage(graphiqueT * graphique);
-int graphiqueMiseAJour(graphiqueT * graphique);
-
-int graphiqueCommandes(graphiqueT * graphique, commandesT * commandes);
-void graphiquePendule(graphiqueT * graphique, grapheT * graphe);
+int capteursMiseAJourLongueur(capteursT * capteurs, int largeur, int hauteur);
 
 #endif
-/////////////////////////////////////////////////////////////////

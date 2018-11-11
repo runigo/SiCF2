@@ -53,8 +53,13 @@ int graphiqueCreation(graphiqueT * graphique, interfaceT * interface)
 					SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 	if(NULL == (*graphique).rendu)
 		{
-		fprintf(stderr, "interfaceInitialisation : Erreur SDL_CreateRenderer : %s \n", SDL_GetError());
-		return EXIT_FAILURE;
+		(*graphique).rendu = SDL_CreateRenderer((*interface).fenetre, -1 , 
+						SDL_RENDERER_SOFTWARE);
+		if(NULL == (*graphique).rendu)
+			{
+			fprintf(stderr, "ERREUR interfaceInitialisation : Erreur SDL_CreateRenderer : %s \n", SDL_GetError());
+			return EXIT_FAILURE;
+			}
 		}
 
 	(*graphique).orange.r = 255; (*graphique).orange.g = 127; (*graphique).orange.b = 40; (*graphique).orange.a = 255;
@@ -89,7 +94,7 @@ int graphiqueCreation(graphiqueT * graphique, interfaceT * interface)
 
 	SDL_Surface *image = 0;
 
-	image = SDL_LoadBMP("./interface/particule.bmp");
+	image = SDL_LoadBMP("particule.bmp");
 	if (!image)
 		{
 		fprintf(stderr,"Erreur chargement image, particule.bmp : %s\n",SDL_GetError());
@@ -110,7 +115,7 @@ int graphiqueCreation(graphiqueT * graphique, interfaceT * interface)
 
 	SDL_Surface *panneau = 0;
 
-	panneau = SDL_LoadBMP("./interface/sicf.bmp");
+	panneau = SDL_LoadBMP("sicf.bmp");
 	if (!panneau)
 		{
 		fprintf(stderr,"ERREUR chargement image, sicf.bmp : %s\n",SDL_GetError());
@@ -126,7 +131,7 @@ int graphiqueCreation(graphiqueT * graphique, interfaceT * interface)
 
 	SDL_Surface *lumiereVerte = 0;
 
-	lumiereVerte = SDL_LoadBMP("./interface/lumiereVerte.bmp");
+	lumiereVerte = SDL_LoadBMP("lumiereVerte.bmp");
 	if (!lumiereVerte)
 		{
 		fprintf(stderr,"ERREUR chargement image, lumiereVerte.bmp : %s\n",SDL_GetError());
@@ -142,7 +147,7 @@ int graphiqueCreation(graphiqueT * graphique, interfaceT * interface)
 
 	SDL_Surface *lumiereRouge = 0;
 
-	lumiereRouge = SDL_LoadBMP("./interface/lumiereRouge.bmp");
+	lumiereRouge = SDL_LoadBMP("lumiereRouge.bmp");
 	if (!lumiereRouge)
 		{
 		fprintf(stderr,"ERREUR chargement image, lumiereRouge.bmp : %s\n",SDL_GetError());
@@ -158,7 +163,7 @@ int graphiqueCreation(graphiqueT * graphique, interfaceT * interface)
 
 	SDL_Surface *lumiereJaune = 0;
 
-	lumiereJaune = SDL_LoadBMP("./interface/lumiereJaune.bmp");
+	lumiereJaune = SDL_LoadBMP("lumiereJaune.bmp");
 	if (!lumiereJaune)
 		{
 		fprintf(stderr,"ERREUR chargement image, lumiereJaune.bmp : %s\n",SDL_GetError());
@@ -174,7 +179,7 @@ int graphiqueCreation(graphiqueT * graphique, interfaceT * interface)
 
 	SDL_Surface *lumiereOrange = 0;
 
-	lumiereOrange = SDL_LoadBMP("./interface/lumiereOrange.bmp");
+	lumiereOrange = SDL_LoadBMP("lumiereOrange.bmp");
 	if (!lumiereOrange)
 		{
 		fprintf(stderr,"ERREUR chargement image, lumiereOrange.bmp : %s\n",SDL_GetError());

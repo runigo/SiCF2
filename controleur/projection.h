@@ -45,13 +45,14 @@ typedef struct ProjectionT projectionT;
 		float logAmplitude;
 		float logFrequence;
 
-		//int hauteur;
-		//int largeur;
+		int hauteur;
+		int largeur;
 
 		//float perspective;
 		};
 
 int projectionInitialise(projectionT * projection);
+int projectionInitialiseLongueurs(projectionT * projection, int largeur, int hauteur);
 int projectionSystemeGraphe(systemeT * systeme, projectionT * projection, grapheT * graphe);
 int projectionSystemeCommandes(systemeT * systeme, projectionT * projection, commandesT * commandes, int duree, int mode);
 

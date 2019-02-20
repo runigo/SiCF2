@@ -39,9 +39,11 @@ termes.
 typedef struct SystemeT systemeT;
 	struct SystemeT
 		{
-		penduleT pendule[N];	//	Le système est un tableau de pendule
+		penduleT pendule[NOMBRE_MAX];	//	Le système est un tableau de pendule
 
-		moteursT moteur;
+		int nombre; // Nombre de pendules
+
+		moteursT moteurs;
 
 		int equation;		//	Pendule=1, Harmonique=2, Corde=3, Dioptre=4
 
@@ -51,18 +53,25 @@ typedef struct SystemeT systemeT;
 
 		float masseDroite;		//
 		float masseGauche;		//
+
 		float longueur;		//
 		float couplage;		//
+
 		float dissipation;	//
+		int modeDissipation;	//	0 : nulle 1 : uniforme, 2 : extrémité absorbante.
+
 		float gravitation;	//
 
 		};
 
-void systemeInitialise(systemeT * systeme);
-void systemeAffiche(systemeT * systeme);
+int systemeInitialise(systemeT * systeme);
 
-// évolution temporelle du système, "duree" cycle d'évolution
-void systemeEvolution(systemeT * systeme, int duree);
+int systemeInitialisePosition(systemeT * systeme, int forme);
 
+	// évolution temporelle du système, "duree" cycle d'évolution
+int systemeEvolution(systemeT * systeme, int duree);
+
+	// Affiche les paramètres du système
+int systemeAffiche(systemeT * systeme);
 
 #endif

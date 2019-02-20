@@ -52,28 +52,12 @@ int donneesControleur(controleurT * controleur)
 		fprintf(stderr, " Initialisation du système\n");
 	donneesSysteme(&(*controleur).systeme, &(*controleur).options);
 
-		fprintf(stderr, " Création du système\n");
-	systemeCreation(&(*controleur).systeme);
-	changeFormeDissipation(&(*controleur).systeme, 1);
-	changeFormeDissipation(&(*controleur).systeme, 0);
-	changeConditionsLimites(&(*controleur).systeme, (*controleur).systeme.libreFixe);
-	systemeInitialisePosition(&(*controleur).systeme, 9);
-
-
 		fprintf(stderr, " Initialisation du graphe\n");
 	donneesGraphe(&(*controleur).graphe, &(*controleur).options);
-
-		fprintf(stderr, " Création du graphe\n");
-	grapheCreation(&(*controleur).graphe, (*controleur).options.nombre);
-
 
 		//fprintf(stderr, " Initialisation de la projection\n");
 	projectionInitialise(&(*controleur).projection);
 		//fprintf(stderr, "projectionInitialiseLongueurs\n");
-	projectionInitialiseLongueurs(&(*controleur).projection, FENETRE_Y/3, FENETRE_X*0.7, 0.57);// hauteur, largeur, ratio de distance
-		//fprintf(stderr, "projectionInitialisePointDeVue\n");
-	projectionInitialisePointDeVue(&(*controleur).projection, PI/2 - 0.27, PI/2 + 0.21);//r=facteur de distance, psi, phi
-	//projectionInitialisePointDeVue(&(*controleur).projection, 3*FENETRE_X, 0.0, 0.0);//r, psi, phi
 
 		fprintf(stderr, " Initialisation SDL\n");
 	interfaceInitialisationSDL();
@@ -82,14 +66,15 @@ int donneesControleur(controleurT * controleur)
 		//fprintf(stderr, " Création du rendu\n");
 	graphiqueInitialisation(&(*controleur).graphique, &(*controleur).interface, TAILLE_MASSE, (*controleur).options.fond);
 
+		fprintf(stderr, " Initialisation des commmandes\n");
 	int largeur;
 	int hauteur;
 	int x, y;
-		fprintf(stderr, " Initialisation des commmandes\n");
 	SDL_GetWindowSize((*controleur).interface.fenetre, &largeur, &hauteur);
 	(*controleur).graphique.largeur=largeur;
 	(*controleur).graphique.hauteur=hauteur;
 	commandesInitialiseBoutons(&(*controleur).commandes, largeur, hauteur);
+	projectionInitialiseLongueurs(&(*controleur).projection, largeur, hauteur);// hauteur, largeur, ratio de distance
 
 	SDL_PumpEvents();
 	SDL_GetMouseState(&x,&y);
@@ -152,35 +137,35 @@ int donneesSysteme(systemeT * systeme, optionsT * options)
 
 		// Paramètres physiques
 
-	(*systeme).gravitation = 9.81; // 4*PI*PI
-	(*systeme).masse = 1.0;
+	//(*systeme).gravitation = 9.81; // 4*PI*PI
+	(*systeme).gravitation = 0.0; // 4*PI*PI
+	(*systeme).masseDroite = 1.0;
+	(*systeme).masseGauche = 1.0;
 	(*systeme).longueur = 1.0;// 9.81/4/PI/PI = 25 cm => période = 1 s. Met en évidence une erreur dans le calcul de l'énergie de couplage.
 	(*systeme).dissipation = 0.17;
 	(*systeme).modeDissipation = 0;	//	0 : nulle 1 : uniforme, 2 : extrémité absorbante.
 	(*systeme).couplage = 11.1 * (*systeme).nombre;
 	(*systeme).dephasage = (*options).soliton * 2 * PI;
 
-/*
-	if((*systeme).equation == 3 || (*systeme).equation == 4)
-		{		 // donneeCorde;
-		(*systeme).couplage = (*systeme).couplage * 10.0;
-		(*systeme).gravitation = 0.0;
-		(*systeme).libreFixe = 2;
-		(*systeme).moteurs.josephson=0.0;
-		}
-*/
+		//fprintf(stderr, " Initialisation du système\n");
+	changeFormeDissipation(systeme, 1);
+	changeFormeDissipation(systeme, 0);
+	changeConditionsLimites(systeme, (*systeme).libreFixe);
+	systemeInitialisePosition(systeme, 1);
+
 	return 0;
 	}
 
 int donneesGraphe(grapheT * graphe, optionsT * options)
 	{
-	(*graphe).rouge=20;
-	(*graphe).bleu=150;
-	(*graphe).vert=200;
-	(*graphe).fond=(*options).fond;	//	Couleur du fond
-	(*graphe).support=(*options).support;	//	Apparence du support
-	(*graphe).dessous = 0;	// Vue de dessous
-	(*graphe).gauche = 0;		// Vue de gauche
+	(*graphe).nombre = (*options).nombre; // Nombre de point
+
+	(*graphe).yZero = 0; // Positon de l'origine
+	(*graphe).xZero = 0; // Positon de l'origine
+
+	(*graphe).largeur = FENETRE_X; // axe x
+	(*graphe).hauteur = FENETRE_Y; // axe y
+
 	return 0;
 	}
 

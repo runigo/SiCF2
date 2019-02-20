@@ -36,10 +36,10 @@ termes.
 #include "../donnees/constantes.h"
 #include <SDL2/SDL.h>
 
-typedef struct Graphe graphe;
-	struct Graphe
+typedef struct GrapheT grapheT;
+	struct GrapheT
 		{
-		SDL_Point point[N];
+		SDL_Point point[NOMBRE_MAX];
 
 		int nombre; // Nombre de point
 

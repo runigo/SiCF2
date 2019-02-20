@@ -32,7 +32,7 @@ termes.
 
 #include "projection.h"
 
-float projectionAbsolue(float valeur);
+float projectionValeurAbsolue(float valeur);
 
 int projectionInitialise(projectionT * projection)
 	{
@@ -45,7 +45,14 @@ int projectionInitialise(projectionT * projection)
 	return 0;
 	}
 
-float projectionAbsolue(float valeur)
+int projectionInitialiseLongueurs(projectionT * projection, int largeur, int hauteur)
+	{
+	(*projection).largeur = largeur;
+	(*projection).hauteur = hauteur;
+	return 0;
+	}
+
+float projectionValeurAbsolue(float valeur)
 	{
 	if(valeur<0) return -valeur;
 	return valeur;

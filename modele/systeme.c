@@ -147,6 +147,19 @@ void systemeInitialise(systemeT * systeme)
 	return;
 	}
 
+int systemeInitialisePosition(systemeT * systeme, int forme)
+	{
+	(void)forme;
+
+	int i;
+	for(i=0;i<(*systeme).nombre;i++)
+	{
+	penduleInitialisePosition(&(*systeme).pendule[i], 0.0, 0.0);
+	}
+
+	return;
+	}
+
 void systemeEvolution(systemeT * systeme, int duree)
 	{//	Fait évoluer le système pendant duree * dt
 	int i;

@@ -56,26 +56,26 @@ $(OBJDIR)/controleur.o : controleur/controleur.c controleur/controleur.h
 $(OBJDIR)/projection.o : controleur/projection.c controleur/projection.h
 	$(CC) -c -g controleur/projection.c $(CFLAGS) -o $@
 
-$(OBJDIR)/horloge.o : graphique/horloge.c graphique/horloge.h
-	$(CC) -c -g graphique/horloge.c $(CFLAGS) -o $@
+$(OBJDIR)/horloge.o : interface/horloge.c interface/horloge.h
+	$(CC) -c -g interface/horloge.c $(CFLAGS) -o $@
 
-$(OBJDIR)/interface.o : graphique/interface.c graphique/interface.h
-	$(CC) -c -g graphique/interface.c $(CFLAGS) -o $@
+$(OBJDIR)/interface.o : interface/interface.c interface/interface.h
+	$(CC) -c -g interface/interface.c $(CFLAGS) -o $@
 
-$(OBJDIR)/graphique.o : graphique/graphique.c graphique/graphique.h
-	$(CC) -c -g graphique/graphique.c $(CFLAGS) -o $@
+$(OBJDIR)/graphique.o : interface/graphique.c interface/graphique.h
+	$(CC) -c -g interface/graphique.c $(CFLAGS) -o $@
 
-$(OBJDIR)/graphe.o : graphique/graphe.c graphique/graphe.h
-	$(CC) -c -g graphique/graphe.c $(CFLAGS) -o $@
+$(OBJDIR)/graphe.o : interface/graphe.c interface/graphe.h
+	$(CC) -c -g interface/graphe.c $(CFLAGS) -o $@
 
-$(OBJDIR)/commandes.o : graphique/commandes.c graphique/commandes.h
-	$(CC) -c -g graphique/commandes.c $(CFLAGS) -o $@
+$(OBJDIR)/commandes.o : interface/commandes.c interface/commandes.h
+	$(CC) -c -g interface/commandes.c $(CFLAGS) -o $@
 
-$(OBJDIR)/point.o : graphique/point.c graphique/point.h
-	$(CC) -c -g graphique/point.c $(CFLAGS) -o $@
+$(OBJDIR)/point.o : interface/point.c interface/point.h
+	$(CC) -c -g interface/point.c $(CFLAGS) -o $@
 
-$(OBJDIR)/vecteur.o : graphique/vecteur.c graphique/vecteur.h
-	$(CC) -c -g graphique/vecteur.c $(CFLAGS) -o $@
+$(OBJDIR)/vecteur.o : interface/vecteur.c interface/vecteur.h
+	$(CC) -c -g interface/vecteur.c $(CFLAGS) -o $@
 
 $(OBJDIR)/observables.o : modele/observables.c modele/observables.h
 	$(CC) -c -g modele/observables.c $(CFLAGS) -o $@

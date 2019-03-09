@@ -64,6 +64,8 @@ struct GraphiqueT {
 	SDL_Texture *lumiereJaune;
 	SDL_Texture *imageFond;
 
+	SDL_Texture *mobile;
+
 	int largeur;
 	int hauteur;
 

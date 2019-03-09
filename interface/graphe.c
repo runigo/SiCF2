@@ -32,7 +32,7 @@ termes.
 
 #include "graphe.h"
 
-int grapheInitialise(grapheT * graphe, int nombre, int r, int g, int b)
+int grapheInitialise(grapheT * graphe, int nombre, int graisse, int r, int g, int b)
 	{
 		//		Initialisation du graphe
 
@@ -52,6 +52,7 @@ int grapheInitialise(grapheT * graphe, int nombre, int r, int g, int b)
 	(*graphe).couleur.a = 255;
 
 	(*graphe).nombre = nombre; // Nombre de point
+	(*graphe).graisse = graisse; // Epaisseur du trait
 
 	return 0;
 	}

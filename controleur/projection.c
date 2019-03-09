@@ -1,7 +1,7 @@
 /*
-Copyright novembre 2018, Stephan Runigo
+Copyright mars 2019, Stephan Runigo
 runigo@free.fr
-SiCF 2.0  simulateur de chaîne de pendules
+SiCF 2.0  simulateur de corde vibrante et spectre
 Ce logiciel est un programme informatique servant à simuler l'équation
 d'une corde vibrante, à calculer sa transformée de fourier, et à donner
 une représentation graphique de ces fonctions.
@@ -36,7 +36,6 @@ float projectionValeurAbsolue(float valeur);
 
 int projectionInitialise(projectionT * projection)
 	{
-	(*projection).rotation = 0;
 	(*projection).logCouplage = 1.0 / log( (COUPLAGE_MAX/COUPLAGE_MIN) );
 	(*projection).logDissipation = 1.0 / log( DISSIPATION_MAX/DISSIPATION_MIN );
 	(*projection).logJosephson = 1.0 / log( JOSEPHSON_MAX/JOSEPHSON_MIN );
@@ -82,7 +81,7 @@ int projectionSystemeCommandes(systemeT * systeme, projectionT * projection, com
 	(*commandes).rotatifPositionY[1]=(int)(ratioRotatif*(*commandes).rotatifY*cos(theta));
 
 	//	Amplitude du moteur josephson
-	theta = DEUXPI * (*projection).logJosephson * log( projectionAbsolue((*systeme).moteurs.courant/JOSEPHSON_MIN) );
+	theta = DEUXPI * (*projection).logJosephson * log( projectionValeurAbsolue((*systeme).moteurs.courant/JOSEPHSON_MIN) );
 	(*commandes).rotatifPositionX[2]=(int)(-ratioRotatif*(*commandes).rotatifX*sin(theta));
 	(*commandes).rotatifPositionY[2]=(int)(ratioRotatif*(*commandes).rotatifY*cos(theta));
 
@@ -173,7 +172,7 @@ int projectionSystemeCommandes(systemeT * systeme, projectionT * projection, com
 	//(*commandes).boutonEtat[16]=0; // 563	Anti F.
 
 	for(i=0;i<TRIANGLE_COMMANDES;i++) (*commandes).triangleEtat[i]=0;
-
+/*
 	switch((*projection).rotation)	//	
 		{
 		case 3:
@@ -189,7 +188,7 @@ int projectionSystemeCommandes(systemeT * systeme, projectionT * projection, com
 		default:
 			;
 		}
-
+*/
 		//	Vitesse de la simulation
 	if(duree<DUREE)
 		{

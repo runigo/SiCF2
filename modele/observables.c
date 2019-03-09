@@ -63,7 +63,7 @@ int observablesInitialise(observablesT * observables)
 			}
 		}
 
-	(*observables).observable[5].dureeCapteur=DY_ENERGIE;
+	//(*observables).observable[5].dureeCapteur=DY_ENERGIE;
 
 	(*observables).index=0;
 
@@ -117,11 +117,11 @@ int observablesMiseAJour(observablesT * observables, systemeT * systeme)
 
 						// Mise à jour des observables
 
-	observablesMiseAJourNombre(observables,systeme);
+	observablesMiseAJourCinetique(observables,systeme);
 
-	observablesMiseAJourLibreParcoursMoyen(observables, systeme);
+	observablesMiseAJourGravitation(observables, systeme);
 
-	observablesMiseAJourTemperature(observables, systeme);
+	observablesMiseAJourCouplage(observables, systeme);
 
 	observablesMiseAJourPression(observables, systeme);
 
@@ -132,36 +132,9 @@ int observablesMiseAJour(observablesT * observables, systemeT * systeme)
 	return 0;
 	}
 
-int observablesMiseAJourNombre(observablesT * observables, systemeT * systeme)
+int observablesMiseAJourCinetique(observablesT * observables, systemeT * systeme)
 	{
-						// Calcul du nombre de particules à gauche et à droite
-	int i;
-	int nbGauche=0;
-	int nbDroite=0;
-
-	for(i=0;i<(*systeme).nombre;i++)
-		{
-		if((*systeme).mobile[i].droite==0)
-			{
-			nbGauche ++;
-			}
-		else
-			{
-			nbDroite ++;
-			}
-		}
-
-	(*observables).observable[1].gauche[(*observables).index]=nbGauche;
-	(*observables).observable[1].droite[(*observables).index]=nbDroite;
-	
-	observablesMiseAJourAmplitude(&(*observables).observable[1]);
-
-	return 0;
-	}
-
-int observablesMiseAJourTemperature(observablesT * observables, systemeT * systeme)
-	{
-						// Calcul de la température à gauche et à droite
+						// Calcul de l'énergie cinétique
 	int i;
 	double ecGauche=0.0;
 	double ecDroite=0.0;
@@ -207,9 +180,9 @@ int observablesMiseAJourTemperature(observablesT * observables, systemeT * syste
 	return 0;
 	}
 
-int observablesMiseAJourLibreParcoursMoyen(observablesT * observables, systemeT * systeme)
+int observablesMiseAJourGravitation(observablesT * observables, systemeT * systeme)
 	{
-						// Calcul du libre parcours moyen à gauche et à droite
+						// Calcul de l'énergie de gravitation
 	int i;
 	double lpmGauche=0.0;
 	double lpmDroite=0.0;
@@ -249,9 +222,9 @@ int observablesMiseAJourLibreParcoursMoyen(observablesT * observables, systemeT 
 	return 0;
 	}
 
-int observablesMiseAJourPression(observablesT * observables, systemeT * systeme)
+int observablesMiseAJourCouplage(observablesT * observables, systemeT * systeme)
 	{
-						// Calcul de la pression à gauche et à droite
+						// Calcul de l'énergie de couplage
 	int i;
 	float pressionGauche=0.0;
 	float pressionDroite=0.0;
@@ -281,63 +254,6 @@ int observablesMiseAJourPression(observablesT * observables, systemeT * systeme)
 
 	return 0;
 	}
-
-int observablesMiseAJourDensite(observablesT * observables, systemeT * systeme)
-	{
-						// Calcul de la fonction de répartition de l'énergie
-	int i;
-	int index = 0;
-	float a;
-
-		// Maximum de l'énergie des particules -> maximum de l'axe oy
-	float max = 0.0;
-	for(i=0;i<(*systeme).nombre;i++)
-		{
-		if((*systeme).mobile[i].ec > max)
-			{
-			max = (*systeme).mobile[i].ec;
-			}
-		}
-
-		// Remise à zéro
-	for(i=0;i<DY_ENERGIE;i++)
-		{
-		(*observables).observable[5].gauche[i]=0.0;
-		(*observables).observable[5].droite[i]=0.0;
-		}
-
-		// Coeficient directeur
-	if(max!=0.0)
-		{
-		a = DY_ENERGIE / max ;
-		}
-	else
-		{
-		a = DY_ENERGIE ;
-		}
-
-		// Calcul des densités
-	for(i=0;i<(*systeme).nombre;i++)
-		{
-		index = (int) (a * (*systeme).mobile[i].ec);
-		if(index < DY_ENERGIE && index >= 0)
-			{
-			if((*systeme).mobile[i].droite==0)
-				{
-				(*observables).observable[5].gauche[index] = (*observables).observable[5].gauche[index] + 1;
-				}
-			else
-				{
-				(*observables).observable[5].droite[index] = (*observables).observable[5].droite[index] + 1;
-				}
-			}
-		}
-
-	observablesMiseAJourAmplitude(&(*observables).observable[5]);
-
-	return 0;
-	}
-
 
 int observablesAffiche(observablesT * observables)
 	{

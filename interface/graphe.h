@@ -43,6 +43,8 @@ typedef struct GrapheT grapheT;
 
 		SDL_Color couleur;
 
+		int graisse; // Epaisseur du trait
+
 		int nombre; // Nombre de point
 
 		int yZero; // Positon de l'origine
@@ -52,7 +54,7 @@ typedef struct GrapheT grapheT;
 		int hauteur; // axe y
 		};
 
-int grapheInitialise(grapheT * graphe, int nombre, int r, int g, int b);
+int grapheInitialise(grapheT * graphe, int nombre, int graisse, int r, int g, int b);
 int grapheInitialiseEchelle(grapheT * graphe, int xZero, int yZero, int zoneX, int zoneY);
 
 #endif

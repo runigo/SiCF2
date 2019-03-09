@@ -94,15 +94,15 @@ int graphiqueCreation(graphiqueT * graphique, interfaceT * interface)
 
 	SDL_Surface *image = 0;
 
-	image = SDL_LoadBMP("particule.bmp");
+	image = SDL_LoadBMP("mobile.bmp");
 	if (!image)
 		{
-		fprintf(stderr,"Erreur chargement image, particule.bmp : %s\n",SDL_GetError());
-		retour = 0;
+		fprintf(stderr,"Erreur chargement image, mobile.bmp : %s\n",SDL_GetError());
+		retour = -1;
 		}
-	(*graphique).particule = SDL_CreateTextureFromSurface((*graphique).rendu, image);
+	(*graphique).mobile = SDL_CreateTextureFromSurface((*graphique).rendu, image);
 	SDL_FreeSurface(image);
-	if ((*graphique).particule == 0)
+	if ((*graphique).mobile == 0)
 		{
 		fprintf(stderr,"grapheInitialisation : Erreur creation texture : %s\n",SDL_GetError());
 		retour = 0;
@@ -110,7 +110,7 @@ int graphiqueCreation(graphiqueT * graphique, interfaceT * interface)
 
 		// Activation de la transparence
 	//SDL_BLENDMODE_NONE || SDL_BLENDMODE_BLEND || SDL_BLENDMODE_ADD || SDL_BLENDMODE_MOD
-	if(SDL_SetTextureBlendMode((*graphique).particule, SDL_BLENDMODE_MOD) < 0)
+	if(SDL_SetTextureBlendMode((*graphique).mobile, SDL_BLENDMODE_MOD) < 0)
 		fprintf(stderr, "grapheInitialisation : Erreur SDL_SetRenderDrawBlendMode : %s.", SDL_GetError());
 
 	SDL_Surface *panneau = 0;
@@ -123,7 +123,7 @@ int graphiqueCreation(graphiqueT * graphique, interfaceT * interface)
 		}
 	(*graphique).imageFond = SDL_CreateTextureFromSurface((*graphique).rendu, panneau);
 	SDL_FreeSurface(panneau);
-	if ((*graphique).SiGP == 0)
+	if ((*graphique).imageFond == 0)
 		{
 		fprintf(stderr,"ERREUR grapheInitialisation : Erreur creation texture sicf.bmp ; %s\n",SDL_GetError());
 		retour = 2;
@@ -235,7 +235,7 @@ int graphiqueCommandes(graphiqueT * graphique, commandesT * commandes)
 		if((*commandes).boutonEtat[i]==1)
 			{
 			coordonnee.y = (*commandes).boutonCentre[i] - centrage;
-			SDL_RenderCopy((*graphique).rendu, (*graphique).particule, NULL, &coordonnee);
+			SDL_RenderCopy((*graphique).rendu, (*graphique).mobile, NULL, &coordonnee);
 			}
 		}
 
@@ -346,47 +346,18 @@ int graphiqueSpectre(graphiqueT * graphique, grapheT * graphe)
 	{
 	int i, j;
 
-		// Grandeurs à gauche
-	graphiqueChangeCouleur(graphique, (*graphique).gauche);
+		// Couleur du graphe
+	graphiqueChangeCouleur(graphique, (*graphe).couleur);
 
-	SDL_RenderDrawLines((*graphique).rendu, (*capteurs).capteur[0].gauche, DUREE_CAPTEURS);
-
-		// Grandeurs à droite
-	graphiqueChangeCouleur(graphique, (*graphique).droite);
-
-	SDL_RenderDrawLines((*graphique).rendu, (*capteurs).capteur[0].droite, DUREE_CAPTEURS);
-	SDL_RenderDrawLines((*graphique).rendu, (*capteurs).capteur[1].droite, DUREE_CAPTEURS);
-	SDL_RenderDrawLines((*graphique).rendu, (*capteurs).capteur[2].droite, DUREE_CAPTEURS);
-
-	SDL_RenderDrawLines((*graphique).rendu, (*capteurs).capteur[3].droite, DUREE_CAPTEURS);
-	SDL_RenderDrawLines((*graphique).rendu, (*capteurs).capteur[4].droite, DUREE_CAPTEURS);
-	//SDL_RenderDrawLines((*graphique).rendu, (*capteurs).capteur[5].droite, DY_ENERGIE);
-
-
-		// Epaississement du trait
-	for(j=0;j<CAPTEURS;j++)
+		// Tracé du graphe
+	for(j=0;j<(*graphe).graisse;j++)
 		{
-		for(i=0;i<DUREE_CAPTEURS;i++)
+		SDL_RenderDrawLines((*graphique).rendu, (*graphe).point, (*graphe).nombre);
+		for(i=0;i<(*graphe).nombre;i++)
 			{
-			(*capteurs).capteur[j].droite[i].y = (*capteurs).capteur[j].droite[i].y + 1;
+			(*graphe).point[i].y = (*graphe).point[i].y + 1;
 			}
 		}
-	SDL_RenderDrawLines((*graphique).rendu, (*capteurs).capteur[0].droite, DUREE_CAPTEURS);
-	SDL_RenderDrawLines((*graphique).rendu, (*capteurs).capteur[1].droite, DUREE_CAPTEURS);
-	SDL_RenderDrawLines((*graphique).rendu, (*capteurs).capteur[2].droite, DUREE_CAPTEURS);
-
-	graphiqueChangeCouleur(graphique, (*graphique).gauche);
-	for(j=0;j<CAPTEURS;j++)
-		{
-		for(i=0;i<DUREE_CAPTEURS;i++)
-			{
-			(*capteurs).capteur[j].gauche[i].y = (*capteurs).capteur[j].gauche[i].y + 1;
-			}
-		}
-	SDL_RenderDrawLines((*graphique).rendu, (*capteurs).capteur[0].gauche, DUREE_CAPTEURS);
-	SDL_RenderDrawLines((*graphique).rendu, (*capteurs).capteur[1].gauche, DUREE_CAPTEURS);
-	SDL_RenderDrawLines((*graphique).rendu, (*capteurs).capteur[2].gauche, DUREE_CAPTEURS);
-
 
 	return 0;
 	}
@@ -395,53 +366,18 @@ int graphiqueCorde(graphiqueT * graphique, grapheT * graphe)
 	{
 	int i, j;
 
-		// Grandeurs à gauche
-	graphiqueChangeCouleur(graphique, (*graphique).gauche);
+		// Couleur du graphe
+	graphiqueChangeCouleur(graphique, (*graphe).couleur);
 
-	SDL_RenderDrawLines((*graphique).rendu, (*capteurs).capteur[0].gauche, DUREE_CAPTEURS);
-	SDL_RenderDrawLines((*graphique).rendu, (*capteurs).capteur[1].gauche, DUREE_CAPTEURS);
-	SDL_RenderDrawLines((*graphique).rendu, (*capteurs).capteur[2].gauche, DUREE_CAPTEURS);
-
-	SDL_RenderDrawLines((*graphique).rendu, (*capteurs).capteur[3].gauche, DUREE_CAPTEURS);
-	SDL_RenderDrawLines((*graphique).rendu, (*capteurs).capteur[4].gauche, DUREE_CAPTEURS);
-	//SDL_RenderDrawLines((*graphique).rendu, (*capteurs).capteur[5].gauche, DY_ENERGIE);
-
-		// Grandeurs à droite
-	graphiqueChangeCouleur(graphique, (*graphique).droite);
-
-	SDL_RenderDrawLines((*graphique).rendu, (*capteurs).capteur[0].droite, DUREE_CAPTEURS);
-	SDL_RenderDrawLines((*graphique).rendu, (*capteurs).capteur[1].droite, DUREE_CAPTEURS);
-	SDL_RenderDrawLines((*graphique).rendu, (*capteurs).capteur[2].droite, DUREE_CAPTEURS);
-
-	SDL_RenderDrawLines((*graphique).rendu, (*capteurs).capteur[3].droite, DUREE_CAPTEURS);
-	SDL_RenderDrawLines((*graphique).rendu, (*capteurs).capteur[4].droite, DUREE_CAPTEURS);
-	//SDL_RenderDrawLines((*graphique).rendu, (*capteurs).capteur[5].droite, DY_ENERGIE);
-
-
-		// Epaississement du trait
-	for(j=0;j<CAPTEURS;j++)
+		// Tracé du graphe
+	for(j=0;j<(*graphe).graisse;j++)
 		{
-		for(i=0;i<DUREE_CAPTEURS;i++)
+		SDL_RenderDrawLines((*graphique).rendu, (*graphe).point, (*graphe).nombre);
+		for(i=0;i<(*graphe).nombre;i++)
 			{
-			(*capteurs).capteur[j].droite[i].y = (*capteurs).capteur[j].droite[i].y + 1;
+			(*graphe).point[i].y = (*graphe).point[i].y + 1;
 			}
 		}
-	SDL_RenderDrawLines((*graphique).rendu, (*capteurs).capteur[0].droite, DUREE_CAPTEURS);
-	SDL_RenderDrawLines((*graphique).rendu, (*capteurs).capteur[1].droite, DUREE_CAPTEURS);
-	SDL_RenderDrawLines((*graphique).rendu, (*capteurs).capteur[2].droite, DUREE_CAPTEURS);
-
-	graphiqueChangeCouleur(graphique, (*graphique).gauche);
-	for(j=0;j<CAPTEURS;j++)
-		{
-		for(i=0;i<DUREE_CAPTEURS;i++)
-			{
-			(*capteurs).capteur[j].gauche[i].y = (*capteurs).capteur[j].gauche[i].y + 1;
-			}
-		}
-	SDL_RenderDrawLines((*graphique).rendu, (*capteurs).capteur[0].gauche, DUREE_CAPTEURS);
-	SDL_RenderDrawLines((*graphique).rendu, (*capteurs).capteur[1].gauche, DUREE_CAPTEURS);
-	SDL_RenderDrawLines((*graphique).rendu, (*capteurs).capteur[2].gauche, DUREE_CAPTEURS);
-
 
 	return 0;
 	}

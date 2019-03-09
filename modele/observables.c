@@ -1,7 +1,7 @@
 /*
-Copyright novembre 2018, Stephan Runigo
+Copyright mars 2019, Stephan Runigo
 runigo@free.fr
-SiCF 2.0  simulateur de chaîne de pendules
+SiCF 2.0  simulateur de corde vibrante et spectre
 Ce logiciel est un programme informatique servant à simuler l'équation
 d'une corde vibrante, à calculer sa transformée de fourier, et à donner
 une représentation graphique de ces fonctions.
@@ -32,106 +32,437 @@ termes.
 
 #include "observables.h"
 
-double observablesEnergieCinetiquePendul(penduleT * pendule, float dt)
+int observablesMiseAJourAmplitudes(observablesT * observables);
+float observablesMiseAJourAmplitude(observableT * observable);
+
+int observablesMiseAJourNombre(observablesT * observables, systemeT * systeme);
+int observablesMiseAJourLibreParcoursMoyen(observablesT * observables, systemeT * systeme);
+int observablesMiseAJourTemperature(observablesT * observables, systemeT * systeme);
+
+int observablesMiseAJourPression(observablesT * observables, systemeT * systeme);
+int observablesMiseAJourDensite(observablesT * observables, systemeT * systeme);
+
+float observablesAbsolue(float valeur);
+
+float observablesAbsolue(float valeur)
+	{
+	if(valeur<0) return -valeur;
+	return valeur;
+	}
+
+int observablesInitialise(observablesT * observables)
+	{
+	int i, j;
+	for(j=0;j<CAPTEURS;j++)
+		{
+		(*observables).observable[j].dureeCapteur=DUREE_CAPTEURS;
+		for(i=0;i<DUREE_CAPTEURS;i++)
+			{
+			(*observables).observable[j].gauche[i]=0;
+			(*observables).observable[j].droite[i]=0;
+			}
+		}
+
+	(*observables).observable[5].dureeCapteur=DY_ENERGIE;
+
+	(*observables).index=0;
+
+	return 0;
+	}
+
+float observablesMiseAJourAmplitude(observableT * observable)
+	{
+				// Calcul le maximum d'un capteur
+	int i;
+	float max;
+
+	max = 0.0;
+	for(i=0;i<DUREE_CAPTEURS;i++)
+		{
+		if((*observable).gauche[i] > max)
+			{
+			max = (*observable).gauche[i];
+			}
+		if((*observable).droite[i] > max)
+			{
+			max = (*observable).droite[i];
+			}
+		}
+	(*observable).maximumCapteur = max;
+
+	return max;
+	}
+
+int observablesMiseAJourAmplitudes(observablesT * observables)
+	{
+				// Mise à jour des maximum des capteurs
+	int j;
+
+	for(j=0;j<CAPTEURS;j++)
+		{
+		observablesMiseAJourAmplitude(&(*observables).observable[j]);
+		}
+	return 0;
+	}
+
+int observablesMiseAJour(observablesT * observables, systemeT * systeme)
+	{
+						// Évolution de l'index
+
+	(*observables).index ++;
+	if((*observables).index==DUREE_CAPTEURS)
+		{
+		(*observables).index=0;
+		}
+
+						// Mise à jour des observables
+
+	observablesMiseAJourNombre(observables,systeme);
+
+	observablesMiseAJourLibreParcoursMoyen(observables, systeme);
+
+	observablesMiseAJourTemperature(observables, systeme);
+
+	observablesMiseAJourPression(observables, systeme);
+
+	//observablesMiseAJourDensite(observables, systeme);
+
+	//observablesMiseAJourAmplitudes(observables);
+
+	return 0;
+	}
+
+int observablesMiseAJourNombre(observablesT * observables, systemeT * systeme)
+	{
+						// Calcul du nombre de particules à gauche et à droite
+	int i;
+	int nbGauche=0;
+	int nbDroite=0;
+
+	for(i=0;i<(*systeme).nombre;i++)
+		{
+		if((*systeme).mobile[i].droite==0)
+			{
+			nbGauche ++;
+			}
+		else
+			{
+			nbDroite ++;
+			}
+		}
+
+	(*observables).observable[1].gauche[(*observables).index]=nbGauche;
+	(*observables).observable[1].droite[(*observables).index]=nbDroite;
+	
+	observablesMiseAJourAmplitude(&(*observables).observable[1]);
+
+	return 0;
+	}
+
+int observablesMiseAJourTemperature(observablesT * observables, systemeT * systeme)
+	{
+						// Calcul de la température à gauche et à droite
+	int i;
+	double ecGauche=0.0;
+	double ecDroite=0.0;
+
+	for(i=0;i<(*systeme).nombre;i++)
+		{
+		if((*systeme).mobile[i].droite==0)
+			{
+			ecGauche=ecGauche+mobileEnergieCinetique(&(*systeme).mobile[i]);
+			}
+		else
+			{
+			ecDroite=ecDroite+mobileEnergieCinetique(&(*systeme).mobile[i]);
+			}
+		}
+
+		// Mise à jour de l'énergie
+	(*observables).observable[3].gauche[(*observables).index]=ecGauche;
+	(*observables).observable[3].droite[(*observables).index]=ecDroite;
+
+		// Mise à jour de la température
+	if((*observables).observable[1].gauche[(*observables).index]!=0.0)
+		{
+		(*observables).observable[0].gauche[(*observables).index]=ecGauche/(*observables).observable[1].gauche[(*observables).index];
+		}
+	else
+		{
+		(*observables).observable[0].gauche[(*observables).index]=ecGauche;
+		}
+
+	if((*observables).observable[1].droite[(*observables).index]!=0.0)
+		{
+		(*observables).observable[0].droite[(*observables).index]=ecDroite/(*observables).observable[1].droite[(*observables).index];
+		}
+	else
+		{
+		(*observables).observable[0].droite[(*observables).index]=ecDroite;
+		}
+
+	observablesMiseAJourAmplitude(&(*observables).observable[3]);
+	observablesMiseAJourAmplitude(&(*observables).observable[0]);
+
+	return 0;
+	}
+
+int observablesMiseAJourLibreParcoursMoyen(observablesT * observables, systemeT * systeme)
+	{
+						// Calcul du libre parcours moyen à gauche et à droite
+	int i;
+	double lpmGauche=0.0;
+	double lpmDroite=0.0;
+
+	for(i=0;i<(*systeme).nombre;i++)
+		{
+		if((*systeme).mobile[i].droite==0)
+			{
+			lpmGauche = lpmGauche + (*systeme).mobile[i].lpm;
+			}
+		else
+			{
+			lpmDroite = lpmDroite + (*systeme).mobile[i].lpm;
+			}
+		}
+
+	if((*observables).observable[1].gauche[(*observables).index]!=0.0)
+		{
+		(*observables).observable[2].gauche[(*observables).index]=lpmGauche/(*observables).observable[1].gauche[(*observables).index];
+		}
+	else
+		{
+		(*observables).observable[2].gauche[(*observables).index]=lpmGauche;
+		}
+
+	if((*observables).observable[1].droite[(*observables).index]!=0.0)
+		{
+		(*observables).observable[2].droite[(*observables).index]=lpmDroite/(*observables).observable[1].droite[(*observables).index];
+		}
+	else
+		{
+		(*observables).observable[2].droite[(*observables).index]=lpmDroite;
+		}
+
+	observablesMiseAJourAmplitude(&(*observables).observable[2]);
+
+	return 0;
+	}
+
+int observablesMiseAJourPression(observablesT * observables, systemeT * systeme)
+	{
+						// Calcul de la pression à gauche et à droite
+	int i;
+	float pressionGauche=0.0;
+	float pressionDroite=0.0;
+
+	for(i=0;i<(*systeme).nombre;i++)
+		{
+		//if(observablesAbsolue((*systeme).mobile[i].actuel.x) < DY_PRESSION)
+			{
+			if((*systeme).mobile[i].droite==0)
+				{
+				pressionGauche = pressionGauche + observablesAbsolue(((*systeme).mobile[i].actuel.y)-((*systeme).mobile[i].ancien.y));
+				//pressionGauche = pressionGauche + observablesAbsolue(((*systeme).mobile[i].nouveau.y)-((*systeme).mobile[i].actuel.y));
+				}
+			else
+				{
+				pressionDroite = pressionDroite + observablesAbsolue(((*systeme).mobile[i].actuel.y)-((*systeme).mobile[i].ancien.y));
+				//pressionDroite = pressionDroite + observablesAbsolue(((*systeme).mobile[i].actuel.y)-((*systeme).mobile[i].ancien.y));
+				}
+			}
+		}
+
+	(*observables).observable[4].gauche[(*observables).index]=pressionGauche;
+
+	(*observables).observable[4].droite[(*observables).index]=pressionDroite;
+
+	observablesMiseAJourAmplitude(&(*observables).observable[4]);
+
+	return 0;
+	}
+
+int observablesMiseAJourDensite(observablesT * observables, systemeT * systeme)
+	{
+						// Calcul de la fonction de répartition de l'énergie
+	int i;
+	int index = 0;
+	float a;
+
+		// Maximum de l'énergie des particules -> maximum de l'axe oy
+	float max = 0.0;
+	for(i=0;i<(*systeme).nombre;i++)
+		{
+		if((*systeme).mobile[i].ec > max)
+			{
+			max = (*systeme).mobile[i].ec;
+			}
+		}
+
+		// Remise à zéro
+	for(i=0;i<DY_ENERGIE;i++)
+		{
+		(*observables).observable[5].gauche[i]=0.0;
+		(*observables).observable[5].droite[i]=0.0;
+		}
+
+		// Coeficient directeur
+	if(max!=0.0)
+		{
+		a = DY_ENERGIE / max ;
+		}
+	else
+		{
+		a = DY_ENERGIE ;
+		}
+
+		// Calcul des densités
+	for(i=0;i<(*systeme).nombre;i++)
+		{
+		index = (int) (a * (*systeme).mobile[i].ec);
+		if(index < DY_ENERGIE && index >= 0)
+			{
+			if((*systeme).mobile[i].droite==0)
+				{
+				(*observables).observable[5].gauche[index] = (*observables).observable[5].gauche[index] + 1;
+				}
+			else
+				{
+				(*observables).observable[5].droite[index] = (*observables).observable[5].droite[index] + 1;
+				}
+			}
+		}
+
+	observablesMiseAJourAmplitude(&(*observables).observable[5]);
+
+	return 0;
+	}
+
+
+int observablesAffiche(observablesT * observables)
+	{
+	printf("\nSTATISTIQUES\n");
+
+	printf("	temperature à gauche %f \n", (*observables).observable[0].gauche[(*observables).index]);
+	printf("	temperature à droite %f \n\n", (*observables).observable[0].droite[(*observables).index]);
+	printf("	nombre à gauche %f \n", (*observables).observable[1].gauche[(*observables).index]);
+	printf("	nombre à droite %f \n\n", (*observables).observable[1].droite[(*observables).index]);
+	printf("	libre parcours moyen à gauche %f \n", (*observables).observable[2].gauche[(*observables).index]);
+	printf("	libre parcours moyen à droite %f \n\n", (*observables).observable[2].droite[(*observables).index]);
+	return 0;
+	}
+
+
+// double observablesEnergieCinetiquePendule(penduleT * pendule, float dt);
+// double observablesEnergieGravitationPendule(penduleT * pendule, float dt);
+// double observablesEnergieHarmoniquePendule(penduleT * pendule, float dt);
+// double observablesEnergieCouplagePendule(penduleT * pendule, penduleT * suivant, float dt);
+// double observablesEnergieCinetiqueSysteme(systemeT * systeme);
+// double observablesEnergieGravitationSysteme(systemeT * systeme);
+// double observablesEnergieCouplageSysteme(systemeT * systeme);
+
+double observablesEnergieCinetiquePendule(penduleT * pendule, float dt)
 	{
 	double vitesse = (*pendule).actuel - (*pendule).ancien;
 
 	return (0.5 * (*pendule).masse * (*pendule).longueur * (*pendule).longueur * vitesse * vitesse / dt / dt);
 	}
 
-double observablesEnergieGravitationPendul(penduleT * pendule, float dt)
-	{	//(*pendule).gamma est négatif et gamma = dt.dt.g/l
-	double h=(*pendule).longueur*(1.0-cos((*pendule).actuel));
+double observablesEnergieGravitationPendule(penduleT * pendule, float dt)
+	{	//(*pendule).gamma est négatif
+	double h = (*pendule).longueur*(1.0-cos((*pendule).actuel));
 
 	return ( - (*pendule).masse * (*pendule).gamma * h / dt / dt);
 	}
 
-double observablesEnergieHarmoniquePendul(penduleT * pendule, float dt)
+double observablesEnergieHarmoniquePendule(penduleT * pendule, float dt)
 	{	//	k(ressort) = masse.raideur.longueur
 	double h = (*pendule).longueur * (*pendule).actuel * (*pendule).actuel;
 	return ( - 0.5 * (*pendule).masse * (*pendule).gamma * h / dt / dt);
 	}
 
-double observablesEnergieCouplagePendul(penduleT * pendule, penduleT * suivant, float dt)
+double observablesEnergieCouplagePendule(penduleT * pendule, penduleT * suivant, float dt)
 	{	//(*pendule).kapa est négatif
-	double x, y;	// CALCUL POUR UN PENDULE DE LONGUEUR = 1 !!!
+	double x, y;
 	x=(*pendule).actuel;
-	y=(*suivant).actuel + (*pendule).dephasage; //(*pendule).longueur * (*pendule).longueur * 
-	return ( - 0.5 * (*pendule).masse * (*pendule).kapa *  (x-y) * (x-y) / dt / dt);
+	y=(*suivant).actuel - (*pendule).dephasage;
+	return ( - 0.5 * (*pendule).longueur * (*pendule).longueur * (*pendule).masse * (*pendule).kapa *  (x-y) * (x-y) / dt / dt);
 	}
 
-double observablesEnergieCinetiqueSystem(systemeT * systeme)
+double observablesEnergieCinetiqueSysteme(systemeT * systeme)
 	{
-	double ectotal=0.0;
 	int i;
-	for(i=1;i<N;i++)
+	double ectotal=0.0;
+	float dt = (*systeme).moteur.dt;
+	for(i=0;i<N;i++)
 		{
-		ectotal=ectotal+observablesEnergieCinetiquePendul(&(*iter).pendule, (*systeme).moteurs.dt);
-		iter=iter->suivant;
+		ectotal=ectotal+observablesEnergieCinetiquePendule(&((*systeme).pendule[i]), dt);
 		}
 	return ectotal;
 	}
 
-double observablesEnergieCouplageSystem(systemeT * systeme)
+double observablesEnergieCouplageSysteme(systemeT * systeme)
 	{
-	double epctotal=0.0;
 	int i;
+	double ectotal=0.0;
+	float dt = (*systeme).moteur.dt;
 	for(i=1;i<N;i++)
 		{
-		epctotal=epctotal + observablesEnergieCouplagePendul(&(*iter).pendule, &(*iter->suivant).pendule, (*systeme).moteurs.dt);
-		iter=iter->suivant;
+		ectotal=ectotal+observablesEnergieCouplagePendule(&((*systeme).pendule[i-1]), &((*systeme).pendule[i]), dt);
 		}
-	return epctotal;
+	if((*systeme).libreFixe==0)
+		ectotal=ectotal+observablesEnergieCouplagePendule(&((*systeme).pendule[N-1]), &((*systeme).pendule[0]), dt);
+	return ectotal;
 	}
 
-double observablesEnergieGravitationSystem(systemeT * systeme)
+double observablesEnergieGravitationSysteme(systemeT * systeme)
 	{
-	double epptotal=0.0;
 	int i;
-	for(i=1;i<N;i++)
+	double ectotal=0.0;
+	float dt = (*systeme).moteur.dt;
+	for(i=0;i<N;i++)
 		{
-		epptotal=epptotal + observablesEnergieGravitationPendul(&(*iter).pendule, (*systeme).moteurs.dt);
-		iter=iter->suivant;
+		ectotal=ectotal+observablesEnergieGravitationPendule(&((*systeme).pendule[i]), dt);
 		}
-	return epptotal;
+	return ectotal;
 	}
 
-double observablesEnergieHarmoniqueSystem(systemeT * systeme)
+double observablesEnergieHarmoniqueSysteme(systemeT * systeme)
 	{
-	double ephtotal=0.0;
 	int i;
-	for(i=1;i<N;i++)
+	double ectotal=0.0;
+	float dt = (*systeme).moteur.dt;
+	for(i=0;i<N;i++)
 		{
-		ephtotal=ephtotal + observablesEnergieHarmoniquePendul(&(*iter).pendule, (*systeme).moteurs.dt);
-		iter=iter->suivant;
+		ectotal=ectotal+observablesEnergieHarmoniquePendule(&((*systeme).pendule[i]), dt);
 		}
-	return ephtotal;
+	return ectotal;
 	}
 
-void  observablesAfficheEnergie(systemeT * systeme)
+void observablesAfficheEnergie(systemeT * systeme)
 	{
 	double eCouplage, eGravitation, eCinetique;
 
 		//printf("\nCalcul de l'énergie cinétique\n");
-	eCinetique=observablesEnergieCinetiqueSystem(systeme);
-	printf("\n  Energie cinétique   %12.9f\n", eCinetique);
+	eCinetique=observablesEnergieCinetiqueSysteme(systeme);
+	printf("\n  Energie cinétique    %12.9f\n", eCinetique);
 
 		//printf("Calcul de l'énergie de couplage\n");
-	eCouplage=observablesEnergieCouplageSystem(systeme);
+	eCouplage=observablesEnergieCouplageSysteme(systeme);
 	printf("  Energie de couplage  %12.9f\n", eCouplage);
 
 		//	Pendule=1, Harmonique=2, Corde=3, Dioptre=4
 	if((*systeme).equation == 1)
 		{
 		//printf("Calcul de l'énergie de gravitation\n");
-		eGravitation=observablesEnergieGravitationSystem(systeme);
+		eGravitation=observablesEnergieGravitationSysteme(systeme);
 		printf("  Energie de gravitation  %12.9f\n", eGravitation);
 		}
 
 	if((*systeme).equation == 2)
 		{
 		//printf("Calcul de l'énergie de raideur harmonique\n");
-		eGravitation=observablesEnergieHarmoniqueSystem(systeme);
+		eGravitation=observablesEnergieHarmoniqueSysteme(systeme);
 		printf("  Energie  de raideur harmonique  %12.9f\n", eGravitation);
 		}
 
@@ -144,4 +475,3 @@ void  observablesAfficheEnergie(systemeT * systeme)
 	printf("\nEnergie totale      %12.9f\n\n", eCouplage + eGravitation + eCinetique);
 	return;
 	}
-///////////////////////////////////////////////////////////////////

@@ -1,9 +1,10 @@
 /*
-Copyright juillet 2018, Stephan Runigo
+Copyright mars 2019, Stephan Runigo
 runigo@free.fr
-SiCP 2.3.2 simulateur de chaîne de pendules
+SiCF 2.0  simulateur de corde vibrante et spectre
 Ce logiciel est un programme informatique servant à simuler l'équation
-d'une chaîne de pendules et à en donner une représentation graphique.
+d'une corde vibrante, à calculer sa transformée de fourier, et à donner
+une représentation graphique de ces fonctions.
 Ce logiciel est régi par la licence CeCILL soumise au droit français et
 respectant les principes de diffusion des logiciels libres. Vous pouvez
 utiliser, modifier et/ou redistribuer ce programme sous les conditions
@@ -47,44 +48,37 @@ termes.
 
 
 
-	//	PARAMÈTRES GRAPHIQUES
-
-//#define FENETRE_X 1158 // Largeur de la fenêtre
-//#define FENETRE_Y 714 // Hauteur de la fenêtre
-#define FENETRE_X 892 // Largeur de la fenêtre
-#define FENETRE_Y 550 // Hauteur de la fenêtre
-
-#define BOUTON_COMMANDES 17 // Nombres de petits boutons
-#define ROTATIF_COMMANDES 5 // Nombre de boutons rotatifs
-
-#define LINEAIRE_COMMANDES 4 // Nombres de commandes linéaires
-#define TRIANGLE_COMMANDES 21 // Nombres de commandes triangulaires
-
-#define ROTATION_PSI 0.00733 // Vitesse de la rotation du graphisme
-
-#define RATIO_H_L 0.436 // Ratio Hauteur sur Largeur de la chaîne
-//#define RATIO_C_X 0.491 // Ratio Centrage X Sans Menu
-//#define RATIO_C_Y 0.751 // Ratio Centrage Y Sans Menu
-#define RATIO_C_X 0.399 // Ratio Centrage X Avec Menu
-#define RATIO_C_Y 0.851 // Ratio Centrage Y Avec Menu
-#define RATIO_R_MIN 0.21 // Ratio Distance minimal
-#define RATIO_R_MAX 0.99 // Ratio Distance maximal
-
-#define TAILLE_MASSE 8 // Diamètre des masses
+			//	PARAMÈTRES GRAPHIQUES
 
 
-	//	PARAMÈTRES DE DISCRÉTISATION TEMPORELLE
+	//  TAILLE IMPLICITE DE LA FENÊTRE
+#define FENETRE_X 892
+#define FENETRE_Y 550
 
-	//	DT * DUREE = TEMPS_AFFICHAGE
+	//  NOMBRE DE COMMANDES
+#define BOUTON_COMMANDES 17		// Nombres de petits boutons
+#define ROTATIF_COMMANDES 5		// Nombre de boutons rotatifs
+#define LINEAIRE_COMMANDES 4	// Nombres de commandes linéaires
+#define TRIANGLE_COMMANDES 21	// Nombres de commandes triangulaires
 
-#define TEMPS_AFFICHAGE 110 // Durée entre les affichages en ms
+	//	PARAMÈTRES DES CAPTEURS
+#define CAPTEURS 100			// Nombre implicite d'incrémentation du système entre deux affichages.
+#define DUREE_CAPTEURS 599		// Nombre maximal d'incrémentation du système entre deux affichages.
 
-#define DUREE 100 // Nombre implicite d'incrémentation du système entre deux affichages.
-#define DUREE_MAX 599 // Nombre maximal d'incrémentation du système entre deux affichages.
 
-#define DT_MIN 0.00003 // Discrétisation minimale du temps
-#define DT 0.0011
-#define DT_MAX 0.003		//	discrétisation maximale du temps
+
+			//	PARAMÈTRES DE DISCRÉTISATION TEMPORELLE DU SYSTÈME
+
+	//	DT * DUREE = TEMPS_AFFICHAGE => temps réel
+
+#define TEMPS_AFFICHAGE 110	// Durée entre les affichages en ms
+
+#define DUREE 100			// Nombre implicite d'incrémentation du système entre deux affichages.
+#define DUREE_MAX 599		// Nombre maximal d'incrémentation du système entre deux affichages.
+
+#define DT_MIN 0.00003		// Discrétisation minimale du temps
+#define DT 0.0011			// Discrétisation implicite du temps
+#define DT_MAX 0.003		// Discrétisation maximale du temps
 
 
 	//	PARAMÈTRES DE LA CHAINE
@@ -98,7 +92,7 @@ termes.
 #define DEPHASAGE_MAX 49*DEUXPI // Déphasage maximal
 
 
-	//	PARAMÈTRES  CHAINE ET CORDE
+	//	PARAMÈTRES CHAINE ET CORDE
 
 #define COUPLAGE_MAX 99 // Couplage maximal / nombre de pendule
 #define COUPLAGE_MIN 0.099

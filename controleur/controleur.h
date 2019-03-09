@@ -1,9 +1,10 @@
 /*
-Copyright juillet 2018, Stephan Runigo
+Copyright mars 2019, Stephan Runigo
 runigo@free.fr
-SiCP 2.3.1 simulateur de chaîne de pendules
+SiCF 2.0  simulateur de corde vibrante et spectre
 Ce logiciel est un programme informatique servant à simuler l'équation
-d'une chaîne de pendules et à en donner une représentation graphique.
+d'une corde vibrante, à calculer sa transformée de fourier, et à donner
+une représentation graphique de ces fonctions.
 Ce logiciel est régi par la licence CeCILL soumise au droit français et
 respectant les principes de diffusion des logiciels libres. Vous pouvez
 utiliser, modifier et/ou redistribuer ce programme sous les conditions
@@ -45,13 +46,19 @@ typedef struct ControleurT controleurT;
 
 		optionsT options;	//	Options de la ligne de commande
 
-		systemeT systeme;	//	Modélisation physique de la chaîne
+		systemeT systeme;	//	Modélisation physique de la corde
+
+		observablesT observables;	//	Capteurs sur le système
 
 		projectionT projection;	//	Paramètre de la projection
 
-		grapheT graphe;		//	Graphe de la chaîne
+		grapheT graphe;		//	Graphe de la corde
+
+		grapheT spectre;		//	Graphe des spectres
 
 		commandesT commandes;	//	Graphe des commandes
+
+		capteursT capteurs;	//	Graphe des capteur
 
 		interfaceT interface;	//	Fenêtre SDL
 
@@ -59,9 +66,12 @@ typedef struct ControleurT controleurT;
 
 		horlogeT horloge;		//	Horloge SDL
 
+		int duree;	// nombre d'incrémentation du système par affichage
+		int modePause;	// pause de l'évolution du système si = 1
 		int sortie;	//	sortie de SiCP si > 0
 
 		int appui;	//	1 si le bouton de la souris est appuyé, 0 sinon.
+
 		int curseurX;	//	Position x de la souris.
 		int curseurY;	//	Position y de la souris.
 

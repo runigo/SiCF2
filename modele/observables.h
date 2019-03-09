@@ -1,9 +1,10 @@
 /*
-Copyright novembre 2017, Stephan Runigo
+Copyright mars 2019, Stephan Runigo
 runigo@free.fr
-SiCP 1.4.1 simulateur de chaîne de pendules
+SiCF 2.0  simulateur de corde vibrante et spectre
 Ce logiciel est un programme informatique servant à simuler l'équation
-d'une chaîne de pendules et à en donner une représentation graphique.
+d'une corde vibrante, à calculer sa transformée de fourier, et à donner
+une représentation graphique de ces fonctions.
 Ce logiciel est régi par la licence CeCILL soumise au droit français et
 respectant les principes de diffusion des logiciels libres. Vous pouvez
 utiliser, modifier et/ou redistribuer ce programme sous les conditions
@@ -14,7 +15,7 @@ de modification et de redistribution accordés par cette licence, il n'est
 offert aux utilisateurs qu'une garantie limitée. Pour les mêmes raisons,
 seule une responsabilité restreinte pèse sur l'auteur du programme, le
 titulaire des droits patrimoniaux et les concédants successifs.
-A cet égard  l'attention de l'utilisateur est attirée sur les risques
+A cet égard l'attention de l'utilisateur est attirée sur les risques
 associés au chargement, à l'utilisation, à la modification et/ou au
 développement et à la reproduction du logiciel par l'utilisateur étant
 donné sa spécificité de logiciel libre, qui peut le rendre complexe à
@@ -29,11 +30,36 @@ pris connaissance de la licence CeCILL, et que vous en avez accepté les
 termes.
 */
 
-#ifndef _OBSERVABLE_
-#define _OBSERVABLE_
+#ifndef _OBSERVABLES_
+#define _OBSERVABLES_
+
+#include <stdio.h>
 
 #include "systeme.h"
 
+typedef struct ObservableT observableT;
+	struct ObservableT
+		{
+		float gauche[DUREE_CAPTEURS];
+		float droite[DUREE_CAPTEURS];
+		float maximumCapteur;
+		int dureeCapteur;
+		};
+
+typedef struct ObservablesT observablesT;
+	struct ObservablesT
+		{
+		observableT observable[CAPTEURS];
+		int index; // instant présent
+		};
+
+int observablesInitialise(observablesT * observables);
+int observablesAffiche(observablesT * observables);
+
+		// Mise à jour des observables
+int observablesMiseAJour(observablesT * observables, systemeT * systeme);
+
+		// Calculs énergétiques
 double observablesEnergieCinetiquePendul(penduleT * pendule, float dt);
 double observablesEnergieGravitationPendul(penduleT * pendule, float dt);
 double observablesEnergieHarmoniquePendul(penduleT * pendule, float dt);
@@ -45,6 +71,4 @@ double observablesEnergieHarmoniqueSystem(systemeT * systeme);
 double observablesEnergieCouplageSystem(systemeT * systeme);
 
 void observablesAfficheEnergie(systemeT * systeme);
-//double ecartCinetique(systemeT * systeme);
-
 #endif

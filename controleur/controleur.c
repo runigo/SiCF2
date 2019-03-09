@@ -1,9 +1,10 @@
 /*
-Copyright juillet 2018, Stephan Runigo
+Copyright mars 2019, Stephan Runigo
 runigo@free.fr
-SiCP 2.3.2 simulateur de chaîne de pendules
+SiCF 2.0  simulateur de corde vibrante et spectre
 Ce logiciel est un programme informatique servant à simuler l'équation
-d'une chaîne de pendules et à en donner une représentation graphique.
+d'une corde vibrante, à calculer sa transformée de fourier, et à donner
+une représentation graphique de ces fonctions.
 Ce logiciel est régi par la licence CeCILL soumise au droit français et
 respectant les principes de diffusion des logiciels libres. Vous pouvez
 utiliser, modifier et/ou redistribuer ce programme sous les conditions
@@ -165,22 +166,12 @@ int controleurConstructionGraphique(controleurT * controleur)
 		//fprintf(stderr, "Dessin des Commandes\n");
 	graphiqueCommandes(&(*controleur).graphique, &(*controleur).commandes);
 
+		//fprintf(stderr, "Dessin des capteurs\n");
+	graphiqueCapteurs(&(*controleur).graphique, &(*controleur).capteurs);
+
 		//fprintf(stderr, "Dessin des graphes\n");
-	if((*controleur).graphe.support==0)
-		{
-		graphiquePendule(&(*controleur).graphique, &(*controleur).graphe);
-		}
-	else
-		{
-		if((*controleur).graphe.support==1)
-			{
-			graphiquePenduleSupport(&(*controleur).graphique, &(*controleur).graphe);
-			}
-		else
-			{
-			graphiquePenduleSupportPlein(&(*controleur).graphique, &(*controleur).graphe);
-			}
-		}
+	graphiqueCorde(&(*controleur).graphique, &(*controleur).graphe);
+	graphiqueSpectre(&(*controleur).graphique, &(*controleur).graphe);
 
 		//fprintf(stderr, "Mise à jour de l'affichage\n");
 	graphiqueMiseAJour(&(*controleur).graphique);
@@ -404,12 +395,12 @@ int controleurClavier(controleurT * controleur)
 		case SDLK_F6:
 			moteursAfficheHorloge(&(*controleur).systeme.moteurs);
 			break;
-		case SDLK_F7:
-			projectionAffichePointDeVue(&(*controleur).projection);
-			break;
+	//	case SDLK_F7:
+	//		projectionAffichePointDeVue(&(*controleur).projection);
+	//		break;
 	// Support
-		case SDLK_F8:
-			grapheChangeSupport(&(*controleur).graphe);break;
+	//	case SDLK_F8:
+	//		grapheChangeSupport(&(*controleur).graphe);break;
 
 
 		default:
@@ -499,6 +490,7 @@ int controleurClavierCtrl(controleurT * controleur)
 	*/
 
 	// Déplacement du point de vue
+/*
 		case SDLK_a:
 			projectionChangePhi(&(*controleur).projection, 0.01);break;
 		case SDLK_z:
@@ -525,7 +517,7 @@ int controleurClavierCtrl(controleurT * controleur)
 			projectionChangePhi(&(*controleur).projection, -0.09);break;
 		case SDLK_v:
 			projectionChangePhi(&(*controleur).projection, -0.09);break;
-
+*/
 		default:
 			;
 		}
@@ -535,7 +527,7 @@ int controleurClavierCtrl(controleurT * controleur)
 int controleurSouris(controleurT * controleur)
 	{
 				// Action des mouvements de la souris
-	float x, y;
+/*	float x, y;
 	if((*controleur).appui==1)
 		{
 		if( (*controleur).commandes.sourisX < (*controleur).commandes.rotatifs && (*controleur).commandes.sourisY < (*controleur).commandes.bas )
@@ -545,10 +537,10 @@ int controleurSouris(controleurT * controleur)
 			y=0.0031*(float)((*controleur).interface.evenement.motion.yrel);
 				//fprintf(stderr, "controleurSouris yrel = %d\n", (*controleur).interface.evenement.motion.yrel);
 				//fprintf(stderr, "controleurSouris yrel = %d\n", (*controleur).interface.evenement.motion.yrel);
-			projectionChangePsi(&(*controleur).projection, x);
-			projectionChangePhi(&(*controleur).projection, y);
+		//	projectionChangePsi(&(*controleur).projection, x);
+		//	projectionChangePhi(&(*controleur).projection, y);
 			}
-		}
+		} */
 	return (*controleur).sortie;
 	}
 
@@ -580,33 +572,19 @@ int controleurDefilePointDeVue(controleurT * controleur)
 
 	if((*controleur).interface.evenement.wheel.y > 0) // scroll up
 		{
-		(*controleur).projection.pointDeVue.r += 0.011;
+		//(*controleur).projection.pointDeVue.r += 0.011;
 		//fprintf(stderr, "evenement.wheel.y = %d\n", (*controleur).interface.evenement.wheel.y);
 		//fprintf(stderr, "Distance = %f\n", (*controleur).projection.pointDeVue.r);
 		}
 	else if((*controleur).interface.evenement.wheel.y < 0) // scroll down
 		{
-		(*controleur).projection.pointDeVue.r -= 0.011;
+		//(*controleur).projection.pointDeVue.r -= 0.011;
 		//fprintf(stderr, "evenement.wheel.y = %d\n", (*controleur).interface.evenement.wheel.y);
 		//fprintf(stderr, "Distance = %f\n", (*controleur).projection.pointDeVue.r);
 		}
 
-	if((*controleur).projection.pointDeVue.r < RATIO_R_MIN)
-		{
-		(*controleur).projection.pointDeVue.r = RATIO_R_MIN;
-		fprintf(stderr, "Distance limite = %f\n", (*controleur).projection.pointDeVue.r);
-		}
-	if((*controleur).projection.pointDeVue.r > RATIO_R_MAX)
-		{
-		(*controleur).projection.pointDeVue.r = RATIO_R_MAX;
-		fprintf(stderr, "Distance limite = %f\n", (*controleur).projection.pointDeVue.r);
-		}
-
 	//if(event.wheel.x > 0) // scroll right{}
 	//else if(event.wheel.x < 0) // scroll left{}
-
-	projectionChangePsi(&(*controleur).projection, 0);
-	projectionChangePhi(&(*controleur).projection, 0);
 
 	return 0;
 	}
@@ -699,7 +677,7 @@ int controleurCommandes(controleurT * controleur, int zone)
 		commande = commandeTriangles(&(*controleur).commandes);
 		switch(commande)	//	
 			{
-			case 0:
+		/*	case 0:
 				(*controleur).projection.rotation=3;break;
 			case 1:
 				(*controleur).projection.rotation=1;break;
@@ -708,7 +686,7 @@ int controleurCommandes(controleurT * controleur, int zone)
 			case 3:
 				(*controleur).projection.rotation=-1;break;
 			case 4:
-				(*controleur).projection.rotation=-3;break;
+				(*controleur).projection.rotation=-3;break; */
 			case 5:
 				controleurChangeVitesse(controleur, 0.32);break;
 			case 6:
@@ -777,7 +755,7 @@ int controleurInitialiseParametres(controleurT * controleur, int forme)
 int controleurInitialiseNulle(controleurT * controleur)
 	{
 	moteursChangeGenerateur(&(*controleur).systeme.moteurs, 0);
-	(*controleur).systeme.premier->pendule.dephasage = 0; // Supprime les fluxons
+	//(*controleur).systeme.premier->pendule.dephasage = 0; // Supprime les fluxons
 
 		// Condition au limites libres
 	changeConditionsLimites(&(*controleur).systeme, 1);

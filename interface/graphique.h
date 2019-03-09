@@ -1,7 +1,7 @@
 /*
-Copyright novembre 2018, Stephan Runigo
+Copyright mars 2019, Stephan Runigo
 runigo@free.fr
-SiCF 2.0  simulateur de chaîne de pendules
+SiCF 2.0  simulateur de corde vibrante et spectre
 Ce logiciel est un programme informatique servant à simuler l'équation
 d'une corde vibrante, à calculer sa transformée de fourier, et à donner
 une représentation graphique de ces fonctions.
@@ -33,9 +33,10 @@ termes.
 #ifndef _GRAPHIQUE_
 #define _GRAPHIQUE_
 
+#include "interface.h"
 #include "graphe.h"
 #include "commandes.h"
-#include "interface.h"
+#include "capteurs.h"
 
 
 struct GraphiqueT {
@@ -57,15 +58,11 @@ struct GraphiqueT {
 	SDL_Color gauche;
 	SDL_Color droite;
 
-	SDL_Texture *particule;
-
 	SDL_Texture *lumiereVerte;
 	SDL_Texture *lumiereRouge;
 	SDL_Texture *lumiereOrange;
 	SDL_Texture *lumiereJaune;
 	SDL_Texture *imageFond;
-
-	int taille; // Diamètre des particules
 
 	int largeur;
 	int hauteur;
@@ -74,13 +71,15 @@ struct GraphiqueT {
 typedef struct GraphiqueT graphiqueT;
 
 int graphiqueDestruction(graphiqueT * graphique);
-int graphiqueInitialisation(graphiqueT * graphique, interfaceT * interface, int taille, int fond);
+int graphiqueCreation(graphiqueT * graphique, interfaceT * interface);
 
 int graphiqueNettoyage(graphiqueT * graphique);
 int graphiqueMiseAJour(graphiqueT * graphique);
 
 int graphiqueCommandes(graphiqueT * graphique, commandesT * commandes);
-void graphiquePendule(graphiqueT * graphique, grapheT * graphe);
+int graphiqueCapteurs(graphiqueT * graphique, capteursT * capteurs);
+int graphiqueCorde(graphiqueT * graphique, grapheT * graphe);
+int graphiqueSpectre(graphiqueT * graphique, grapheT * graphe);
 
 #endif
 /////////////////////////////////////////////////////////////////

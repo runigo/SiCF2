@@ -56,6 +56,7 @@ int observablesInitialise(observablesT * observables)
 	for(j=0;j<CAPTEURS;j++)
 		{
 		(*observables).observable[j].dureeCapteur=DUREE_CAPTEURS;
+		(*observables).observable[j].maximumCapteur = 0;
 		for(i=0;i<DUREE_CAPTEURS;i++)
 			{
 			(*observables).observable[j].gauche[i]=0;
@@ -310,7 +311,7 @@ double observablesEnergieCinetiqueSysteme(systemeT * systeme)
 	int i;
 	double ectotal=0.0;
 	float dt = (*systeme).moteur.dt;
-	for(i=0;i<N;i++)
+	for(i=0;i<(*systeme).nombre;i++)
 		{
 		ectotal=ectotal+observablesEnergieCinetiquePendule(&((*systeme).pendule[i]), dt);
 		}
@@ -322,7 +323,7 @@ double observablesEnergieCouplageSysteme(systemeT * systeme)
 	int i;
 	double ectotal=0.0;
 	float dt = (*systeme).moteur.dt;
-	for(i=1;i<N;i++)
+	for(i=1;i<(*systeme).nombre;i++)
 		{
 		ectotal=ectotal+observablesEnergieCouplagePendule(&((*systeme).pendule[i-1]), &((*systeme).pendule[i]), dt);
 		}
@@ -336,7 +337,7 @@ double observablesEnergieGravitationSysteme(systemeT * systeme)
 	int i;
 	double ectotal=0.0;
 	float dt = (*systeme).moteur.dt;
-	for(i=0;i<N;i++)
+	for(i=0;i<(*systeme).nombre;i++)
 		{
 		ectotal=ectotal+observablesEnergieGravitationPendule(&((*systeme).pendule[i]), dt);
 		}
@@ -348,7 +349,7 @@ double observablesEnergieHarmoniqueSysteme(systemeT * systeme)
 	int i;
 	double ectotal=0.0;
 	float dt = (*systeme).moteur.dt;
-	for(i=0;i<N;i++)
+	for(i=0;i<(*systeme).nombre;i++)
 		{
 		ectotal=ectotal+observablesEnergieHarmoniquePendule(&((*systeme).pendule[i]), dt);
 		}

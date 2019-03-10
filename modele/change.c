@@ -45,7 +45,7 @@ int changeCouplage(systemeT * systeme, float facteur)
 		if(nouveau < COUPLAGE_MAX)
 			{
 			(*systeme).couplage=nouveau;
-			for(i=0;i<N;i++)
+			for(i=0;i<(*systeme).nombre;i++)
 				{
 				penduleChangeCouplage(&(*systeme).pendule[i], facteur);
 				}
@@ -65,7 +65,7 @@ int changeCouplage(systemeT * systeme, float facteur)
 		if(nouveau > COUPLAGE_MIN)
 			{
 			(*systeme).couplage=nouveau;
-			for(i=0;i<N;i++)
+			for(i=0;i<(*systeme).nombre;i++)
 				{
 				penduleChangeCouplage(&(*systeme).pendule[i], facteur);
 				}
@@ -127,7 +127,7 @@ void changeGravitation(systemeT * systeme, float facteur)
 		if(nouveau < GRAVITATION_MAX)
 			{
 			(*systeme).gravitation=nouveau;
-			for(i=0;i<N;i++)
+			for(i=0;i<(*systeme).nombre;i++)
 				{
 				penduleChangeGravitation(&(*systeme).pendule[i], facteur);
 				}
@@ -146,7 +146,7 @@ void changeGravitation(systemeT * systeme, float facteur)
 		if(nouveau > GRAVITATION_MIN)
 			{
 			(*systeme).gravitation=nouveau;
-			for(i=0;i<N;i++)
+			for(i=0;i<(*systeme).nombre;i++)
 				{
 				penduleChangeGravitation(&(*systeme).pendule[i], facteur);
 				}
@@ -168,14 +168,14 @@ void changeDioptre(systemeT * systeme)
 	int i;
 	if((*systeme).equation==4)
 		{
-		for(i=N/2;i<N;i++)
+		for(i=(*systeme).nombre/2;i<(*systeme).nombre;i++)
 			{
 			penduleReinitialiseMasse(&(*systeme).pendule[i], (*systeme).masseDroite, (*systeme).moteur.dt);
 			}
 		}
 	else
 		{
-		for(i=0;i<N;i++)
+		for(i=0;i<(*systeme).nombre;i++)
 			{
 			penduleReinitialiseMasse(&(*systeme).pendule[i], (*systeme).masseGauche, (*systeme).moteur.dt);
 			}
@@ -235,7 +235,7 @@ void changeDissipation(systemeT * systeme, float facteur)
 			(*systeme).dissipation = (*systeme).dissipation * facteur;
 			}
 		// Multiplie la dissipation des pendules par facteur
-		for(i=0;i<N;i++)
+		for(i=0;i<(*systeme).nombre;i++)
 			{
 			penduleChangeDissipation(&(*systeme).pendule[i], facteur);
 			}
@@ -304,7 +304,7 @@ void changeFormeDissipation(systemeT * systeme, int forme)
 
 	// Reinitialisation de alpha
 	int i;
-	for(i=0;i<N;i++)
+	for(i=0;i<(*systeme).nombre;i++)
 		{
 		if ( forme == 2 )
 			{
@@ -316,7 +316,7 @@ void changeFormeDissipation(systemeT * systeme, int forme)
 	if ( forme == 2 )
 		{
 		printf("Dissipation premier= %6.3f\n", (*systeme).pendule[0].dissipation);
-		printf("Dissipation dernier= %6.3f\n", (*systeme).pendule[N-1].dissipation);
+		printf("Dissipation dernier= %6.3f\n", (*systeme).pendule[(*systeme).nombre-1].dissipation);
 		}
 	else
 		{ // Cas uniforme (forme=1)
@@ -392,7 +392,7 @@ void changeLimite(systemeT * systeme)
 		couplage=(*systeme).couplage;
 		}
 
-	penduleInitialiseKapa(&(*systeme).pendule[N-1], couplage, (*systeme).moteur.dt);
+	penduleInitialiseKapa(&(*systeme).pendule[(*systeme).nombre-1], couplage, (*systeme).moteur.dt);
 
 	printf("Couplage dernier = %6.3f\n", couplage);
 
@@ -402,7 +402,7 @@ void changeLimite(systemeT * systeme)
 void changeFormeDioptre(systemeT * systeme, float facteur)
 	{
 	int i;
-	for(i=N/2;i<N;i++)
+	for(i=(*systeme).nombre/2;i<(*systeme).nombre;i++)
 		{
 		penduleChangeMasse(&((*systeme).pendule[i]), facteur);
 		}
@@ -411,9 +411,9 @@ void changeFormeDioptre(systemeT * systeme, float facteur)
 
 void changeDephasage(systemeT * systeme, float dephasage)
 	{
-	penduleAjouteDephasage(&(*systeme).pendule[N-1], dephasage);
+	penduleAjouteDephasage(&(*systeme).pendule[(*systeme).nombre-1], dephasage);
 
-	printf("Déphasage dernier = %6.3f\n", (*systeme).pendule[N-1].dephasage);
+	printf("Déphasage dernier = %6.3f\n", (*systeme).pendule[(*systeme).nombre-1].dephasage);
 
 	}
 

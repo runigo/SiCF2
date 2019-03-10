@@ -35,12 +35,9 @@ termes.
 int observablesMiseAJourAmplitudes(observablesT * observables);
 float observablesMiseAJourAmplitude(observableT * observable);
 
-int observablesMiseAJourNombre(observablesT * observables, systemeT * systeme);
-int observablesMiseAJourLibreParcoursMoyen(observablesT * observables, systemeT * systeme);
-int observablesMiseAJourTemperature(observablesT * observables, systemeT * systeme);
-
-int observablesMiseAJourPression(observablesT * observables, systemeT * systeme);
-int observablesMiseAJourDensite(observablesT * observables, systemeT * systeme);
+int observablesMiseAJourCinetique(observablesT * observables, systemeT * systeme);
+int observablesMiseAJourRappel(observablesT * observables, systemeT * systeme);
+int observablesMiseAJourCouplage(observablesT * observables, systemeT * systeme);
 
 float observablesAbsolue(float valeur);
 
@@ -120,15 +117,9 @@ int observablesMiseAJour(observablesT * observables, systemeT * systeme)
 
 	observablesMiseAJourCinetique(observables,systeme);
 
-	observablesMiseAJourGravitation(observables, systeme);
+	observablesMiseAJourRappel(observables, systeme);
 
 	observablesMiseAJourCouplage(observables, systeme);
-
-	observablesMiseAJourPression(observables, systeme);
-
-	//observablesMiseAJourDensite(observables, systeme);
-
-	//observablesMiseAJourAmplitudes(observables);
 
 	return 0;
 	}
@@ -139,86 +130,42 @@ int observablesMiseAJourCinetique(observablesT * observables, systemeT * systeme
 	int i;
 	double ecGauche=0.0;
 	double ecDroite=0.0;
+	int j = (*systeme).nombre / 2;
 
-	for(i=0;i<(*systeme).nombre;i++)
+	for(i=0;i<j;i++)
 		{
-		if((*systeme).mobile[i].droite==0)
-			{
-			ecGauche=ecGauche+mobileEnergieCinetique(&(*systeme).mobile[i]);
-			}
-		else
-			{
-			ecDroite=ecDroite+mobileEnergieCinetique(&(*systeme).mobile[i]);
-			}
+		ecGauche=ecGauche+mobileEnergieCinetique(&(*systeme).pendule[i]);
+		ecDroite=ecDroite+mobileEnergieCinetique(&(*systeme).pendule[i + j]);
 		}
 
 		// Mise à jour de l'énergie
-	(*observables).observable[3].gauche[(*observables).index]=ecGauche;
-	(*observables).observable[3].droite[(*observables).index]=ecDroite;
+	(*observables).observable[0].gauche[(*observables).index]=ecGauche;
+	(*observables).observable[0].droite[(*observables).index]=ecDroite;
 
-		// Mise à jour de la température
-	if((*observables).observable[1].gauche[(*observables).index]!=0.0)
-		{
-		(*observables).observable[0].gauche[(*observables).index]=ecGauche/(*observables).observable[1].gauche[(*observables).index];
-		}
-	else
-		{
-		(*observables).observable[0].gauche[(*observables).index]=ecGauche;
-		}
-
-	if((*observables).observable[1].droite[(*observables).index]!=0.0)
-		{
-		(*observables).observable[0].droite[(*observables).index]=ecDroite/(*observables).observable[1].droite[(*observables).index];
-		}
-	else
-		{
-		(*observables).observable[0].droite[(*observables).index]=ecDroite;
-		}
-
-	observablesMiseAJourAmplitude(&(*observables).observable[3]);
 	observablesMiseAJourAmplitude(&(*observables).observable[0]);
 
 	return 0;
 	}
 
-int observablesMiseAJourGravitation(observablesT * observables, systemeT * systeme)
+int observablesMiseAJourRappel(observablesT * observables, systemeT * systeme)
 	{
 						// Calcul de l'énergie de gravitation
 	int i;
-	double lpmGauche=0.0;
-	double lpmDroite=0.0;
+	double erGauche=0.0;
+	double erDroite=0.0;
+	int j = (*systeme).nombre / 2;
 
-	for(i=0;i<(*systeme).nombre;i++)
+	for(i=0;i<j;i++)
 		{
-		if((*systeme).mobile[i].droite==0)
-			{
-			lpmGauche = lpmGauche + (*systeme).mobile[i].lpm;
-			}
-		else
-			{
-			lpmDroite = lpmDroite + (*systeme).mobile[i].lpm;
-			}
+		erGauche = erGauche + (*systeme).pendule[i].lpm;
+		erDroite = erDroite + (*systeme).pendule[i].lpm;
 		}
 
-	if((*observables).observable[1].gauche[(*observables).index]!=0.0)
-		{
-		(*observables).observable[2].gauche[(*observables).index]=lpmGauche/(*observables).observable[1].gauche[(*observables).index];
-		}
-	else
-		{
-		(*observables).observable[2].gauche[(*observables).index]=lpmGauche;
-		}
+		// Mise à jour de l'énergie
+	(*observables).observable[0].gauche[(*observables).index]=ecGauche;
+	(*observables).observable[0].droite[(*observables).index]=ecDroite;
 
-	if((*observables).observable[1].droite[(*observables).index]!=0.0)
-		{
-		(*observables).observable[2].droite[(*observables).index]=lpmDroite/(*observables).observable[1].droite[(*observables).index];
-		}
-	else
-		{
-		(*observables).observable[2].droite[(*observables).index]=lpmDroite;
-		}
-
-	observablesMiseAJourAmplitude(&(*observables).observable[2]);
+	observablesMiseAJourAmplitude(&(*observables).observable[1]);
 
 	return 0;
 	}
@@ -227,29 +174,19 @@ int observablesMiseAJourCouplage(observablesT * observables, systemeT * systeme)
 	{
 						// Calcul de l'énergie de couplage
 	int i;
-	float pressionGauche=0.0;
-	float pressionDroite=0.0;
+	float ekGauche=0.0;
+	float ekDroite=0.0;
+	int j = (*systeme).nombre / 2;
 
 	for(i=0;i<(*systeme).nombre;i++)
 		{
-		//if(observablesAbsolue((*systeme).mobile[i].actuel.x) < DY_PRESSION)
-			{
-			if((*systeme).mobile[i].droite==0)
-				{
-				pressionGauche = pressionGauche + observablesAbsolue(((*systeme).mobile[i].actuel.y)-((*systeme).mobile[i].ancien.y));
-				//pressionGauche = pressionGauche + observablesAbsolue(((*systeme).mobile[i].nouveau.y)-((*systeme).mobile[i].actuel.y));
-				}
-			else
-				{
-				pressionDroite = pressionDroite + observablesAbsolue(((*systeme).mobile[i].actuel.y)-((*systeme).mobile[i].ancien.y));
-				//pressionDroite = pressionDroite + observablesAbsolue(((*systeme).mobile[i].actuel.y)-((*systeme).mobile[i].ancien.y));
-				}
-			}
+		ekGauche = pressionGauche + observablesAbsolue(((*systeme).pendule[i].actuel.y)-((*systeme).pendule[i].ancien.y));
+		ekDroite = pressionDroite + observablesAbsolue(((*systeme).pendule[i].actuel.y)-((*systeme).pendule[i].ancien.y));
 		}
 
-	(*observables).observable[4].gauche[(*observables).index]=pressionGauche;
+	(*observables).observable[2].gauche[(*observables).index]=ekGauche;
 
-	(*observables).observable[4].droite[(*observables).index]=pressionDroite;
+	(*observables).observable[2].droite[(*observables).index]=ekDroite;
 
 	observablesMiseAJourAmplitude(&(*observables).observable[4]);
 

@@ -214,9 +214,6 @@ double gravitationPendul(penduleT * pendul, int choix)
 		// Calcul de la FORCE DE RAPPEL
 	double forceRappel;
 
-	forceRappel = (*pendul).gamma * sin((*pendul).actuel);
-
-/*		SUPPRIMÉ DANS SiCP 1.5.1
 	switch(choix)
 		{
 		case 1:// gravitation
@@ -232,8 +229,6 @@ double gravitationPendul(penduleT * pendul, int choix)
 			forceRappel = 0.0;
 		break;
 		}
-*/
-	(void)choix;
 
 	return forceRappel;
 	}

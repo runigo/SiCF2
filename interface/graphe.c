@@ -36,7 +36,7 @@ int grapheInitialise(grapheT * graphe, int nombre, int graisse, int r, int g, in
 	{
 		//		Initialisation du graphe
 
-	grapheInitialiseEchelle(graphe, 0, 0, FENETRE_X, FENETRE_Y)
+	grapheInitialiseEchelle(graphe, 0, 0, FENETRE_X, FENETRE_Y);
 
 	int i;
 
@@ -61,7 +61,7 @@ int grapheInitialiseEchelle(grapheT * graphe, int xZero, int yZero, int zoneX, i
 	{
 		//		Position et taille du graphe
 
-	(*graphe).xZero = yZero; // Positon de l'origine
+	(*graphe).xZero = xZero; // Positon de l'origine
 	(*graphe).yZero = yZero; // Positon de l'origine
 
 	(*graphe).largeur = zoneX; // axe x

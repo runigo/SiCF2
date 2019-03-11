@@ -102,8 +102,9 @@ int capteursMiseAJourLongueur(capteursT * capteurs, int largeur, int hauteur)
 		else
 			{
 			x0=(*capteurs).capteur[j].xZero;
-			a=(float)((*capteurs).capteur[j].largeur) / (float)(DY_ENERGIE);
-			for(i=0;i<DY_ENERGIE;i++)
+			//a=(float)((*capteurs).capteur[j].largeur) / (float)(DY_ENERGIE);
+			a=(float)((*capteurs).capteur[j].largeur) / (float)(DUREE_CAPTEURS);
+			for(i=0;i<DUREE_CAPTEURS;i++)
 				{
 				(*capteurs).capteur[j].gauche[i].x=(int)(a*i)+x0;
 				(*capteurs).capteur[j].droite[i].x=(int)(a*i)+x0;

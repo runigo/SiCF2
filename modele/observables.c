@@ -35,6 +35,12 @@ termes.
 int observablesMiseAJourAmplitudes(observablesT * observables);
 float observablesMiseAJourAmplitude(observableT * observable);
 
+
+double observablesEnergieCinetiquePendule(penduleT * pendule, float dt);
+double observablesEnergieGravitationPendule(penduleT * pendule, float dt);
+double observablesEnergieHarmoniquePendule(penduleT * pendule, float dt);
+double observablesEnergieCouplagePendule(penduleT * pendule, penduleT * suivant, float dt);
+
 int observablesMiseAJourCinetique(observablesT * observables, systemeT * systeme);
 int observablesMiseAJourRappel(observablesT * observables, systemeT * systeme);
 int observablesMiseAJourCouplage(observablesT * observables, systemeT * systeme);
@@ -134,11 +140,11 @@ int observablesMiseAJourCinetique(observablesT * observables, systemeT * systeme
 
 	for(i=0;i<j;i++)
 		{
-		ecGauche=ecGauche+mobileEnergieCinetique(&(*systeme).pendule[i]);
-		ecDroite=ecDroite+mobileEnergieCinetique(&(*systeme).pendule[i + j]);
+		ecGauche=ecGauche+observablesEnergieCinetiquePendule(&(*systeme).pendule[i], (*systeme).moteurs.dt);
+		ecDroite=ecDroite+observablesEnergieCinetiquePendule(&(*systeme).pendule[i+j], (*systeme).moteurs.dt);
 		}
 
-		// Mise à jour de l'énergie
+		// Mise à jour de l'énergie cinétique
 	(*observables).observable[0].gauche[(*observables).index]=ecGauche;
 	(*observables).observable[0].droite[(*observables).index]=ecDroite;
 
@@ -155,15 +161,30 @@ int observablesMiseAJourRappel(observablesT * observables, systemeT * systeme)
 	double erDroite=0.0;
 	int j = (*systeme).nombre / 2;
 
-	for(i=0;i<j;i++)
+	switch((*systeme).equation)
 		{
-		erGauche = erGauche + (*systeme).pendule[i].lpm;
-		erDroite = erDroite + (*systeme).pendule[i].lpm;
+		case 1:// gravitation
+			for(i=0;i<j;i++)
+				{
+				erGauche = erGauche + observablesEnergieHarmoniquePendule(&(*systeme).pendule[i], (*systeme).moteurs.dt);
+				erDroite = erDroite + observablesEnergieHarmoniquePendule(&(*systeme).pendule[i+j], (*systeme).moteurs.dt);
+				}
+		break;
+		case 2:// linearisation harmonique
+			for(i=0;i<j;i++)
+				{
+				erGauche = erGauche + observablesEnergieGravitationPendule(&(*systeme).pendule[i], (*systeme).moteurs.dt);
+				erDroite = erDroite + observablesEnergieGravitationPendule(&(*systeme).pendule[i+j], (*systeme).moteurs.dt);
+				}
+		break;
+		default:// corde vibrante
+		break;
 		}
 
-		// Mise à jour de l'énergie
-	(*observables).observable[0].gauche[(*observables).index]=ecGauche;
-	(*observables).observable[0].droite[(*observables).index]=ecDroite;
+
+		// Mise à jour de l'énergie de rappel
+	(*observables).observable[1].gauche[(*observables).index]=erGauche;
+	(*observables).observable[1].droite[(*observables).index]=erDroite;
 
 	observablesMiseAJourAmplitude(&(*observables).observable[1]);
 
@@ -178,17 +199,23 @@ int observablesMiseAJourCouplage(observablesT * observables, systemeT * systeme)
 	float ekDroite=0.0;
 	int j = (*systeme).nombre / 2;
 
-	for(i=0;i<(*systeme).nombre;i++)
+	for(i=1;i<j;i++)
 		{
-		ekGauche = pressionGauche + observablesAbsolue(((*systeme).pendule[i].actuel.y)-((*systeme).pendule[i].ancien.y));
-		ekDroite = pressionDroite + observablesAbsolue(((*systeme).pendule[i].actuel.y)-((*systeme).pendule[i].ancien.y));
+		ekGauche = ekGauche + observablesEnergieCouplagePendule(&((*systeme).pendule[i-1]), &((*systeme).pendule[i]), (*systeme).moteurs.dt);
+		ekDroite = ekDroite + observablesEnergieCouplagePendule(&((*systeme).pendule[i-1+j]), &((*systeme).pendule[i+j]), (*systeme).moteurs.dt);
 		}
 
+//	float dt = (*systeme).moteurs.dt;
+//	for(i=1;i<(*systeme).nombre;i++)
+//		{
+//		ectotal=ectotal+observablesEnergieCouplagePendule(&((*systeme).pendule[i-1]), &((*systeme).pendule[i]), dt);
+//		}
+//	if((*systeme).libreFixe==0)
+//		ectotal=ectotal+observablesEnergieCouplagePendule(&((*systeme).pendule[N-1]), &((*systeme).pendule[0]), dt);
+
 	(*observables).observable[2].gauche[(*observables).index]=ekGauche;
-
 	(*observables).observable[2].droite[(*observables).index]=ekDroite;
-
-	observablesMiseAJourAmplitude(&(*observables).observable[4]);
+	observablesMiseAJourAmplitude(&(*observables).observable[2]);
 
 	return 0;
 	}
@@ -247,7 +274,7 @@ double observablesEnergieCinetiqueSysteme(systemeT * systeme)
 	{
 	int i;
 	double ectotal=0.0;
-	float dt = (*systeme).moteur.dt;
+	float dt = (*systeme).moteurs.dt;
 	for(i=0;i<(*systeme).nombre;i++)
 		{
 		ectotal=ectotal+observablesEnergieCinetiquePendule(&((*systeme).pendule[i]), dt);
@@ -259,13 +286,13 @@ double observablesEnergieCouplageSysteme(systemeT * systeme)
 	{
 	int i;
 	double ectotal=0.0;
-	float dt = (*systeme).moteur.dt;
+	float dt = (*systeme).moteurs.dt;
 	for(i=1;i<(*systeme).nombre;i++)
 		{
 		ectotal=ectotal+observablesEnergieCouplagePendule(&((*systeme).pendule[i-1]), &((*systeme).pendule[i]), dt);
 		}
 	if((*systeme).libreFixe==0)
-		ectotal=ectotal+observablesEnergieCouplagePendule(&((*systeme).pendule[N-1]), &((*systeme).pendule[0]), dt);
+		ectotal=ectotal+observablesEnergieCouplagePendule(&((*systeme).pendule[(*systeme).nombre-1]), &((*systeme).pendule[0]), dt);
 	return ectotal;
 	}
 
@@ -273,7 +300,7 @@ double observablesEnergieGravitationSysteme(systemeT * systeme)
 	{
 	int i;
 	double ectotal=0.0;
-	float dt = (*systeme).moteur.dt;
+	float dt = (*systeme).moteurs.dt;
 	for(i=0;i<(*systeme).nombre;i++)
 		{
 		ectotal=ectotal+observablesEnergieGravitationPendule(&((*systeme).pendule[i]), dt);
@@ -285,7 +312,7 @@ double observablesEnergieHarmoniqueSysteme(systemeT * systeme)
 	{
 	int i;
 	double ectotal=0.0;
-	float dt = (*systeme).moteur.dt;
+	float dt = (*systeme).moteurs.dt;
 	for(i=0;i<(*systeme).nombre;i++)
 		{
 		ectotal=ectotal+observablesEnergieHarmoniquePendule(&((*systeme).pendule[i]), dt);

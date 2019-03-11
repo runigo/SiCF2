@@ -170,14 +170,14 @@ void changeDioptre(systemeT * systeme)
 		{
 		for(i=(*systeme).nombre/2;i<(*systeme).nombre;i++)
 			{
-			penduleReinitialiseMasse(&(*systeme).pendule[i], (*systeme).masseDroite, (*systeme).moteur.dt);
+			penduleReinitialiseMasse(&(*systeme).pendule[i], (*systeme).masseDroite, (*systeme).moteurs.dt);
 			}
 		}
 	else
 		{
 		for(i=0;i<(*systeme).nombre;i++)
 			{
-			penduleReinitialiseMasse(&(*systeme).pendule[i], (*systeme).masseGauche, (*systeme).moteur.dt);
+			penduleReinitialiseMasse(&(*systeme).pendule[i], (*systeme).masseGauche, (*systeme).moteurs.dt);
 			}
 		}
 	return;

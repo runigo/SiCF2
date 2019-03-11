@@ -36,7 +36,7 @@ termes.
 #include "systeme.h"
 
 // Variation des parametres
-void changeCouplage(systemeT * systeme, float facteur);
+int changeCouplage(systemeT * systeme, float facteur);
 int changeCouplageMoyenne(systemeT * systeme);
 void changeGravitation(systemeT * systeme, float facteur);
 void changeMasse(systemeT * systeme, float facteur);

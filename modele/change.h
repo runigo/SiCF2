@@ -44,7 +44,7 @@ void changeMasse(systemeT * systeme, float facteur);
 //void changeFormeDioptre(systemeT * systeme, float facteur);
 void changeEquation(systemeT * systeme, int equation);
 
-void changeDissipation(systemeT * systeme, float facteur);
+int changeDissipation(systemeT * systeme, float facteur);
 int changeDissipationMoyenne(systemeT * systemes);
 void changeFormeDissipation(systemeT * systeme, int forme);
 

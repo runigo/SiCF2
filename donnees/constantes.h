@@ -94,6 +94,10 @@ termes.
 
 	//	PARAMÈTRES CHAINE ET CORDE
 
+#define MOYENNE_MAX 2.3 // Moyenne maximale
+	// Utilisé dans systemeJauge(systeme * system)
+	// normalise la moyenne du système à zéro
+
 #define COUPLAGE_MAX 99 // Couplage maximal / nombre de pendule
 #define COUPLAGE_MIN 0.099
 
@@ -104,6 +108,8 @@ termes.
 #define MASSE_MIN 0.7
 
 #define DISSIPATION_MAX 333	//	Coeficient de frottement visqueux maximal
+//#define DISSIPATION_MAX 333	//	Coeficient de frottement visqueux
+#define DISSIPATION_MAX_DT 0.333
 #define DISSIPATION_MIN 0.033	//	Valeur minimale
 
 #define FREQUENCE_MAX 77	//	Valeur maximale de la fréquence du moteur

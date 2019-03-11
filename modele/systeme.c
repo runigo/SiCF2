@@ -115,7 +115,7 @@ double systemeMoyenne(systemeT * systeme)
 	return ( moyenne / (*systeme).nombre );
 	}
 
-void systemeInitialise(systemeT * systeme)
+int systemeInitialise(systemeT * systeme)
 	{
 	// Initialisation des pendules
 	systemeInitialisePendul(systeme);
@@ -139,12 +139,12 @@ void systemeInitialise(systemeT * systeme)
 	int i;
 			for(i=(*systeme).nombre/2;i<(*systeme).nombre;i++)
 				{
-				penduleReinitialiseMasse(&(*systeme).pendule[i], (*systeme).masseDroite, (*systeme).moteur.dt);
+				penduleReinitialiseMasse(&(*systeme).pendule[i], (*systeme).masseDroite, (*systeme).moteurs.dt);
 				}
 		}
 	//printf("Systeme initialisé\n");
 
-	return;
+	return 0;
 	}
 
 int systemeInitialisePosition(systemeT * systeme, int forme)
@@ -157,10 +157,10 @@ int systemeInitialisePosition(systemeT * systeme, int forme)
 	penduleInitialisePosition(&(*systeme).pendule[i], 0.0, 0.0);
 	}
 
-	return;
+	return 0;
 	}
 
-void systemeEvolution(systemeT * systeme, int duree)
+int systemeEvolution(systemeT * systeme, int duree)
 	{//	Fait évoluer le système pendant duree * dt
 	int i;
 	for(i=0;i<duree;i++)
@@ -170,7 +170,7 @@ void systemeEvolution(systemeT * systeme, int duree)
 		systemeIncremente(systeme);
 		}
 	systemeJaugeZero(systeme);
-	return;
+	return 0;
 	}
 
 void systemeInitialisePendul(systemeT * systeme)
@@ -180,7 +180,7 @@ void systemeInitialisePendul(systemeT * systeme)
 	float d=(*systeme).dissipation;
 	float c=(*systeme).couplage;
 	float g=(*systeme).gravitation;
-	float t=(*systeme).moteur.dt;
+	float t=(*systeme).moteurs.dt;
 
 	int i;
 
@@ -246,14 +246,14 @@ void systemeCouplage(systemeT * systeme)
 void systemeInertie(systemeT * systeme)
 	{//	Principe d'inertie applique au système
 
-  // Version SiCF-1.0, extrémité moteur fixe.
+  // Version SiCF-1.0, extrémité moteurs fixe.
 
 	int equation = (*systeme).equation;
 	int libreFixe = (*systeme).libreFixe;
-	int etatMoteur = (*systeme).moteur.generateur;
-	float courantJosephson = (*systeme).moteur.josephson;
+	int etatMoteur = (*systeme).moteurs.generateur;
+	float courantJosephson = (*systeme).moteurs.josephson;
 
-	float moteur = moteursGenerateur(&(*systeme).moteur);
+	float moteurs = moteursGenerateur(&(*systeme).moteurs);
 
 				// Cas du premier et du dernier pendule
 
@@ -276,11 +276,11 @@ void systemeInertie(systemeT * systeme)
 		penduleInitialisePosition(&(*systeme).pendule[(*systeme).nombre-1], (*systeme).pendule[(*systeme).nombre-1].dephasage, (*systeme).pendule[(*systeme).nombre-1].dephasage);
 		}
 
-	if(etatMoteur!=0) // moteur allumé
+	if(etatMoteur!=0) // moteurs allumé
 		{
-		penduleInitialisePosition(&(*systeme).pendule[0], moteur, moteur);
+		penduleInitialisePosition(&(*systeme).pendule[0], moteurs, moteurs);
 		}
-	/*else // SiCF-1.0 : extrémité moteur fixe
+	/*else // SiCF-1.0 : extrémité moteurs fixe
 		{
 		penduleInitialisePosition(&(*systeme).pendule[0], 0, 0);
 		}*/
@@ -297,8 +297,8 @@ void systemeInertie(systemeT * systeme)
 void systemeIncremente(systemeT * systeme)
 	{//	incremente l'horloge, l'ancien et l'actuel etat du système
 
-	//(*systeme).moteur.horloge = (*systeme).moteur.horloge + (*systeme).moteur.dt;
-	(*systeme).moteur.chrono = (*systeme).moteur.chrono + (*systeme).moteur.dt;
+	//(*systeme).moteurs.horloge = (*systeme).moteurs.horloge + (*systeme).moteurs.dt;
+	(*systeme).moteurs.chrono = (*systeme).moteurs.chrono + (*systeme).moteurs.dt;
 
 	int i;
 	for(i=0;i<(*systeme).nombre;i++)
@@ -309,7 +309,7 @@ void systemeIncremente(systemeT * systeme)
 	return;
 	}
 
-void systemeAffiche(systemeT * systeme)
+int systemeAffiche(systemeT * systeme)
 	{// Affichage de la position et des parametres
 	printf("\nParamètres système\n");
 	printf("	Couplage entre les pendules	%4.3f\n", (*systeme).couplage);
@@ -321,7 +321,7 @@ void systemeAffiche(systemeT * systeme)
 		float dephasage;	//	déphasage entre les limites
 		int libreFixe;		// 0 : périodiques 1 : libres, 2 : fixes, 
 	*/					//		3 libre-fixe, 4 fixe-libre
-	return;
+	return 0;
 	}
 
 //////////////////////////////////////////////////////////////////////

@@ -62,10 +62,9 @@ termes.
 #define TRIANGLE_COMMANDES 21	// Nombres de commandes triangulaires
 
 	//	PARAMÈTRES DES CAPTEURS
-#define CAPTEURS 100			// Nombre implicite d'incrémentation du système entre deux affichages.
-#define DUREE_CAPTEURS 599		// Nombre maximal d'incrémentation du système entre deux affichages.
-
-
+#define CAPTEURS 6 // Nombres de capteurs
+#define DUREE_CAPTEURS 128 // Nombre de points en mémoire
+#define DY_ENERGIE (DUREE_CAPTEURS / 16) // Pour la densité d'énergie.
 
 			//	PARAMÈTRES DE DISCRÉTISATION TEMPORELLE DU SYSTÈME
 

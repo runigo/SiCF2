@@ -32,9 +32,11 @@ termes.
 #ifndef _PROJECTION_
 #define _PROJECTION_
 
+#include "../modele/observables.h"
 #include "../modele/systeme.h"
 #include "../interface/graphe.h"
 #include "../interface/commandes.h"
+#include "../interface/capteurs.h"
 
 typedef struct ProjectionT projectionT;
 	struct ProjectionT

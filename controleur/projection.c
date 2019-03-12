@@ -215,4 +215,65 @@ int projectionSystemeCommandes(systemeT * systeme, projectionT * projection, com
 	return 0;
 	}
 
+int projectionObservablesCapteurs(observablesT * observables, projectionT * projection, capteursT * capteurs)
+	{
+	(void)projection;
+	float a;
+	int i, j, k, y0;
+
+	for(j=0;j<CAPTEURS;j++)
+		{
+		if(j!=5)
+			{
+			if((*observables).observable[j].maximumCapteur!=0.0)
+				{
+				a = -(float)((*capteurs).capteur[j].hauteur) / (*observables).observable[j].maximumCapteur;
+				}
+			else
+				{
+				a = 0.0;
+				}
+			y0 = (*capteurs).capteur[j].yZero;
+			for(i=0;i<DUREE_CAPTEURS;i++)
+				{
+				k=(i+(*observables).index+1)%DUREE_CAPTEURS;
+				(*capteurs).capteur[j].gauche[i].y = (int)(a*(*observables).observable[j].gauche[k]) + y0;
+				(*capteurs).capteur[j].droite[i].y = (int)(a*(*observables).observable[j].droite[k]) + y0;
+				}
+			}
+		else
+			{
+			if((*observables).observable[j].maximumCapteur!=0.0)
+				{
+				a = -(float)((*capteurs).capteur[j].hauteur) / (*observables).observable[j].maximumCapteur;
+				}
+			else
+				{
+				a = 0.0;
+				}
+			y0 = (*capteurs).capteur[j].yZero;
+			for(i=0;i<DY_ENERGIE;i++)
+				{
+				(*capteurs).capteur[j].gauche[i].y = (int)(a*(*observables).observable[j].gauche[i]) + y0;
+				(*capteurs).capteur[j].droite[i].y = (int)(a*(*observables).observable[j].droite[i]) + y0;
+				}
+			}
+		}
+
+	return 0;
+	}
+
+int projectionAffiche(projectionT * projection)
+	{
+	(void)projection;
+	/*
+	fprintf(stderr, "  (*projection).logTrou   = %f\n",(*projection).logTrou);
+	fprintf(stderr, "   (*projection).logParticule  = %f\n",(*projection).logParticule);
+	fprintf(stderr, "  (*projection).logTemperature   = %f\n",(*projection).logTemperature);
+	fprintf(stderr, "  (*projection).logGauche   = %f\n",(*projection).logGauche);
+	fprintf(stderr, "  (*projection).logDroite   = %f\n",(*projection).logDroite);
+	*/
+	return 0;
+	}
+
 //////////////////////////////////////////////////////////////////////////////////////

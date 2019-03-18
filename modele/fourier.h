@@ -39,8 +39,8 @@ termes.
 typedef struct Fonction fonction;
 	struct Fonction
 		{
-		double reel[Ne];//		Une fonction est un tableau de complexe.
-		double imag[Ne];
+		double reel[NOMBRE_MAX];//		Une fonction est un tableau de complexe.
+		double imag[NOMBRE_MAX];
 		};
 
 void fourierCalcule(fonction * spectre, int k, int n);

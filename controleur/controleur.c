@@ -62,13 +62,6 @@ void controleurChangeVitesse(controleurT * controleur, float facteur);
 int controleurDestruction(controleurT * control)
 	{
 
-
-	//fprintf(stderr, "Suppression du système\n");
-	//systemeSuppression(&(*control).systeme);
-
-	//fprintf(stderr, "Suppression du graphe\n");
-	//grapheSuppression(&(*control).graphe);
-
 	fprintf(stderr, "Suppression de l'horloge\n");
 	horlogeSuppression(&(*control).horloge);
 
@@ -124,7 +117,7 @@ int controleurProjection(controleurT * controleur)
 	int hauteur;
 	int x, y;
 
-		//void SDL_GetWindowSize(SDL_Window* window, int* w, int* h)
+		// Récupération de la taille de la fenêtre
 	SDL_GetWindowSize((*controleur).interface.fenetre, &largeur, &hauteur);
 
 		// Réinitialisation des commandes si la fenêtre change de taille
@@ -135,15 +128,19 @@ int controleurProjection(controleurT * controleur)
 		commandesInitialiseBoutons(&(*controleur).commandes, largeur, hauteur);
 		}
 
-		// Réinitialisation des commandes de la souris
+		// Récupération de la position de la souris
 	SDL_PumpEvents();
 	SDL_GetMouseState(&x,&y);
+		// Réinitialisation des commandes de la souris
 	commandesInitialiseSouris(&(*controleur).commandes, x, y);
 
-		//fprintf(stderr, "projectionInitialiseLongueurs\n");
+		//fprintf(stderr, "Réinitialisation de la taille de la fenêtre dans la projection\n");
 	projectionInitialiseLongueurs(&(*controleur).projection, hauteur, largeur);
 
+		//fprintf(stderr, "projection de la corde et des spectres\n");
 	projectionSystemeGraphe(&(*controleur).systeme, &(*controleur).projection, &(*controleur).graphe);
+
+		//fprintf(stderr, "projection du système sur les commandes\n");
 	projectionSystemeCommandes(&(*controleur).systeme, &(*controleur).projection, &(*controleur).commandes, (*controleur).options.duree, (*controleur).options.modePause);
 
 	return (*controleur).sortie;
@@ -153,6 +150,11 @@ int controleurEvolutionSysteme(controleurT * controleur)
 	{
 		//fprintf(stderr, "Evolution temporelle du système\n");
 	systemeEvolution(&(*controleur).systeme, (*controleur).options.duree);
+
+		//fprintf(stderr, "Calcul des spectres\n");
+	//projectionSystemeFonction(&(*controleur).systeme, &(*controleur).spectreG, &(*controleur).spectreD);
+	//fourierCalcule(&(*controleur).spectreG, 0, Ne);
+	//fourierCalcule(&(*controleur).spectreD, 0, Ne);
 
 	return 0;
 	}
@@ -171,7 +173,7 @@ int controleurConstructionGraphique(controleurT * controleur)
 
 		//fprintf(stderr, "Dessin des graphes\n");
 	graphiqueCorde(&(*controleur).graphique, &(*controleur).graphe);
-	graphiqueSpectre(&(*controleur).graphique, &(*controleur).graphe);
+	//graphiqueSpectre(&(*controleur).graphique, &(*controleur).graphe);
 
 		//fprintf(stderr, "Mise à jour de l'affichage\n");
 	graphiqueMiseAJour(&(*controleur).graphique);

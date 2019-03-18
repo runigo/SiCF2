@@ -56,12 +56,36 @@ float projectionValeurAbsolue(float valeur)
 	if(valeur<0) return -valeur;
 	return valeur;
 	}
+/*
+void projectionSystemeFonction(systemeT * systeme, fonction * spectreG, fonction * spectreD)
+	{
+	//	Projette les parties gauche et droite du système sur deux fonctions
+	int i;
+	for(i=0;i<Ne;i++)
+		{
 
+		(*spectreG).reel[i]=(*systeme).pendule[i].nouveau;
+		(*spectreG).imag[i]=0.0;
+
+		(*spectreD).reel[i]=(*systeme).pendule[i+Ne].nouveau;
+		(*spectreD).imag[i]=0.0;
+
+		}
+	return;
+	}
+*/
 int projectionSystemeGraphe(systemeT * systeme, projectionT * projection, grapheT * graphe)
 	{
 	(void)systeme;
 	(void)projection;
 	(void)graphe;
+
+	int i;
+
+	for(i=0;i<(*systeme).nombre;i++)
+		{
+		(*graphe).point[i].y = (int)(*systeme).pendule[i].nouveau;
+		}
 	return 0;
 	}
 

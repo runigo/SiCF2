@@ -30,8 +30,8 @@ pris connaissance de la licence CeCILL, et que vous en avez accepté les
 termes.
 */
 
-#ifndef _GRAPHE_
-#define _GRAPHE_
+#ifndef _GRAPHES_
+#define _GRAPHES_
 
 #include "../donnees/constantes.h"
 #include <SDL2/SDL.h>
@@ -43,16 +43,23 @@ typedef struct GrapheT grapheT;
 
 		SDL_Color couleur;
 
-		int graisse; // Epaisseur du trait
+		int graisse;	// Epaisseur du trait
 
-		int nombre; // Nombre de point
+		int nombre;	// Nombre de point
 
-		int yZero; // Positon de l'origine
-		int xZero; // Positon de l'origine
+		int yZero;	// Positon de l'origine
+		int xZero;	// Positon de l'origine
 
-		int largeur; // axe x
-		int hauteur; // axe y
+		int largeur;	// axe x
+		int hauteur;	// axe y
 		};
+
+typedef struct GraphesT graphesT;
+	struct GraphesT
+		{
+		grapheT graphe[GRAPHES];
+		};
+
 
 int grapheInitialise(grapheT * graphe, int nombre, int graisse, int r, int g, int b);
 int grapheInitialiseEchelle(grapheT * graphe, int xZero, int yZero, int zoneX, int zoneY);

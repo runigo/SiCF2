@@ -55,6 +55,9 @@ termes.
 #define FENETRE_X 892
 #define FENETRE_Y 550
 
+	//	PARAMÈTRES DES CAPTEURS
+#define GRAPHES 2 // Nombres de graphes
+
 	//  NOMBRE DE COMMANDES
 #define BOUTON_COMMANDES 17		// Nombres de petits boutons
 #define ROTATIF_COMMANDES 5		// Nombre de boutons rotatifs

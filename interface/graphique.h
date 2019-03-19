@@ -34,7 +34,7 @@ termes.
 #define _GRAPHIQUE_
 
 #include "interface.h"
-#include "graphe.h"
+#include "graphes.h"
 #include "commandes.h"
 #include "capteurs.h"
 

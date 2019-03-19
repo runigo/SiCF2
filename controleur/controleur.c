@@ -138,7 +138,7 @@ int controleurProjection(controleurT * controleur)
 	projectionInitialiseLongueurs(&(*controleur).projection, hauteur, largeur);
 
 		//fprintf(stderr, "projection de la corde et des spectres\n");
-	projectionSystemeGraphe(&(*controleur).systeme, &(*controleur).projection, &(*controleur).graphe);
+	projectionSystemeGraphe(&(*controleur).systeme, &(*controleur).projection, &(*controleur).graphes);
 
 		//fprintf(stderr, "projection du système sur les commandes\n");
 	projectionSystemeCommandes(&(*controleur).systeme, &(*controleur).projection, &(*controleur).commandes, (*controleur).options.duree, (*controleur).options.modePause);
@@ -172,8 +172,8 @@ int controleurConstructionGraphique(controleurT * controleur)
 	graphiqueCapteurs(&(*controleur).graphique, &(*controleur).capteurs);
 
 		//fprintf(stderr, "Dessin des graphes\n");
-	graphiqueCorde(&(*controleur).graphique, &(*controleur).graphe);
-	//graphiqueSpectre(&(*controleur).graphique, &(*controleur).graphe);
+	graphiqueCorde(&(*controleur).graphique, &(*controleur).graphes.graphe[0]);
+	graphiqueSpectre(&(*controleur).graphique, &(*controleur).graphes.graphe[1]);
 
 		//fprintf(stderr, "Mise à jour de l'affichage\n");
 	graphiqueMiseAJour(&(*controleur).graphique);

@@ -44,27 +44,25 @@ typedef struct ControleurT controleurT;
 	struct ControleurT
 		{
 
-		optionsT options;	//	Options de la ligne de commande
+		optionsT options;			//	Options de la ligne de commande
 
-		systemeT systeme;	//	Modélisation physique de la corde
+		systemeT systeme;			//	Modélisation physique de la corde
 
 		observablesT observables;	//	Capteurs sur le système
 
-		projectionT projection;	//	Paramètre de la projection
+		projectionT projection;		//	Paramètre de la projection
 
-		grapheT graphe;		//	Graphe de la corde
-
-		grapheT spectre;		//	Graphe des spectres
+		graphesT graphes;		//	Graphe de la corde et des spectres
 
 		commandesT commandes;	//	Graphe des commandes
 
-		capteursT capteurs;	//	Graphe des capteur
+		capteursT capteurs;		//	Graphe des capteurs
 
-		interfaceT interface;	//	Fenêtre SDL
+		interfaceT interface;		//	Fenêtre SDL
 
-		graphiqueT graphique;	//	Rendu SDL et graphisme
+		graphiqueT graphique;		//	Rendu SDL et graphisme
 
-		horlogeT horloge;		//	Horloge SDL
+		horlogeT horloge;			//	Horloge SDL
 
 		int duree;	// nombre d'incrémentation du système par affichage
 		int modePause;	// pause de l'évolution du système si = 1

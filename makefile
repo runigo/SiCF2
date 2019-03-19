@@ -39,8 +39,8 @@ OBJDIR = ./obj
 
 all : $(EXEC)
 
-$(EXEC) : $(OBJDIR)/principale.o $(OBJDIR)/options.o $(OBJDIR)/donnees.o $(OBJDIR)/controleur.o $(OBJDIR)/projection.o $(OBJDIR)/graphique.o $(OBJDIR)/observables.o $(OBJDIR)/graphe.o $(OBJDIR)/commandes.o $(OBJDIR)/capteurs.o $(OBJDIR)/horloge.o $(OBJDIR)/interface.o $(OBJDIR)/change.o $(OBJDIR)/systeme.o $(OBJDIR)/moteurs.o $(OBJDIR)/pendule.o
-	$(CC) -g $(OBJDIR)/principale.o $(OBJDIR)/options.o $(OBJDIR)/donnees.o $(OBJDIR)/controleur.o $(OBJDIR)/projection.o $(OBJDIR)/graphique.o $(OBJDIR)/observables.o $(OBJDIR)/graphe.o $(OBJDIR)/commandes.o $(OBJDIR)/capteurs.o $(OBJDIR)/horloge.o $(OBJDIR)/interface.o $(OBJDIR)/change.o $(OBJDIR)/systeme.o $(OBJDIR)/moteurs.o $(OBJDIR)/pendule.o `sdl2-config --libs` $(LDFLAGS) -o $(EXEC)
+$(EXEC) : $(OBJDIR)/principale.o $(OBJDIR)/options.o $(OBJDIR)/donnees.o $(OBJDIR)/controleur.o $(OBJDIR)/projection.o $(OBJDIR)/graphique.o $(OBJDIR)/observables.o $(OBJDIR)/graphes.o $(OBJDIR)/commandes.o $(OBJDIR)/capteurs.o $(OBJDIR)/horloge.o $(OBJDIR)/interface.o $(OBJDIR)/change.o $(OBJDIR)/systeme.o $(OBJDIR)/moteurs.o $(OBJDIR)/pendule.o
+	$(CC) -g $(OBJDIR)/principale.o $(OBJDIR)/options.o $(OBJDIR)/donnees.o $(OBJDIR)/controleur.o $(OBJDIR)/projection.o $(OBJDIR)/graphique.o $(OBJDIR)/observables.o $(OBJDIR)/graphes.o $(OBJDIR)/commandes.o $(OBJDIR)/capteurs.o $(OBJDIR)/horloge.o $(OBJDIR)/interface.o $(OBJDIR)/change.o $(OBJDIR)/systeme.o $(OBJDIR)/moteurs.o $(OBJDIR)/pendule.o `sdl2-config --libs` $(LDFLAGS) -o $(EXEC)
 
 $(OBJDIR)/principale.o : controleur/principale.c controleur/principale.h
 	$(CC) -c -g controleur/principale.c $(CFLAGS) -o $@
@@ -66,8 +66,8 @@ $(OBJDIR)/interface.o : interface/interface.c interface/interface.h
 $(OBJDIR)/graphique.o : interface/graphique.c interface/graphique.h
 	$(CC) -c -g interface/graphique.c $(CFLAGS) -o $@
 
-$(OBJDIR)/graphe.o : interface/graphe.c interface/graphe.h
-	$(CC) -c -g interface/graphe.c $(CFLAGS) -o $@
+$(OBJDIR)/graphes.o : interface/graphes.c interface/graphes.h
+	$(CC) -c -g interface/graphes.c $(CFLAGS) -o $@
 
 $(OBJDIR)/commandes.o : interface/commandes.c interface/commandes.h
 	$(CC) -c -g interface/commandes.c $(CFLAGS) -o $@

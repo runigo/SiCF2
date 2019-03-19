@@ -74,17 +74,15 @@ void projectionSystemeFonction(systemeT * systeme, fonction * spectreG, fonction
 	return;
 	}
 */
-int projectionSystemeGraphe(systemeT * systeme, projectionT * projection, grapheT * graphe)
+int projectionSystemeGraphe(systemeT * systeme, projectionT * projection, graphesT * graphes)
 	{
-	(void)systeme;
 	(void)projection;
-	(void)graphe;
 
 	int i;
 
 	for(i=0;i<(*systeme).nombre;i++)
 		{
-		(*graphe).point[i].y = (int)(*systeme).pendule[i].nouveau;
+		(*graphes).graphe[0].point[i].y = (int)(*systeme).pendule[i].nouveau;
 		}
 	return 0;
 	}

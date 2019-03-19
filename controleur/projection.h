@@ -34,7 +34,7 @@ termes.
 
 #include "../modele/observables.h"
 #include "../modele/systeme.h"
-#include "../interface/graphe.h"
+#include "../interface/graphes.h"
 #include "../interface/commandes.h"
 #include "../interface/capteurs.h"
 
@@ -55,7 +55,7 @@ typedef struct ProjectionT projectionT;
 
 int projectionInitialise(projectionT * projection);
 int projectionInitialiseLongueurs(projectionT * projection, int largeur, int hauteur);
-int projectionSystemeGraphe(systemeT * systeme, projectionT * projection, grapheT * graphe);
+int projectionSystemeGraphe(systemeT * systeme, projectionT * projection, graphesT * graphes);
 int projectionSystemeCommandes(systemeT * systeme, projectionT * projection, commandesT * commandes, int duree, int mode);
 
 int projectionAffichePointDeVue(projectionT * projection);

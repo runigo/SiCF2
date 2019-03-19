@@ -41,7 +41,7 @@ termes.
 
 
 int donneesSysteme(systemeT * systeme, optionsT * options);
-int donneesGraphe(grapheT * graphe, optionsT * options);
+int donneesGraphes(graphesT * graphes, optionsT * options);
 
 int donneesControleur(controleurT * controleur)
 	{
@@ -53,8 +53,8 @@ int donneesControleur(controleurT * controleur)
 		fprintf(stderr, " Initialisation du système\n");
 	donneesSysteme(&(*controleur).systeme, &(*controleur).options);
 
-		fprintf(stderr, " Initialisation du graphe\n");
-	donneesGraphe(&(*controleur).graphe, &(*controleur).options);
+		fprintf(stderr, " Initialisation des graphes\n");
+	donneesGraphes(&(*controleur).graphes, &(*controleur).options);
 
 		//fprintf(stderr, " Initialisation de la projection\n");
 	projectionInitialise(&(*controleur).projection);
@@ -157,17 +157,15 @@ int donneesSysteme(systemeT * systeme, optionsT * options)
 	return 0;
 	}
 
-int donneesGraphe(grapheT * graphe, optionsT * options)
+int donneesGraphes(graphesT * graphes, optionsT * options)
 	{
-	(*graphe).nombre = (*options).nombre; // Nombre de point
+	int i;
+	for(i=0;i<GRAPHES;i++)
+		{
+		grapheInitialise(&(*graphes).graphe[i],(*options).nombre, 2, 6, 6, 255);
+		}
 
-	(*graphe).yZero = 0; // Positon de l'origine
-	(*graphe).xZero = 0; // Positon de l'origine
-
-	(*graphe).largeur = FENETRE_X; // axe x
-	(*graphe).hauteur = FENETRE_Y; // axe y
-
-	return 0;
+	return i;
 	}
 
 //////////////////////////////////////////////////////////////////////////

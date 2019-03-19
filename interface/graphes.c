@@ -30,7 +30,7 @@ pris connaissance de la licence CeCILL, et que vous en avez accepté les
 termes.
 */
 
-#include "graphe.h"
+#include "graphes.h"
 
 int grapheInitialise(grapheT * graphe, int nombre, int graisse, int r, int g, int b)
 	{

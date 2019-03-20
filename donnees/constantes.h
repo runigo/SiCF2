@@ -55,6 +55,18 @@ termes.
 #define FENETRE_X 892
 #define FENETRE_Y 550
 
+	//	Taille des marges et des graphes
+#define MARGE_X 0.05
+#define MARGE_Y 0.05
+#define GRAPHE_CORDE_X 0.6
+#define GRAPHE_CORDE_Y 0.4
+#define GRAPHE_SPECTRES_X 0.6
+#define GRAPHE_SPECTRES_Y 0.4
+#define GRAPHE_CAPTEURS_X 0.6
+#define GRAPHE_CAPTEURS_Y 0.4
+
+
+
 	//	PARAMÈTRES DES CAPTEURS
 #define GRAPHES 2 // Nombres de graphes
 

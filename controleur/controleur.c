@@ -125,13 +125,14 @@ int controleurProjection(controleurT * controleur)
 		{
 		(*controleur).graphique.largeur=largeur;
 		(*controleur).graphique.hauteur=hauteur;
+		grapheInitialiseCorde(&(*controleur).graphes.graphe[0], largeur, hauteur);
 		commandesInitialiseBoutons(&(*controleur).commandes, largeur, hauteur);
 		}
 
-		// Récupération de la position de la souris
+			// Récupération de la position de la souris
 	SDL_PumpEvents();
 	SDL_GetMouseState(&x,&y);
-		// Réinitialisation des commandes de la souris
+			// Réinitialisation des commandes de la souris
 	commandesInitialiseSouris(&(*controleur).commandes, x, y);
 
 		//fprintf(stderr, "Réinitialisation de la taille de la fenêtre dans la projection\n");
@@ -141,7 +142,7 @@ int controleurProjection(controleurT * controleur)
 	projectionSystemeGraphe(&(*controleur).systeme, &(*controleur).projection, &(*controleur).graphes);
 
 		//fprintf(stderr, "projection du système sur les commandes\n");
-	projectionSystemeCommandes(&(*controleur).systeme, &(*controleur).projection, &(*controleur).commandes, (*controleur).options.duree, (*controleur).options.modePause);
+	//projectionSystemeCommandes(&(*controleur).systeme, &(*controleur).projection, &(*controleur).commandes, (*controleur).options.duree, (*controleur).options.modePause);
 
 	return (*controleur).sortie;
 	}
@@ -169,11 +170,11 @@ int controleurConstructionGraphique(controleurT * controleur)
 	graphiqueCommandes(&(*controleur).graphique, &(*controleur).commandes);
 
 		//fprintf(stderr, "Dessin des capteurs\n");
-	graphiqueCapteurs(&(*controleur).graphique, &(*controleur).capteurs);
+	//graphiqueCapteurs(&(*controleur).graphique, &(*controleur).capteurs);
 
 		//fprintf(stderr, "Dessin des graphes\n");
 	graphiqueCorde(&(*controleur).graphique, &(*controleur).graphes.graphe[0]);
-	graphiqueSpectre(&(*controleur).graphique, &(*controleur).graphes.graphe[1]);
+	//graphiqueSpectre(&(*controleur).graphique, &(*controleur).graphes.graphe[1]);
 
 		//fprintf(stderr, "Mise à jour de l'affichage\n");
 	graphiqueMiseAJour(&(*controleur).graphique);
@@ -397,13 +398,12 @@ int controleurClavier(controleurT * controleur)
 		case SDLK_F6:
 			moteursAfficheHorloge(&(*controleur).systeme.moteurs);
 			break;
-	//	case SDLK_F7:
-	//		projectionAffichePointDeVue(&(*controleur).projection);
-	//		break;
-	// Support
-	//	case SDLK_F8:
-	//		grapheChangeSupport(&(*controleur).graphe);break;
-
+		case SDLK_F7:
+			systemeAffiche(&(*controleur).systeme);
+			break;
+		case SDLK_F8:
+			penduleAffiche(&(*controleur).systeme.pendule[(*controleur).systeme.nombre/4]);
+			break;
 
 		default:
 			;

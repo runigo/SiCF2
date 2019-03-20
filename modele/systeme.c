@@ -32,7 +32,7 @@ termes.
 
 #include "systeme.h"
 
-void systemeInitialisePendul(systemeT * systeme);
+void systemeInitialisePendule(systemeT * systeme);
 void systemeCouplage(systemeT * systeme);
 void systemeInertie(systemeT * systeme);
 void systemeIncremente(systemeT * systeme);
@@ -118,7 +118,7 @@ double systemeMoyenne(systemeT * systeme)
 int systemeInitialise(systemeT * systeme)
 	{
 	// Initialisation des pendules
-	systemeInitialisePendul(systeme);
+	systemeInitialisePendule(systeme);
 
 	// Initialise les conditions aux limites
 	//systemeChangeLimite(systeme);
@@ -154,7 +154,7 @@ int systemeInitialisePosition(systemeT * systeme, int forme)
 	int i;
 	for(i=0;i<(*systeme).nombre;i++)
 	{
-	penduleInitialisePosition(&(*systeme).pendule[i], 0.0, 0.0);
+	penduleInitialisePosition(&(*systeme).pendule[i], 0.3*sin(i*0.1), 0.301*sin(i*0.1));
 	}
 
 	return 0;
@@ -173,7 +173,7 @@ int systemeEvolution(systemeT * systeme, int duree)
 	return 0;
 	}
 
-void systemeInitialisePendul(systemeT * systeme)
+void systemeInitialisePendule(systemeT * systeme)
 	{
 	float m=(*systeme).masseGauche;
 	float l=(*systeme).longueur;
@@ -317,6 +317,7 @@ int systemeAffiche(systemeT * systeme)
 	printf("	Intensité de la gravitation	%4.3f\n",(*systeme).gravitation);
 	printf("	Masse des pendules à droite : %4.3f, à gauche : %4.3f\n",(*systeme).masseDroite,(*systeme).masseGauche);
 	printf("	Masse des pendules \n");
+	printf("	Nombre de pendules	%d\n", (*systeme).nombre);
 	/*	int equation;		//	Pendule=1, Harmonique=2, Corde=3, Dioptre=4
 		float dephasage;	//	déphasage entre les limites
 		int libreFixe;		// 0 : périodiques 1 : libres, 2 : fixes, 

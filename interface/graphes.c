@@ -36,7 +36,7 @@ int grapheInitialise(grapheT * graphe, int nombre, int graisse, int r, int g, in
 	{
 		//		Initialisation du graphe
 
-	grapheInitialiseEchelle(graphe, 0, 0, FENETRE_X, FENETRE_Y);
+	grapheInitialiseTaille(graphe, 0, 0, FENETRE_X, FENETRE_Y);
 
 	int i;
 
@@ -57,7 +57,28 @@ int grapheInitialise(grapheT * graphe, int nombre, int graisse, int r, int g, in
 	return 0;
 	}
 
-int grapheInitialiseEchelle(grapheT * graphe, int xZero, int yZero, int zoneX, int zoneY)
+int grapheInitialiseCorde(grapheT * graphe, int largeur, int hauteur)
+	{
+		//		Position et taille du graphe
+
+	(*graphe).xZero = MARGE_X*largeur; // Positon de l'origine
+	(*graphe).yZero = MARGE_Y*hauteur + GRAPHE_CORDE_Y*(hauteur/2); // Positon de l'origine
+
+	(*graphe).largeur = GRAPHE_CORDE_X*largeur; // axe x
+	(*graphe).hauteur = GRAPHE_CORDE_Y*hauteur; // axe y
+
+	(*graphe).graisse = 5; // Positon de l'origine
+
+	int i;
+	float dx=(*graphe).largeur/(*graphe).nombre;
+	for(i=0;i<(*graphe).nombre;i++)
+		{
+		(*graphe).point[i].x=(*graphe).xZero + (int)(i*dx);
+		}
+	return 0;
+	}
+
+int grapheInitialiseTaille(grapheT * graphe, int xZero, int yZero, int zoneX, int zoneY)
 	{
 		//		Position et taille du graphe
 

@@ -149,6 +149,7 @@ int donneesSysteme(systemeT * systeme, optionsT * options)
 	(*systeme).dephasage = (*options).soliton * 2 * PI;
 
 		//fprintf(stderr, " Initialisation du système\n");
+	systemeInitialise(systeme);
 	changeFormeDissipation(systeme, 1);
 	changeFormeDissipation(systeme, 0);
 	changeConditionsLimites(systeme, (*systeme).libreFixe);
@@ -164,6 +165,10 @@ int donneesGraphes(graphesT * graphes, optionsT * options)
 		{
 		grapheInitialise(&(*graphes).graphe[i],(*options).nombre, 2, 6, 6, 255);
 		}
+
+	//grapheInitialiseTaille(&(*graphes).graphe[0], (int)(MARGE_X*FENETRE_X), (int)(MARGE_Y*FENETRE_Y+GRAPHE_CORDE_Y*(FENETRE_Y/2)), (int)(GRAPHE_CORDE_X*FENETRE_X), (int)(GRAPHE_CORDE_Y*FENETRE_Y));
+
+		grapheInitialiseCorde(&(*graphes).graphe[0], FENETRE_X, FENETRE_Y);
 
 	return i;
 	}

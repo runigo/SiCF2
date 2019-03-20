@@ -78,11 +78,13 @@ int projectionSystemeGraphe(systemeT * systeme, projectionT * projection, graphe
 	{
 	(void)projection;
 
+	(*graphes).graphe[0].nombre = (*systeme).nombre;
+
 	int i;
 
 	for(i=0;i<(*systeme).nombre;i++)
 		{
-		(*graphes).graphe[0].point[i].y = (int)(*systeme).pendule[i].nouveau;
+		(*graphes).graphe[0].point[i].y = (*graphes).graphe[0].yZero + (int)((*graphes).graphe[0].hauteur*(*systeme).pendule[i].nouveau);
 		}
 	return 0;
 	}

@@ -62,6 +62,7 @@ typedef struct GraphesT graphesT;
 
 
 int grapheInitialise(grapheT * graphe, int nombre, int graisse, int r, int g, int b);
-int grapheInitialiseEchelle(grapheT * graphe, int xZero, int yZero, int zoneX, int zoneY);
+int grapheInitialiseTaille(grapheT * graphe, int xZero, int yZero, int zoneX, int zoneY);
+int grapheInitialiseCorde(grapheT * graphe, int largeur, int hauteur);
 
 #endif

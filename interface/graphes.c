@@ -32,6 +32,8 @@ termes.
 
 #include "graphes.h"
 
+int grapheInitialiseTaille(grapheT * graphe, int xZero, int yZero, int zoneX, int zoneY);
+
 int grapheInitialise(grapheT * graphe, int nombre, int graisse, int r, int g, int b)
 	{
 		//		Initialisation du graphe
@@ -66,6 +68,27 @@ int grapheInitialiseCorde(grapheT * graphe, int largeur, int hauteur)
 
 	(*graphe).largeur = GRAPHE_CORDE_X*largeur; // axe x
 	(*graphe).hauteur = GRAPHE_CORDE_Y*hauteur; // axe y
+
+	(*graphe).graisse = 5; // Positon de l'origine
+
+	int i;
+	float dx=(*graphe).largeur/(*graphe).nombre;
+	for(i=0;i<(*graphe).nombre;i++)
+		{
+		(*graphe).point[i].x=(*graphe).xZero + (int)(i*dx);
+		}
+	return 0;
+	}
+
+int grapheInitialiseSpectre(grapheT * graphe, int largeur, int hauteur)
+	{
+		//		Position et taille du graphe
+
+	(*graphe).xZero = MARGE_X*largeur; // Positon de l'origine
+	(*graphe).yZero = MARGE_Y*hauteur + GRAPHE_SPECTRE_Y*(hauteur/2); // Positon de l'origine
+
+	(*graphe).largeur = GRAPHE_SPECTRE_X*largeur; // axe x
+	(*graphe).hauteur = GRAPHE_SPECTRE_Y*hauteur; // axe y
 
 	(*graphe).graisse = 5; // Positon de l'origine
 

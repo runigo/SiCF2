@@ -56,24 +56,19 @@ float projectionValeurAbsolue(float valeur)
 	if(valeur<0) return -valeur;
 	return valeur;
 	}
-/*
-void projectionSystemeFonction(systemeT * systeme, fonction * spectreG, fonction * spectreD)
+
+int projectionSystemeFonction(systemeT * systeme, fonctionT * fourier)
 	{
-	//	Projette les parties gauche et droite du système sur deux fonctions
+	//	Projette le système sur une fonction
 	int i;
-	for(i=0;i<Ne;i++)
+	for(i=0;i<(*systeme).nombre;i++)
 		{
-
-		(*spectreG).reel[i]=(*systeme).pendule[i].nouveau;
-		(*spectreG).imag[i]=0.0;
-
-		(*spectreD).reel[i]=(*systeme).pendule[i+Ne].nouveau;
-		(*spectreD).imag[i]=0.0;
-
+		(*fourier).reel[i]=(*systeme).pendule[i].nouveau;
+		(*fourier).imag[i]=0.0;
 		}
-	return;
+	return i;
 	}
-*/
+
 int projectionSystemeGraphe(systemeT * systeme, projectionT * projection, graphesT * graphes)
 	{
 	(void)projection;
@@ -85,6 +80,21 @@ int projectionSystemeGraphe(systemeT * systeme, projectionT * projection, graphe
 	for(i=0;i<(*systeme).nombre;i++)
 		{
 		(*graphes).graphe[0].point[i].y = (*graphes).graphe[0].yZero + (int)((*graphes).graphe[0].hauteur*(*systeme).pendule[i].nouveau);
+		}
+	return 0;
+	}
+
+int projectionFourierGraphe(fonctionT * fourier, projectionT * projection, graphesT * graphes)
+	{
+	(void)projection;
+
+	(*graphes).graphe[1].nombre = (*fourier).nombre;
+
+	int i;
+
+	for(i=0;i<(*fourier).nombre;i++)
+		{
+		(*graphes).graphe[1].point[i].y = (*graphes).graphe[1].yZero + (int)( (*graphes).graphe[1].hauteur * (*fourier).module[i] );
 		}
 	return 0;
 	}

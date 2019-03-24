@@ -42,11 +42,18 @@ typedef struct FonctionT fonctionT;
 		double reel[NOMBRE_MAX];//		Une fonction est un tableau de complexe.
 		double imag[NOMBRE_MAX];
 
+		double module[NOMBRE_MAX];
+
 		int nombre;
 		};
 
 int fourierInitialise(fonctionT * spectre, int nombre);
 int fourierChangeNombre(fonctionT * spectre, int nombre);
+
+int fourierModule(fonctionT * spectre);
+
 void fourierCalcule(fonctionT * spectre, int k, int n);
+
+
 
 #endif

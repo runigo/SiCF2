@@ -178,9 +178,8 @@ int donneesGraphes(graphesT * graphes, optionsT * options)
 		grapheInitialise(&(*graphes).graphe[i],(*options).nombre, 2, 6, 6, 255);
 		}
 
-	//grapheInitialiseTaille(&(*graphes).graphe[0], (int)(MARGE_X*FENETRE_X), (int)(MARGE_Y*FENETRE_Y+GRAPHE_CORDE_Y*(FENETRE_Y/2)), (int)(GRAPHE_CORDE_X*FENETRE_X), (int)(GRAPHE_CORDE_Y*FENETRE_Y));
-
 		grapheInitialiseCorde(&(*graphes).graphe[0], FENETRE_X, FENETRE_Y);
+		grapheInitialiseSpectre(&(*graphes).graphe[1], FENETRE_X, FENETRE_Y);
 
 	return i;
 	}

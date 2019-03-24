@@ -40,6 +40,18 @@ void polynome(fonctionT * test, int n);
 void evaluer(fonctionT * trF, fonctionT * echang, fonctionT * racineDe1, int k, int n);
 void racinesmoins(fonctionT * rd1, int n);
 
+
+int fourierModule(fonctionT * fonction)
+	{
+	int i;
+	for(i=0;i<(*fonction).nombre;i++)
+		{
+		(*fonction).module[i]=sqrt((*fonction).reel[i]*(*fonction).reel[i] + (*fonction).imag[i]*(*fonction).imag[i]);
+		}
+	return i;
+	}
+
+
 int fourierInitialise(fonctionT * trFourier, int nombre)
 	{
 	(*trFourier).nombre=NOMBRE;

@@ -55,7 +55,11 @@ typedef struct ProjectionT projectionT;
 
 int projectionInitialise(projectionT * projection);
 int projectionInitialiseLongueurs(projectionT * projection, int largeur, int hauteur);
+
+int projectionSystemeFonction(systemeT * systeme, fonctionT * fourier);
+
 int projectionSystemeGraphe(systemeT * systeme, projectionT * projection, graphesT * graphes);
+int projectionFourierGraphe(fonctionT * fourier, projectionT * projection, graphesT * graphes);
 int projectionSystemeCommandes(systemeT * systeme, projectionT * projection, commandesT * commandes, int duree, int mode);
 
 int projectionAffichePointDeVue(projectionT * projection);

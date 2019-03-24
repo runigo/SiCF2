@@ -60,8 +60,8 @@ termes.
 #define MARGE_Y 0.05
 #define GRAPHE_CORDE_X 0.6
 #define GRAPHE_CORDE_Y 0.4
-#define GRAPHE_SPECTRES_X 0.6
-#define GRAPHE_SPECTRES_Y 0.4
+#define GRAPHE_SPECTRE_X 0.6
+#define GRAPHE_SPECTRE_Y 0.8
 #define GRAPHE_CAPTEURS_X 0.6
 #define GRAPHE_CAPTEURS_Y 0.4
 

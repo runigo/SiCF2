@@ -140,6 +140,7 @@ int controleurProjection(controleurT * controleur)
 
 		//fprintf(stderr, "projection de la corde et des spectres\n");
 	projectionSystemeGraphe(&(*controleur).systeme, &(*controleur).projection, &(*controleur).graphes);
+	projectionFourierGraphe(&(*controleur).fourier, &(*controleur).projection, &(*controleur).graphes);
 
 		//fprintf(stderr, "projection du système sur les commandes\n");
 	//projectionSystemeCommandes(&(*controleur).systeme, &(*controleur).projection, &(*controleur).commandes, (*controleur).options.duree, (*controleur).options.modePause);
@@ -152,10 +153,10 @@ int controleurEvolutionSysteme(controleurT * controleur)
 		//fprintf(stderr, "Evolution temporelle du système\n");
 	systemeEvolution(&(*controleur).systeme, (*controleur).options.duree);
 
-		//fprintf(stderr, "Calcul des spectres\n");
-	//projectionSystemeFonction(&(*controleur).systeme, &(*controleur).spectreG, &(*controleur).spectreD);
-	//fourierCalcule(&(*controleur).spectreG, 0, Ne);
-	//fourierCalcule(&(*controleur).spectreD, 0, Ne);
+		//fprintf(stderr, "Calcul du spectre\n");
+	projectionSystemeFonction(&(*controleur).systeme, &(*controleur).fourier);
+	fourierCalcule(&(*controleur).fourier, 0, (*controleur).systeme.nombre);
+	fourierModule(&(*controleur).fourier);
 
 	return 0;
 	}
@@ -174,7 +175,7 @@ int controleurConstructionGraphique(controleurT * controleur)
 
 		//fprintf(stderr, "Dessin des graphes\n");
 	graphiqueCorde(&(*controleur).graphique, &(*controleur).graphes.graphe[0]);
-	//graphiqueSpectre(&(*controleur).graphique, &(*controleur).graphes.graphe[1]);
+	graphiqueSpectre(&(*controleur).graphique, &(*controleur).graphes.graphe[1]);
 
 		//fprintf(stderr, "Mise à jour de l'affichage\n");
 	graphiqueMiseAJour(&(*controleur).graphique);

@@ -41,6 +41,7 @@ termes.
 
 
 int donneesSysteme(systemeT * systeme, optionsT * options);
+int donneesFourier(fonctionT * spectre, optionsT * options);
 int donneesGraphes(graphesT * graphes, optionsT * options);
 
 int donneesControleur(controleurT * controleur)
@@ -52,6 +53,9 @@ int donneesControleur(controleurT * controleur)
 
 		fprintf(stderr, " Initialisation du système\n");
 	donneesSysteme(&(*controleur).systeme, &(*controleur).options);
+
+		fprintf(stderr, " Initialisation de fourier\n");
+	donneesFourier(&(*controleur).fourier, &(*controleur).options);
 
 		fprintf(stderr, " Initialisation des graphes\n");
 	donneesGraphes(&(*controleur).graphes, &(*controleur).options);
@@ -154,6 +158,14 @@ int donneesSysteme(systemeT * systeme, optionsT * options)
 	changeFormeDissipation(systeme, 0);
 	changeConditionsLimites(systeme, (*systeme).libreFixe);
 	systemeInitialisePosition(systeme, 1);
+
+	return 0;
+	}
+
+int donneesFourier(fonctionT * spectre, optionsT * options)
+	{
+		//fprintf(stderr, " Initialisation de fourier\n");
+	fourierInitialise(spectre, (*options).nombre);
 
 	return 0;
 	}

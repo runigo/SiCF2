@@ -64,7 +64,7 @@ void systemeJaugeZero(systemeT * systeme)
 	if(jauge>PI || jauge<PI)
 		{
 		int i;
-		for(i=1;i<(*systeme).nombre;i++)
+		for(i=0;i<(*systeme).nombre;i++)
 			{
 			penduleJauge(&(*systeme).pendule[i], jauge);
 			}
@@ -160,6 +160,36 @@ int systemeInitialisePosition(systemeT * systeme, int forme)
 	return 0;
 	}
 
+/*------------------------  ÉVOLUTION TEMPORELLE  -------------------------*/
+
+int systemeEvolution(systemeT * systeme, int duree)
+	{
+	int i;
+
+	//	Fait évoluer le système pendant duree*dt
+	for(i=0;i<duree;i++)
+		{
+		//	Évolution élémentaire
+		systemeCouplage(systeme);
+		systemeInertie(systeme);
+		systemeIncremente(systeme);
+		}
+
+	//	Limite la valeur des paramètres croissants
+	if((*systeme).moteurs.generateur==0)
+		{
+		//	Rapproche la position du premier pendule de zéro
+		systemeJaugeZero(systeme);
+		}
+	else
+		{
+		//	Rapproche les compteurs des moteurs de zéro
+		moteurJaugeZero(&(*systeme).moteurs);
+		}
+	return i;
+	}
+
+/*
 int systemeEvolution(systemeT * systeme, int duree)
 	{//	Fait évoluer le système pendant duree * dt
 	int i;
@@ -172,7 +202,7 @@ int systemeEvolution(systemeT * systeme, int duree)
 	systemeJaugeZero(systeme);
 	return 0;
 	}
-
+*/
 void systemeInitialisePendule(systemeT * systeme)
 	{
 	float m=(*systeme).masseGauche;

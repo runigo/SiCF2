@@ -36,6 +36,7 @@ termes.
 #include <stdio.h>
 
 #include "systeme.h"
+#include "fourier.h"
 
 typedef struct ObservableT observableT;
 	struct ObservableT

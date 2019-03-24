@@ -40,8 +40,10 @@ termes.
 typedef struct Fonction fonction;
 	struct Fonction
 		{
-		double reel[N];	// Une fonction est un tableau de complexe.
-		double imag[N];
+		double reel[NOMBRE_MAX];	// Une fonction est un tableau de complexe.
+		double imag[NOMBRE_MAX];
+
+		int nombre;
 		};
 
 void fonctionInitialise(fonction * f);

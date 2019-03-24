@@ -36,13 +36,17 @@ termes.
 #include "../donnees/constantes.h"
 
 
-typedef struct Fonction fonction;
-	struct Fonction
+typedef struct FonctionT fonctionT;
+	struct FonctionT
 		{
 		double reel[NOMBRE_MAX];//		Une fonction est un tableau de complexe.
 		double imag[NOMBRE_MAX];
+
+		int nombre;
 		};
 
-void fourierCalcule(fonction * spectre, int k, int n);
+int fourierInitialise(fonctionT * spectre, int nombre);
+int fourierChangeNombre(fonctionT * spectre, int nombre);
+void fourierCalcule(fonctionT * spectre, int k, int n);
 
 #endif

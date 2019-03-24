@@ -48,6 +48,8 @@ typedef struct ControleurT controleurT;
 
 		systemeT systeme;			//	Modélisation physique de la corde
 
+		fonctionT fourier;			//	Spectre de la corde
+
 		observablesT observables;	//	Capteurs sur le système
 
 		projectionT projection;		//	Paramètre de la projection

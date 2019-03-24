@@ -35,15 +35,38 @@ http://www.ai.univ-paris8.fr/~audibert/tra/FFT.pdf
 */
 #include "fourier.h"
 
-void racinesnemesde1(fonction * rd1, int n);
-void polynome(fonction * test, int n);
-void evaluer(fonction * trF, fonction * echang, fonction * racineDe1, int k, int n);
-void racinesmoins(fonction * rd1, int n);
+void racinesnemesde1(fonctionT * rd1, int n);
+void polynome(fonctionT * test, int n);
+void evaluer(fonctionT * trF, fonctionT * echang, fonctionT * racineDe1, int k, int n);
+void racinesmoins(fonctionT * rd1, int n);
 
-void fourierCalcule(fonction * trFourier, int k, int n)
+int fourierInitialise(fonctionT * trFourier, int nombre)
 	{
-	fonction racineDe1;
-	fonction echange;
+	(*trFourier).nombre=NOMBRE;
+	
+	if(nombre > NOMBRE_MIN && nombre < NOMBRE_MAX)
+		{
+		(*trFourier).nombre=nombre;
+		}
+	return (*trFourier).nombre;
+	}
+
+int fourierChangeNombre(fonctionT * trFourier, int nombre)
+	{
+	(*trFourier).nombre=NOMBRE;
+	
+	if(nombre > NOMBRE_MIN && nombre < NOMBRE_MAX)
+		{
+		(*trFourier).nombre=nombre;
+		}
+	return (*trFourier).nombre;
+	}
+
+
+void fourierCalcule(fonctionT * trFourier, int k, int n)
+	{
+	fonctionT racineDe1;
+	fonctionT echange;
 
 	racinesnemesde1(&racineDe1, n);
 
@@ -52,7 +75,7 @@ void fourierCalcule(fonction * trFourier, int k, int n)
 	return;
 	}
 
-void racinesnemesde1(fonction * racineDe1, int n)
+void racinesnemesde1(fonctionT * racineDe1, int n)
 	{
 	int i;
 	for(i=0;i<n;i++)
@@ -62,7 +85,7 @@ void racinesnemesde1(fonction * racineDe1, int n)
 		}
 	}
 
-void evaluer(fonction * trFourier, fonction * echange, fonction * racineDe1, int k, int n)
+void evaluer(fonctionT * trFourier, fonctionT * echange, fonctionT * racineDe1, int k, int n)
 	{
 	double wPimpreel,wPimpimag;
 	int nsur2,i,j,jj,expo;
@@ -89,7 +112,7 @@ void evaluer(fonction * trFourier, fonction * echange, fonction * racineDe1, int
 			}
 		evaluer(trFourier, echange, racineDe1, k, nsur2);
 		evaluer(trFourier, echange, racineDe1, k+nsur2, nsur2);
-		jj=Ne/n;
+		jj=(*trFourier).nombre/n;
 		for(i=0;i<nsur2;i++)
 			{
 			expo=i*jj;
@@ -108,7 +131,7 @@ void evaluer(fonction * trFourier, fonction * echange, fonction * racineDe1, int
 		}
 	}
 
-void racinesmoins(fonction * racineDe1, int n)
+void racinesmoins(fonctionT * racineDe1, int n)
 	{
 	int i;
 	for(i=0;i<n;i++)

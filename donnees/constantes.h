@@ -97,10 +97,11 @@ termes.
 
 	//	PARAMÈTRES DE LA CHAINE
 
-#define ABSORPTION 2.1 // Facteur de l'extrémité absorbante
 #define NOMBRE_MIN 8 // Nombre minimal de pendules
 #define NOMBRE 64 // Nombre implicite de pendules
 #define NOMBRE_MAX 1024 // Nombre maximal de pendules
+
+#define ABSORPTION 2.1 // Facteur de l'extrémité absorbante
 
 //#define SOLITON_MAX 19 // Nombre maximal de soliton
 #define DEPHASAGE_MAX 49*DEUXPI // Déphasage maximal

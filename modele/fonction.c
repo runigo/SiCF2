@@ -30,17 +30,17 @@ pris connaissance de la licence CeCILL, et que vous en avez accepté les
 termes.
 */
 
-#include "fonctions.h"
+#include "fonction.h"
 
-double fonctionMaximum(fonction * f);
+double fonctionMaximum(fonctionT * f);
 
-void fonctionInitialise(fonction * f)
+void fonctionInitialise(fonctionT * f)
 	{
 	int i;
 	double frequence = 4.444;
 	double module = 0.1;
 
-	for(i=0;i<N;i++)
+	for(i=0;i<(*f).nombre;i++)
 		{
 		(*f).reel[i] = module * cos(frequence*i);
 		(*f).imag[i] = module * sin(frequence*i);
@@ -48,21 +48,21 @@ void fonctionInitialise(fonction * f)
 	return;
 	}
 
-void fonctionEgale(fonction * onde, fonction * spectre)
+void fonctionEgale(fonctionT * f1, fonctionT * f2)
 	{
 	int i;
-	for(i=0;i<N;i++)
+	for(i=0;i<(*f1).nombre;i++)
 		{
-		(*spectre).reel[i] = (*onde).reel[i];
-		(*spectre).imag[i] = (*onde).imag[i];
+		(*f2).reel[i] = (*f1).reel[i];
+		(*f2).imag[i] = (*f1).imag[i];
 		}
 	return;
 	}
-
-void fonctionReplier(fonction * spectre, int diviseur)
+/*
+void fonctionReplier(fonctionT * spectre, int diviseur)
 	{// Effectue un repliement de spectre
 	int i;
-	fonction tmp;
+	fonctionT tmp;
 
 	if (diviseur<1) diviseur = 1;
 
@@ -83,7 +83,7 @@ void fonctionReplier(fonction * spectre, int diviseur)
 	return;
 	}
 
-void fonctionNormale(fonction * f, fonction * nf)
+void fonctionNormale(fonctionT * f, fonctionT * nf)
 	{
 	int i;
 	double module;
@@ -99,7 +99,7 @@ void fonctionNormale(fonction * f, fonction * nf)
 	return;
 	}
 
-double fonctionMaximum(fonction * f)
+double fonctionMaximum(fonctionT * f)
 	{
 	int i;
 	double x,y;
@@ -120,7 +120,7 @@ double fonctionMaximum(fonction * f)
 	return max;
 	}
 
-double fonctionSommeModuleCarre(fonction * f)
+double fonctionSommeModuleCarre(fonctionT * f)
 	{
 	int i;
 	double somme = 0.0;
@@ -133,7 +133,7 @@ double fonctionSommeModuleCarre(fonction * f)
 	return somme;
 	}
 
-void fonctionModuleCarre(fonction * f, fonction * modCar)
+void fonctionModuleCarre(fonctionT * f, fonctionT * modCar)
 	{
 	int i;
 
@@ -145,7 +145,7 @@ void fonctionModuleCarre(fonction * f, fonction * modCar)
 	return;
 	}
 
-void fonctionModuleCarreMax1(fonction * f, fonction * modCar)
+void fonctionModuleCarreMax1(fonctionT * f, fonctionT * modCar)
 	{
 	int i;
 	double x;
@@ -170,7 +170,7 @@ void fonctionModuleCarreMax1(fonction * f, fonction * modCar)
 	return;
 	}
 
-void fonctionAffiche(fonction * f)
+void fonctionAffiche(fonctionT * f)
   {
 	int i;
 	printf("fonction complexe\n");
@@ -182,10 +182,11 @@ void fonctionAffiche(fonction * f)
 	return;
 	}
 
-void fonctionTest(fonction * f)
+void fonctionTest(fonctionT * f)
 	{
 	fonctionAffiche(f);
 	return;
 	}
 
+*/
 ////////////////////////////////////////////////////////////////

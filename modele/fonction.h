@@ -37,29 +37,31 @@ termes.
 #include "../donnees/constantes.h"
 
 
-typedef struct Fonction fonction;
-	struct Fonction
+typedef struct FonctionT fonctionT;
+	struct FonctionT
 		{
 		double reel[NOMBRE_MAX];	// Une fonction est un tableau de complexe.
 		double imag[NOMBRE_MAX];
 
-		int nombre;
+		double module[NOMBRE_MAX];	// Enregistrement du module
+
+		int nombre;					// Nombre de points
 		};
 
-void fonctionInitialise(fonction * f);
-void fonctionAffiche(fonction * f);
-void fonctionTest(fonction * f);
+void fonctionInitialise(fonctionT * f);
+void fonctionAffiche(fonctionT * f);
+void fonctionTest(fonctionT * f);
 
-void fonctionEgale(fonction * init, fonction * result);
-void fonctionReplier(fonction * spectre, int diviseur);
-void fonctionNormale(fonction * f, fonction * nf);
+void fonctionEgale(fonctionT * init, fonctionT * result);
+void fonctionReplier(fonctionT * spectre, int diviseur);
+void fonctionNormale(fonctionT * f, fonctionT * nf);
 
-void fonctionModuleCarre(fonction * f, fonction * modCar);
-void fonctionModuleCarreMax1(fonction * f, fonction * modCar);
+void fonctionModuleCarre(fonctionT * f, fonctionT * modCar);
+void fonctionModuleCarreMax1(fonctionT * f, fonctionT * modCar);
 
-double fonctionSomme(fonction * f);
-double fonctionMoyenne(fonction * f);
-double fonctionSommeModuleCarre(fonction * f);
+double fonctionSomme(fonctionT * f);
+double fonctionMoyenne(fonctionT * f);
+double fonctionSommeModuleCarre(fonctionT * f);
 
 
 #endif

@@ -39,8 +39,8 @@ OBJDIR = ./obj
 
 all : $(EXEC)
 
-$(EXEC) : $(OBJDIR)/principale.o $(OBJDIR)/options.o $(OBJDIR)/donnees.o $(OBJDIR)/controleur.o $(OBJDIR)/projection.o $(OBJDIR)/graphique.o $(OBJDIR)/observables.o $(OBJDIR)/graphes.o $(OBJDIR)/commandes.o $(OBJDIR)/capteurs.o $(OBJDIR)/horloge.o $(OBJDIR)/interface.o $(OBJDIR)/change.o $(OBJDIR)/systeme.o $(OBJDIR)/moteurs.o $(OBJDIR)/fourier.o $(OBJDIR)/pendule.o
-	$(CC) -g $(OBJDIR)/principale.o $(OBJDIR)/options.o $(OBJDIR)/donnees.o $(OBJDIR)/controleur.o $(OBJDIR)/projection.o $(OBJDIR)/graphique.o $(OBJDIR)/observables.o $(OBJDIR)/graphes.o $(OBJDIR)/commandes.o $(OBJDIR)/capteurs.o $(OBJDIR)/horloge.o $(OBJDIR)/interface.o $(OBJDIR)/change.o $(OBJDIR)/systeme.o $(OBJDIR)/moteurs.o $(OBJDIR)/pendule.o $(OBJDIR)/fourier.o `sdl2-config --libs` $(LDFLAGS) -o $(EXEC)
+$(EXEC) : $(OBJDIR)/principale.o $(OBJDIR)/options.o $(OBJDIR)/donnees.o $(OBJDIR)/controleur.o $(OBJDIR)/projection.o $(OBJDIR)/graphique.o $(OBJDIR)/observables.o $(OBJDIR)/graphes.o $(OBJDIR)/commandes.o $(OBJDIR)/capteurs.o $(OBJDIR)/horloge.o $(OBJDIR)/interface.o $(OBJDIR)/change.o $(OBJDIR)/systeme.o $(OBJDIR)/moteurs.o $(OBJDIR)/fourier.o $(OBJDIR)/fonction.o $(OBJDIR)/pendule.o
+	$(CC) -g $(OBJDIR)/principale.o $(OBJDIR)/options.o $(OBJDIR)/donnees.o $(OBJDIR)/controleur.o $(OBJDIR)/projection.o $(OBJDIR)/graphique.o $(OBJDIR)/observables.o $(OBJDIR)/graphes.o $(OBJDIR)/commandes.o $(OBJDIR)/capteurs.o $(OBJDIR)/horloge.o $(OBJDIR)/interface.o $(OBJDIR)/change.o $(OBJDIR)/systeme.o $(OBJDIR)/moteurs.o $(OBJDIR)/fourier.o $(OBJDIR)/pendule.o $(OBJDIR)/fonction.o `sdl2-config --libs` $(LDFLAGS) -o $(EXEC)
 
 $(OBJDIR)/principale.o : controleur/principale.c controleur/principale.h
 	$(CC) -c -g controleur/principale.c $(CFLAGS) -o $@
@@ -95,6 +95,9 @@ $(OBJDIR)/moteurs.o : modele/moteurs.c modele/moteurs.h
 
 $(OBJDIR)/fourier.o : modele/fourier.c modele/fourier.h
 	$(CC) -c -g modele/fourier.c $(CFLAGS) -o $@
+
+$(OBJDIR)/fonction.o : modele/fonction.c modele/fonction.h
+	$(CC) -c -g modele/fonction.c $(CFLAGS) -o $@
 
 $(OBJDIR)/pendule.o : modele/pendule.c modele/pendule.h
 	$(CC) -c -g modele/pendule.c $(CFLAGS) -o $@

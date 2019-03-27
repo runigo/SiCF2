@@ -35,69 +35,40 @@ http://www.ai.univ-paris8.fr/~audibert/tra/FFT.pdf
 */
 #include "fourier.h"
 
-void racinesnemesde1(fonctionT * rd1, int n);
 void polynome(fonctionT * test, int n);
-void evaluer(fonctionT * trF, fonctionT * echang, fonctionT * racineDe1, int k, int n);
-void racinesmoins(fonctionT * rd1, int n);
+void fourierEvaluer(fonctionT * trF, fonctionT * echang, fonctionT * racineDe1, int k, int n);
 
+int fourierModule(fourierT * fourier);
 
-int fourierModule(fonctionT * fonction)
+int fourierInitialise(fourierT * fourier, int nombre)
 	{
-	int i;
-	for(i=0;i<(*fonction).nombre;i++)
-		{
-		(*fonction).module[i]=sqrt((*fonction).reel[i]*(*fonction).reel[i] + (*fonction).imag[i]*(*fonction).imag[i]);
-		}
-	return i;
+	fonctionInitialise(&(*fourier).racineNDe1, nombre);
+	fonctionInitialise(&(*fourier).racineNs2De1, nombre/2);
+	fonctionInitialise(&(*fourier).echange, nombre);
+	fonctionInitialise(&(*fourier).spectre, nombre);
+	fonctionInitialise(&(*fourier).gauche, nombre/2);
+	fonctionInitialise(&(*fourier).droite, nombre/2);
+
+	fonctionRacinesNemesDe1(&(*fourier).racineNDe1, nombre);
+	fonctionRacinesNemesDe1(&(*fourier).racineNs2De1, nombre/2);
+
+	return 0;
 	}
 
-
-int fourierInitialise(fonctionT * trFourier, int nombre)
+int fourierCalcule(fonctionT * trFourier)
 	{
-	(*trFourier).nombre=NOMBRE;
-	
-	if(nombre > NOMBRE_MIN && nombre < NOMBRE_MAX)
-		{
-		(*trFourier).nombre=nombre;
-		}
-	return (*trFourier).nombre;
+	evaluer(&(*fourier).spectre, &(*fourier).echange, &(*fourier).racineNDe1, 0, (*fourier).fourier.nombre);
+	evaluer(&(*fourier).gauche, &(*fourier).echange, &(*fourier).racineNs2De1, 0, &(*fourier).gauche.nombre);
+	evaluer(&(*fourier).droite, &(*fourier).echange, &(*fourier).racineNs2De1, 0, &(*fourier).droite.nombre);
+
+	fourierModule(&(*fourier).spectre);
+	fourierModule(&(*fourier).gauche);
+	fourierModule(&(*fourier).droite);
+
+	return 0;
 	}
 
-int fourierChangeNombre(fonctionT * trFourier, int nombre)
-	{
-	(*trFourier).nombre=NOMBRE;
-	
-	if(nombre > NOMBRE_MIN && nombre < NOMBRE_MAX)
-		{
-		(*trFourier).nombre=nombre;
-		}
-	return (*trFourier).nombre;
-	}
-
-
-void fourierCalcule(fonctionT * trFourier, int k, int n)
-	{
-	fonctionT racineDe1;
-	fonctionT echange;
-
-	racinesnemesde1(&racineDe1, n);
-
-	evaluer(trFourier, &echange, &racineDe1, k, n);
-
-	return;
-	}
-
-void racinesnemesde1(fonctionT * racineDe1, int n)
-	{
-	int i;
-	for(i=0;i<n;i++)
-		{
-		(*racineDe1).reel[i]=cos(2*PI*i/(float)n);
-		(*racineDe1).imag[i]=sin(2*PI*i/(float)n);
-		}
-	}
-
-void evaluer(fonctionT * trFourier, fonctionT * echange, fonctionT * racineDe1, int k, int n)
+void fourierEvaluer(fonctionT * trFourier, fonctionT * echange, fonctionT * racineDe1, int k, int n)
 	{
 	double wPimpreel,wPimpimag;
 	int nsur2,i,j,jj,expo;
@@ -122,8 +93,8 @@ void evaluer(fonctionT * trFourier, fonctionT * echange, fonctionT * racineDe1, 
 			(*trFourier).reel[k+i]=(*echange).reel[i];
 			(*trFourier).imag[k+i]=(*echange).imag[i];
 			}
-		evaluer(trFourier, echange, racineDe1, k, nsur2);
-		evaluer(trFourier, echange, racineDe1, k+nsur2, nsur2);
+		fourierEvaluer(trFourier, echange, racineDe1, k, nsur2);
+		fourierEvaluer(trFourier, echange, racineDe1, k+nsur2, nsur2);
 		jj=(*trFourier).nombre/n;
 		for(i=0;i<nsur2;i++)
 			{
@@ -143,12 +114,3 @@ void evaluer(fonctionT * trFourier, fonctionT * echange, fonctionT * racineDe1, 
 		}
 	}
 
-void racinesmoins(fonctionT * racineDe1, int n)
-	{
-	int i;
-	for(i=0;i<n;i++)
-		{
-		(*racineDe1).reel[i]=cos(-2*PI*i/(float)n);
-		(*racineDe1).imag[i]=sin(-2*PI*i/(float)n);
-		}
-	}

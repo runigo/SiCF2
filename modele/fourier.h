@@ -44,24 +44,15 @@ typedef struct FourierT fourierT;
 
 		fonctionT echange;		// Fonction d'échange
 
-		fonctionT fourier;		// Transformé de fourier
+		fonctionT spectre;		// Transformé de fourier
 
-		fonctionT gauche;		// Transformé de fourier
+		fonctionT gauche;		// Transformé de fourier de la moitié gauche
 
-		fonctionT droite;		// Transformé de fourier
+		fonctionT droite;		// Transformé de fourier de la moitié droite
 		};
 
+int fourierInitialise(fourierT * fourier, int nombre);
 
-
-
-
-int fourierInitialise(fonctionT * spectre, int nombre);
-int fourierChangeNombre(fonctionT * spectre, int nombre);
-
-int fourierModule(fonctionT * spectre);
-
-void fourierCalcule(fonctionT * spectre, int k, int n);
-
-
+int fourierCalcule(fourierT * fourier);
 
 #endif

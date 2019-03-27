@@ -48,11 +48,11 @@ typedef struct ControleurT controleurT;
 
 		systemeT systeme;			//	Modélisation physique de la corde
 
-		fonctionT fourier;			//	Spectre de la corde
+		fourierT fourier;			//	Spectres de la corde
 
 		observablesT observables;	//	Capteurs sur le système
 
-		projectionT projection;		//	Paramètre de la projection
+		projectionT projection;		//	Paramètre des projections
 
 		graphesT graphes;		//	Graphe de la corde et des spectres
 
@@ -66,16 +66,13 @@ typedef struct ControleurT controleurT;
 
 		horlogeT horloge;			//	Horloge SDL
 
-		int duree;	// nombre d'incrémentation du système par affichage
+		int duree;		// nombre d'incrémentation du système par affichage
 		int modePause;	// pause de l'évolution du système si = 1
-		int sortie;	//	sortie de SiCP si > 0
+		int sortie;		//	sortie de SiCP si > 0
 
-		int appui;	//	1 si le bouton de la souris est appuyé, 0 sinon.
-
+		int appui;		//	1 si le bouton de la souris est appuyé, 0 sinon.
 		int curseurX;	//	Position x de la souris.
 		int curseurY;	//	Position y de la souris.
-
-		int modeMenu;		// 0 : Menu, 1 SiCP, 2 SiGP
 
 		};
 

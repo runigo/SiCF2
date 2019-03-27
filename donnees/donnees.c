@@ -41,7 +41,7 @@ termes.
 
 
 int donneesSysteme(systemeT * systeme, optionsT * options);
-int donneesFourier(fonctionT * spectre, optionsT * options);
+int donneesFourier(fourierT * fourier, optionsT * options);
 int donneesGraphes(graphesT * graphes, optionsT * options);
 
 int donneesControleur(controleurT * controleur)
@@ -49,7 +49,6 @@ int donneesControleur(controleurT * controleur)
 
 	(*controleur).sortie = 0;	// Sortie de SiCP si <> 0
 	(*controleur).appui = 0;	// Appuie sur la souris
-	(*controleur).modeMenu = (*controleur).options.modeMenu;		// 0 : Menu, 1 SiCP, 2SiCF, 3 SiGP
 
 		fprintf(stderr, " Initialisation du système\n");
 	donneesSysteme(&(*controleur).systeme, &(*controleur).options);
@@ -162,26 +161,27 @@ int donneesSysteme(systemeT * systeme, optionsT * options)
 	return 0;
 	}
 
-int donneesFourier(fonctionT * spectre, optionsT * options)
+int donneesFourier(fourierT * fourier, optionsT * options)
 	{
 		//fprintf(stderr, " Initialisation de fourier\n");
-	fourierInitialise(spectre, (*options).nombre);
+	fourierInitialise(fourier, (*options).nombre);
 
 	return 0;
 	}
 
 int donneesGraphes(graphesT * graphes, optionsT * options)
 	{
-	int i;
-	for(i=0;i<GRAPHES;i++)
-		{
-		grapheInitialise(&(*graphes).graphe[i],(*options).nombre, 2, 6, 6, 255);
-		}
+	grapheInitialise(&(*graphes).corde,(*options).nombre, 2, 6, 6, 255);
+	grapheInitialise(&(*graphes).spectre,(*options).nombre, 2, 255, 6, 6);
+	grapheInitialise(&(*graphes).gauche,(*options).nombre, 2, 127, 63, 127);
+	grapheInitialise(&(*graphes).droite,(*options).nombre, 2, 127, 127, 63);
 
-		grapheInitialiseCorde(&(*graphes).graphe[0], FENETRE_X, FENETRE_Y);
-		grapheInitialiseSpectre(&(*graphes).graphe[1], FENETRE_X, FENETRE_Y);
+	grapheInitialiseCorde(&(*graphes).corde, FENETRE_X, FENETRE_Y);
+	grapheInitialiseSpectre(&(*graphes).spectre, FENETRE_X, FENETRE_Y);
+	grapheInitialiseSpectre(&(*graphes).gauche, FENETRE_X, FENETRE_Y);
+	grapheInitialiseSpectre(&(*graphes).droite, FENETRE_X, FENETRE_Y);
 
-	return i;
+	return 0;
 	}
 
 //////////////////////////////////////////////////////////////////////////

@@ -57,7 +57,10 @@ typedef struct GrapheT grapheT;
 typedef struct GraphesT graphesT;
 	struct GraphesT
 		{
-		grapheT graphe[GRAPHES];
+		grapheT corde;
+		grapheT spectre;
+		grapheT gauche;
+		grapheT droite;
 		};
 
 

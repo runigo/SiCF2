@@ -125,7 +125,10 @@ int controleurProjection(controleurT * controleur)
 		{
 		(*controleur).graphique.largeur=largeur;
 		(*controleur).graphique.hauteur=hauteur;
-		grapheInitialiseCorde(&(*controleur).graphes.graphe[0], largeur, hauteur);
+		grapheInitialiseLongueur(&(*controleur).graphes.corde, largeur, hauteur);
+		grapheInitialiseLongueur(&(*controleur).graphes.spectre, largeur, hauteur);
+		grapheInitialiseLongueur(&(*controleur).graphes.gauche, largeur, hauteur);
+		grapheInitialiseLongueur(&(*controleur).graphes.droite, largeur, hauteur);
 		commandesInitialiseBoutons(&(*controleur).commandes, largeur, hauteur);
 		}
 
@@ -154,9 +157,8 @@ int controleurEvolutionSysteme(controleurT * controleur)
 	systemeEvolution(&(*controleur).systeme, (*controleur).options.duree);
 
 		//fprintf(stderr, "Calcul du spectre\n");
-	projectionSystemeFonction(&(*controleur).systeme, &(*controleur).fourier);
-	fourierCalcule(&(*controleur).fourier, 0, (*controleur).systeme.nombre);
-	fourierModule(&(*controleur).fourier);
+	projectionSystemeFourier(&(*controleur).systeme, &(*controleur).fourier);
+	fourierCalcule(&(*controleur).fourier);
 
 	return 0;
 	}
@@ -174,8 +176,10 @@ int controleurConstructionGraphique(controleurT * controleur)
 	//graphiqueCapteurs(&(*controleur).graphique, &(*controleur).capteurs);
 
 		//fprintf(stderr, "Dessin des graphes\n");
-	graphiqueCorde(&(*controleur).graphique, &(*controleur).graphes.graphe[0]);
-	graphiqueSpectre(&(*controleur).graphique, &(*controleur).graphes.graphe[1]);
+	graphiqueCorde(&(*controleur).graphique, &(*controleur).graphes.corde);
+	graphiqueSpectre(&(*controleur).graphique, &(*controleur).graphes.spectre);
+	graphiqueSpectre(&(*controleur).graphique, &(*controleur).graphes.gauche);
+	graphiqueSpectre(&(*controleur).graphique, &(*controleur).graphes.droite);
 
 		//fprintf(stderr, "Mise à jour de l'affichage\n");
 	graphiqueMiseAJour(&(*controleur).graphique);

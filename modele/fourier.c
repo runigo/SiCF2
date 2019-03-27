@@ -55,15 +55,22 @@ int fourierInitialise(fourierT * fourier, int nombre)
 	return 0;
 	}
 
-int fourierCalcule(fonctionT * trFourier)
+int fourierCalcule(fourierT * fourier)
 	{
-	evaluer(&(*fourier).spectre, &(*fourier).echange, &(*fourier).racineNDe1, 0, (*fourier).fourier.nombre);
-	evaluer(&(*fourier).gauche, &(*fourier).echange, &(*fourier).racineNs2De1, 0, &(*fourier).gauche.nombre);
-	evaluer(&(*fourier).droite, &(*fourier).echange, &(*fourier).racineNs2De1, 0, &(*fourier).droite.nombre);
+	fourierEvaluer(&(*fourier).spectre, &(*fourier).echange, &(*fourier).racineNDe1, 0, (*fourier).spectre.nombre);
+	fourierEvaluer(&(*fourier).gauche, &(*fourier).echange, &(*fourier).racineNs2De1, 0, (*fourier).gauche.nombre);
+	fourierEvaluer(&(*fourier).droite, &(*fourier).echange, &(*fourier).racineNs2De1, 0, (*fourier).droite.nombre);
 
-	fourierModule(&(*fourier).spectre);
-	fourierModule(&(*fourier).gauche);
-	fourierModule(&(*fourier).droite);
+	fourierModule(fourier);
+
+	return 0;
+	}
+
+int fourierModule(fourierT * fourier)
+	{
+	fonctionModule(&(*fourier).spectre);
+	fonctionModule(&(*fourier).gauche);
+	fonctionModule(&(*fourier).droite);
 
 	return 0;
 	}

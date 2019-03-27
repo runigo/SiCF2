@@ -120,16 +120,15 @@ int controleurProjection(controleurT * controleur)
 		// Récupération de la taille de la fenêtre
 	SDL_GetWindowSize((*controleur).interface.fenetre, &largeur, &hauteur);
 
-		// Réinitialisation des commandes si la fenêtre change de taille
+		// Réinitialisation des longueurs si la fenêtre a changé de taille
 	if((*controleur).graphique.largeur!=largeur || (*controleur).graphique.hauteur!=hauteur)
 		{
 		(*controleur).graphique.largeur=largeur;
 		(*controleur).graphique.hauteur=hauteur;
-		grapheInitialiseLongueur(&(*controleur).graphes.corde, largeur, hauteur);
-		grapheInitialiseLongueur(&(*controleur).graphes.spectre, largeur, hauteur);
-		grapheInitialiseLongueur(&(*controleur).graphes.gauche, largeur, hauteur);
-		grapheInitialiseLongueur(&(*controleur).graphes.droite, largeur, hauteur);
+		graphesInitialiseLongueur(&(*controleur).graphes, largeur, hauteur);
 		commandesInitialiseBoutons(&(*controleur).commandes, largeur, hauteur);
+			//fprintf(stderr, "Réinitialisation de la taille de la fenêtre dans la projection\n");
+		projectionInitialiseLongueurs(&(*controleur).projection, hauteur, largeur);
 		}
 
 			// Récupération de la position de la souris
@@ -137,9 +136,6 @@ int controleurProjection(controleurT * controleur)
 	SDL_GetMouseState(&x,&y);
 			// Réinitialisation des commandes de la souris
 	commandesInitialiseSouris(&(*controleur).commandes, x, y);
-
-		//fprintf(stderr, "Réinitialisation de la taille de la fenêtre dans la projection\n");
-	projectionInitialiseLongueurs(&(*controleur).projection, hauteur, largeur);
 
 		//fprintf(stderr, "projection de la corde et des spectres\n");
 	projectionSystemeGraphe(&(*controleur).systeme, &(*controleur).projection, &(*controleur).graphes);
@@ -156,8 +152,10 @@ int controleurEvolutionSysteme(controleurT * controleur)
 		//fprintf(stderr, "Evolution temporelle du système\n");
 	systemeEvolution(&(*controleur).systeme, (*controleur).options.duree);
 
-		//fprintf(stderr, "Calcul du spectre\n");
+		//fprintf(stderr, "Projection du système sur les spectres\n");
 	projectionSystemeFourier(&(*controleur).systeme, &(*controleur).fourier);
+
+		//fprintf(stderr, "Calcul des spectres\n");
 	fourierCalcule(&(*controleur).fourier);
 
 	return 0;

@@ -57,45 +57,73 @@ float projectionValeurAbsolue(float valeur)
 	return valeur;
 	}
 
-int projectionSystemeFonction(systemeT * systeme, fonctionT * fourier)
+int projectionSystemeFourier(systemeT * systeme, fourierT * fourier)
 	{
-	//	Projette le système sur une fonction
+		//	Projection du système sur les fonctions de fourier
 	int i;
-	for(i=0;i<(*systeme).nombre;i++)
+	int j = (*systeme).nombre;
+
+	for(i=0;i<j;i++)
 		{
-		(*fourier).reel[i]=(*systeme).pendule[i].nouveau;
-		(*fourier).imag[i]=0.0;
+		(*fourier).spectre.reel[i]=(*systeme).pendule[i].nouveau;
+		(*fourier).spectre.imag[i]=0.0;
 		}
-	return i;
+
+	j = (*systeme).nombre/2;
+
+	for(i=0;i<j;i++)
+		{
+		(*fourier).gauche.reel[i]=(*systeme).pendule[i].nouveau;
+		(*fourier).gauche.imag[i]=0.0;
+		(*fourier).droite.reel[i]=(*systeme).pendule[i+j].nouveau;
+		(*fourier).droite.imag[i]=0.0;
+		}
+
+	return 0;
 	}
 
 int projectionSystemeGraphe(systemeT * systeme, projectionT * projection, graphesT * graphes)
 	{
+		// Projection du système sur le graphe
 	(void)projection;
 
-	(*graphes).graphe[0].nombre = (*systeme).nombre;
+	(*graphes).corde.nombre = (*systeme).nombre;
 
 	int i;
 
 	for(i=0;i<(*systeme).nombre;i++)
 		{
-		(*graphes).graphe[0].point[i].y = (*graphes).graphe[0].yZero + (int)((*graphes).graphe[0].hauteur*(*systeme).pendule[i].nouveau);
+		(*graphes).corde.point[i].y = (*graphes).corde.yZero + (int)((*graphes).corde.hauteur*(*systeme).pendule[i].nouveau);
 		}
 	return 0;
 	}
 
-int projectionFourierGraphe(fonctionT * fourier, projectionT * projection, graphesT * graphes)
+int projectionFourierGraphe(fourierT * fourier, projectionT * projection, graphesT * graphes)
 	{
+		// Projection des spectres sur les graphes
 	(void)projection;
 
-	(*graphes).graphe[1].nombre = (*fourier).nombre;
+	(*graphes).spectre.nombre = (*fourier).spectre.nombre;
+	(*graphes).gauche.nombre = (*fourier).gauche.nombre;
+	(*graphes).droite.nombre = (*fourier).droite.nombre;
 
 	int i;
 
-	for(i=0;i<(*fourier).nombre;i++)
+	for(i=0;i<(*fourier).spectre.nombre;i++)
 		{
-		(*graphes).graphe[1].point[i].y = (*graphes).graphe[1].yZero + (int)( (*graphes).graphe[1].hauteur * (*fourier).module[i] );
+		(*graphes).spectre.point[i].y = (*graphes).spectre.yZero + (int)( (*graphes).spectre.hauteur * (*fourier).spectre.module[i] );
 		}
+
+	for(i=0;i<(*fourier).gauche.nombre;i++)
+		{
+		(*graphes).gauche.point[i].y = (*graphes).gauche.yZero + (int)( (*graphes).gauche.hauteur * (*fourier).gauche.module[i] );
+		}
+
+	for(i=0;i<(*fourier).droite.nombre;i++)
+		{
+		(*graphes).droite.point[i].y = (*graphes).droite.yZero + (int)( (*graphes).droite.hauteur * (*fourier).droite.module[i] );
+		}
+
 	return 0;
 	}
 

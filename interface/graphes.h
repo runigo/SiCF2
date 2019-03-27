@@ -63,10 +63,14 @@ typedef struct GraphesT graphesT;
 		grapheT droite;
 		};
 
-
+		//fprintf(stderr, " Initialisation des couleurs et du nombre de points\n");
 int grapheInitialise(grapheT * graphe, int nombre, int graisse, int r, int g, int b);
-//int grapheInitialiseTaille(grapheT * graphe, int xZero, int yZero, int zoneX, int zoneY);
-int grapheInitialiseCorde(grapheT * graphe, int largeur, int hauteur);
-int grapheInitialiseSpectre(grapheT * graphe, int largeur, int hauteur);
+
+		//fprintf(stderr, " Initialisation des longueurs\n");
+int graphesInitialiseLongueur(graphesT * graphes, int largeur, int hauteur);
+
+
+// int grapheInitialiseCorde(grapheT * graphe, int largeur, int hauteur);
+// int grapheInitialiseSpectre(grapheT * graphe, int largeur, int hauteur);
 
 #endif

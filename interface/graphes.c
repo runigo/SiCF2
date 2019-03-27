@@ -32,13 +32,73 @@ termes.
 
 #include "graphes.h"
 
-int grapheInitialiseTaille(grapheT * graphe, int xZero, int yZero, int zoneX, int zoneY);
+/*
+int graphesInitialise(graphesT * graphes, int nombre, int graisse, int r, int g, int b)
+	{
+		//		Initialisation des graphe
+
+	grapheInitialiseTaille(graphe, 0, 0, FENETRE_X, FENETRE_Y);
+
+	int i;
+
+	for(i=0;i<NOMBRE_MAX;i++)
+		{
+		(*graphe).point[i].x=0;
+		(*graphe).point[i].y=0;
+		}
+
+	(*graphe).couleur.r = r;
+	(*graphe).couleur.g = g;
+	(*graphe).couleur.b = b;
+	(*graphe).couleur.a = 255;
+
+	(*graphe).nombre = nombre; // Nombre de point
+	(*graphe).graisse = graisse; // Epaisseur du trait
+
+	return 0;
+	}
+*/
+
+int graphesInitialiseLongueur(graphesT * graphes, int largeur, int hauteur)
+	{
+		//		Initialisation des longueurs des graphes
+
+			//	CORDE
+	(*graphes).corde.xZero=MARGE_X*largeur;	// X0
+	(*graphes).corde.yZero=MARGE_Y*hauteur;	// Y0
+	(*graphes).corde.largeur=GRAPHE_CORDE_X*largeur;	// axe x
+	(*graphes).corde.hauteur=GRAPHE_CORDE_Y*hauteur;	// axe y
+
+			//	SPECTRE COMPLET
+	(*graphes).spectre.xZero=MARGE_X*largeur;	// X0
+	(*graphes).spectre.yZero= ( MARGE_Y + GRAPHE_CORDE_Y ) * hauteur;	// Y0
+	(*graphes).spectre.largeur=GRAPHE_SPECTRE_X*largeur;	// axe x
+	(*graphes).spectre.hauteur=GRAPHE_SPECTRE_Y*hauteur;	// axe y
+
+			//	SPECTRE GAUCHE
+	(*graphes).gauche.xZero=(MARGE_X+GRAPHE_SPECTRE_X)*largeur;	// X0
+	(*graphes).gauche.yZero= ( MARGE_Y + GRAPHE_CORDE_Y ) * hauteur;	// Y0
+	(*graphes).gauche.largeur=GRAPHE_SPECTRE_X*largeur;	// axe x
+	(*graphes).gauche.hauteur=GRAPHE_SPECTRE_Y*hauteur;	// axe y
+
+			//	SPECTRE DROIT
+	(*graphes).droite.xZero=(MARGE_X+GRAPHE_SPECTRE_X)*largeur;	// X0
+	(*graphes).droite.yZero= ( MARGE_Y + GRAPHE_CORDE_Y ) * hauteur;	// Y0
+	(*graphes).droite.largeur=GRAPHE_SPECTRE_X*largeur;	// axe x
+	(*graphes).droite.hauteur=GRAPHE_SPECTRE_Y*hauteur;	// axe y
+
+	//(*graphe).graisse = graisse; // Epaisseur du trait
+
+	return 0;
+	}
+
 
 int grapheInitialise(grapheT * graphe, int nombre, int graisse, int r, int g, int b)
 	{
 		//		Initialisation du graphe
 
-	grapheInitialiseTaille(graphe, 0, 0, FENETRE_X, FENETRE_Y);
+		//fprintf(stderr, " Initialisation des couleurs et du nombre de points\n");
+	//grapheInitialiseTaille(graphe, 0, 0, FENETRE_X, FENETRE_Y);
 
 	int i;
 
@@ -101,6 +161,7 @@ int grapheInitialiseSpectre(grapheT * graphe, int largeur, int hauteur)
 	return 0;
 	}
 
+int grapheInitialiseTaille(grapheT * graphe, int xZero, int yZero, int zoneX, int zoneY);
 int grapheInitialiseTaille(grapheT * graphe, int xZero, int yZero, int zoneX, int zoneY)
 	{
 		//		Position et taille du graphe

@@ -42,7 +42,7 @@ int fonctionInitialise(fonctionT * f, int nombre)
 
 	for(i=0;i<NOMBRE_MAX;i++)
 		{
-		(*f).reel[i] = O;
+		(*f).reel[i] = 0;
 		(*f).imag[i] = 0;
 		}
 /*
@@ -52,7 +52,7 @@ int fonctionInitialise(fonctionT * f, int nombre)
 		(*f).imag[i] = module * sin(frequence*i);
 		}
 */
-	return;
+	return 0;
 	}
 
 void fonctionRacinesNemesDe1(fonctionT * racineDe1, int n)

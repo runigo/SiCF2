@@ -65,29 +65,28 @@ int graphesInitialiseLongueur(graphesT * graphes, int largeur, int hauteur)
 
 			//	CORDE
 	(*graphes).corde.xZero=MARGE_X*largeur;	// X0
-	(*graphes).corde.yZero=MARGE_Y*hauteur;	// Y0
+	//(*graphes).corde.yZero=MARGE_Y*hauteur;	// Y0
+	(*graphes).corde.yZero = MARGE_Y*hauteur + GRAPHE_CORDE_Y*(hauteur/2); // Positon de l'origine
 	(*graphes).corde.largeur=GRAPHE_CORDE_X*largeur;	// axe x
 	(*graphes).corde.hauteur=GRAPHE_CORDE_Y*hauteur;	// axe y
 
 			//	SPECTRE COMPLET
-	(*graphes).spectre.xZero=MARGE_X*largeur;	// X0
-	(*graphes).spectre.yZero= ( MARGE_Y + GRAPHE_CORDE_Y ) * hauteur;	// Y0
-	(*graphes).spectre.largeur=GRAPHE_SPECTRE_X*largeur;	// axe x
-	(*graphes).spectre.hauteur=GRAPHE_SPECTRE_Y*hauteur;	// axe y
+	(*graphes).spectre.xZero=0.088565*largeur;	// Positon de l'origine
+	(*graphes).spectre.yZero =0.733*hauteur;
+	(*graphes).spectre.largeur=0.325112*largeur;	// axe x
+	(*graphes).spectre.hauteur=0.213425*hauteur;	// axe y
 
 			//	SPECTRE GAUCHE
-	(*graphes).gauche.xZero=(MARGE_X+GRAPHE_SPECTRE_X)*largeur;	// X0
-	(*graphes).gauche.yZero= ( MARGE_Y + GRAPHE_CORDE_Y ) * hauteur;	// Y0
-	(*graphes).gauche.largeur=GRAPHE_SPECTRE_X*largeur;	// axe x
-	(*graphes).gauche.hauteur=GRAPHE_SPECTRE_Y*hauteur;	// axe y
+	(*graphes).gauche.xZero=0.457399*largeur;	// X0
+	(*graphes).gauche.yZero= 0.736 * hauteur;	// Y0
+	(*graphes).gauche.largeur=0.325*largeur;	// axe x
+	(*graphes).gauche.hauteur=0.213*hauteur;	// axe y
 
 			//	SPECTRE DROIT
-	(*graphes).droite.xZero=(MARGE_X+GRAPHE_SPECTRE_X)*largeur;	// X0
-	(*graphes).droite.yZero= ( MARGE_Y + GRAPHE_CORDE_Y ) * hauteur;	// Y0
-	(*graphes).droite.largeur=GRAPHE_SPECTRE_X*largeur;	// axe x
-	(*graphes).droite.hauteur=GRAPHE_SPECTRE_Y*hauteur;	// axe y
-
-	//(*graphe).graisse = graisse; // Epaisseur du trait
+	(*graphes).droite.xZero=0.457399*largeur;	// X0
+	(*graphes).droite.yZero= 0.736 * hauteur;	// Y0
+	(*graphes).droite.largeur=0.325*largeur;	// axe x
+	(*graphes).droite.hauteur=0.213*hauteur;	// axe y
 
 	return 0;
 	}
@@ -108,6 +107,14 @@ int grapheInitialise(grapheT * graphe, int nombre, int graisse, int r, int g, in
 		(*graphe).point[i].y=0;
 		}
 
+		//fprintf(stderr, " Initialisation de l'axe x\n");
+	float dx=(float)(*graphe).largeur/(float)nombre;
+	for(i=0;i<nombre;i++)
+		{
+		(*graphe).point[i].x=(*graphe).xZero + (int)(i*dx);
+		}
+
+		fprintf(stderr, " Initialisation des couleurs\n");
 	(*graphe).couleur.r = r;
 	(*graphe).couleur.g = g;
 	(*graphe).couleur.b = b;
@@ -150,7 +157,7 @@ int grapheInitialiseSpectre(grapheT * graphe, int largeur, int hauteur)
 	(*graphe).largeur = GRAPHE_SPECTRE_X*largeur; // axe x
 	(*graphe).hauteur = GRAPHE_SPECTRE_Y*hauteur; // axe y
 
-	(*graphe).graisse = 5; // Positon de l'origine
+	(*graphe).graisse = 3; // Positon de l'origine
 
 	int i;
 	float dx=(*graphe).largeur/(*graphe).nombre;
@@ -161,16 +168,35 @@ int grapheInitialiseSpectre(grapheT * graphe, int largeur, int hauteur)
 	return 0;
 	}
 
-int grapheInitialiseTaille(grapheT * graphe, int xZero, int yZero, int zoneX, int zoneY);
-int grapheInitialiseTaille(grapheT * graphe, int xZero, int yZero, int zoneX, int zoneY)
+int graphesInitialiseLongueurVersionZero(graphesT * graphes, int largeur, int hauteur)
 	{
-		//		Position et taille du graphe
+		//		Initialisation des longueurs des graphes
 
-	(*graphe).xZero = xZero; // Positon de l'origine
-	(*graphe).yZero = yZero; // Positon de l'origine
+			//	CORDE
+	(*graphes).corde.xZero=MARGE_X*largeur;	// X0
+	//(*graphes).corde.yZero=MARGE_Y*hauteur;	// Y0
+	(*graphes).corde.yZero = MARGE_Y*hauteur + GRAPHE_CORDE_Y*(hauteur/2); // Positon de l'origine
+	(*graphes).corde.largeur=GRAPHE_CORDE_X*largeur;	// axe x
+	(*graphes).corde.hauteur=GRAPHE_CORDE_Y*hauteur;	// axe y
 
-	(*graphe).largeur = zoneX; // axe x
-	(*graphe).hauteur = zoneY; // axe y
+			//	SPECTRE COMPLET
+	(*graphes).spectre.xZero=MARGE_X*largeur;	// X0
+	//(*graphes).spectre.yZero= ( MARGE_Y + GRAPHE_CORDE_Y ) * hauteur;	// Y0
+	(*graphes).spectre.yZero = ( MARGE_Y + GRAPHE_CORDE_Y + GRAPHE_SPECTRE_Y) * hauteur; // Positon de l'origine
+	(*graphes).spectre.largeur=GRAPHE_SPECTRE_X*largeur/2;	// axe x
+	(*graphes).spectre.hauteur=GRAPHE_SPECTRE_Y*hauteur/2;	// axe y
+
+			//	SPECTRE GAUCHE
+	(*graphes).gauche.xZero=(MARGE_X+GRAPHE_SPECTRE_X)*largeur;	// X0
+	(*graphes).gauche.yZero= ( MARGE_Y + GRAPHE_CORDE_Y + GRAPHE_SPECTRE_Y ) * hauteur;	// Y0
+	(*graphes).gauche.largeur=GRAPHE_SPECTRE_X*largeur/2;	// axe x
+	(*graphes).gauche.hauteur=GRAPHE_SPECTRE_Y*hauteur/2;	// axe y
+
+			//	SPECTRE DROIT
+	(*graphes).droite.xZero=(MARGE_X+GRAPHE_SPECTRE_X)*largeur;	// X0
+	(*graphes).droite.yZero= ( MARGE_Y + GRAPHE_CORDE_Y + GRAPHE_SPECTRE_Y  ) * hauteur;	// Y0
+	(*graphes).droite.largeur=GRAPHE_SPECTRE_X*largeur/2;	// axe x
+	(*graphes).droite.hauteur=GRAPHE_SPECTRE_Y*hauteur/2;	// axe y
 
 	return 0;
 	}

@@ -108,20 +108,29 @@ int projectionFourierGraphe(fourierT * fourier, projectionT * projection, graphe
 	(*graphes).droite.nombre = (*fourier).droite.nombre;
 
 	int i;
+	int j=(*fourier).spectre.nombre/2;
+	int k=(*fourier).spectre.nombre;
 
-	for(i=0;i<(*fourier).spectre.nombre;i++)
+	for(i=0;i<j;i++)
 		{
-		(*graphes).spectre.point[i].y = (*graphes).spectre.yZero + (int)( (*graphes).spectre.hauteur * (*fourier).spectre.module[i] );
+		(*graphes).spectre.point[2*i].y = (*graphes).spectre.yZero - (int)( (*graphes).spectre.hauteur * (*fourier).spectre.module[i]);
+		(*graphes).spectre.point[2*i+1].y = (*graphes).spectre.yZero - (int)( (*graphes).spectre.hauteur * (*fourier).spectre.module[k-i]);
 		}
 
+	j=(*fourier).gauche.nombre/2;
+	k=(*fourier).gauche.nombre;
 	for(i=0;i<(*fourier).gauche.nombre;i++)
 		{
-		(*graphes).gauche.point[i].y = (*graphes).gauche.yZero + (int)( (*graphes).gauche.hauteur * (*fourier).gauche.module[i] );
+		(*graphes).gauche.point[2*i].y = (*graphes).gauche.yZero - (int)( (*graphes).gauche.hauteur * (*fourier).gauche.module[i]);
+		(*graphes).gauche.point[2*i+1].y = (*graphes).gauche.yZero - (int)( (*graphes).gauche.hauteur * (*fourier).gauche.module[k-i]);
 		}
 
+	j=(*fourier).droite.nombre/2;
+	k=(*fourier).droite.nombre;
 	for(i=0;i<(*fourier).droite.nombre;i++)
 		{
-		(*graphes).droite.point[i].y = (*graphes).droite.yZero + (int)( (*graphes).droite.hauteur * (*fourier).droite.module[i] );
+		(*graphes).droite.point[2*i].y = (*graphes).droite.yZero - (int)( (*graphes).droite.hauteur * (*fourier).droite.module[i]);
+		(*graphes).droite.point[2*i+1].y = (*graphes).droite.yZero - (int)( (*graphes).droite.hauteur * (*fourier).droite.module[k-i]);
 		}
 
 	return 0;

@@ -890,10 +890,13 @@ int controleurDefileCommandes(controleurT * controleur, int zone)
 
 void controleurAfficheSouris(controleurT * controleur)
 	{
-	fprintf(stderr, "(*controleur).graphique.hauteur = %d\n", (*controleur).graphique.hauteur);
-	fprintf(stderr, "(*controleur).commandes.sourisY = %d\n", (*controleur).commandes.sourisY);
 	fprintf(stderr, "(*controleur).graphique.largeur = %d\n", (*controleur).graphique.largeur);
 	fprintf(stderr, "(*controleur).commandes.sourisX = %d\n", (*controleur).commandes.sourisX);
+	fprintf(stderr, "(*controleur).graphique.hauteur = %d\n", (*controleur).graphique.hauteur);
+	fprintf(stderr, "(*controleur).commandes.sourisY = %d\n\n", (*controleur).commandes.sourisY);
+
+	fprintf(stderr, "Position X = %f\n", (float)(*controleur).commandes.sourisX/(*controleur).graphique.largeur);
+	fprintf(stderr, "Position Y = %f\n", (float)(*controleur).commandes.sourisY/(*controleur).graphique.hauteur);
 
 	return ;
 	}

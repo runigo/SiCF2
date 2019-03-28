@@ -53,7 +53,7 @@ termes.
 
 	//  TAILLE IMPLICITE DE LA FENÊTRE
 #define FENETRE_X 892
-#define FENETRE_Y 550
+#define FENETRE_Y 581
 
 	//	Taille des marges et des graphes
 #define MARGE_X 0.05
@@ -61,7 +61,7 @@ termes.
 #define GRAPHE_CORDE_X 0.6
 #define GRAPHE_CORDE_Y 0.4
 #define GRAPHE_SPECTRE_X 0.6
-#define GRAPHE_SPECTRE_Y 0.8
+#define GRAPHE_SPECTRE_Y 0.4
 #define GRAPHE_CAPTEURS_X 0.6
 #define GRAPHE_CAPTEURS_Y 0.4
 
@@ -98,7 +98,8 @@ termes.
 	//	PARAMÈTRES DE LA CHAINE
 
 #define NOMBRE_MIN 8 // Nombre minimal de pendules
-#define NOMBRE 64 // Nombre implicite de pendules
+//#define NOMBRE 64 // Nombre implicite de pendules
+#define NOMBRE 512 // Nombre implicite de pendules
 #define NOMBRE_MAX 1024 // Nombre maximal de pendules
 
 #define ABSORPTION 2.1 // Facteur de l'extrémité absorbante

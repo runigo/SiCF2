@@ -51,7 +51,9 @@ typedef struct FonctionT fonctionT;
 int fonctionInitialise(fonctionT * spectre, int nombre);
 int fonctionChangeNombre(fonctionT * spectre, int nombre);
 
-int fonctionModule(fonctionT * spectre);
+float fonctionModuleMax1(fonctionT * fonction);
+float fonctionsModuleMax1(fonctionT * f1, fonctionT * f2);
+int fonctionModuleDivise(fonctionT * fonction, float max);
 
 void fonctionRacinesNemesDe1(fonctionT * rd1, int n);
 void fonctionRacinesMoins1(fonctionT * rd1, int n);
@@ -64,7 +66,7 @@ void fonctionEgale(fonctionT * fonction, fonctionT * resultat);
 void fonctionReplier(fonctionT * spectre, int diviseur);
 void fonctionNormale(fonctionT * f, fonctionT * nf);
 
-void fonctionModuleCarre(fonctionT * f, fonctionT * modCar);
+//void fonctionModuleCarre(fonctionT * f, fonctionT * modCar);
 void fonctionModuleCarreMax1(fonctionT * f, fonctionT * modCar);
 
 double fonctionSomme(fonctionT * f);

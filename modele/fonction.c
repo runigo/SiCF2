@@ -32,7 +32,9 @@ termes.
 
 #include "fonction.h"
 
-double fonctionMaximum(fonctionT * f);
+double fonctionMaximum(fonctionT * fonction);
+int fonctionModule(fonctionT * fonction);
+int fonctionModuleCarre(fonctionT * fonction);
 
 int fonctionInitialise(fonctionT * f, int nombre)
 	{
@@ -94,6 +96,93 @@ int fonctionModule(fonctionT * fonction)
 		(*fonction).module[i]=sqrt((*fonction).reel[i]*(*fonction).reel[i] + (*fonction).imag[i]*(*fonction).imag[i]);
 		}
 	return i;
+	}
+
+float fonctionModuleMax1(fonctionT * fonction)
+	{
+	int i;
+	double max=0.0;
+
+	fonctionModule(fonction);
+
+	for(i=0;i<(*fonction).nombre;i++)
+		{
+		if((*fonction).module[i] > max)
+			{
+			max=(*fonction).module[i];
+			}
+		}
+
+	if(max!=0.0)
+		{
+		for(i=0;i<(*fonction).nombre;i++)
+			{
+			(*fonction).module[i] = (*fonction).module[i] / max;
+			}
+		}
+
+	return max;
+	}
+
+float fonctionsModuleMax1(fonctionT * f1, fonctionT * f2)
+	{
+	int i;
+	double max=0.0;
+
+	fonctionModule(f1);
+	fonctionModule(f2);
+
+	for(i=0;i<(*f1).nombre;i++)
+		{
+		if((*f1).module[i] > max)
+			{
+			max=(*f1).module[i];
+			}
+		if((*f2).module[i] > max)
+			{
+			max=(*f2).module[i];
+			}
+		}
+
+	if(max!=0.0)
+		{
+		for(i=0;i<(*f1).nombre;i++)
+			{
+			(*f1).module[i] = (*f1).module[i] / max;
+			(*f2).module[i] = (*f2).module[i] / max;
+			}
+		}
+
+	return max;
+	}
+
+int fonctionModuleDivise(fonctionT * fonction, float max)
+	{
+	int i;
+
+	fonctionModule(fonction);
+
+	if(max!=0.0)
+		{
+		for(i=0;i<(*fonction).nombre;i++)
+			{
+			(*fonction).module[i] = (*fonction).module[i] / max;
+			}
+		}
+
+	return 0;
+	}
+
+int fonctionModuleCarre(fonctionT * fonction)
+	{
+	int i;
+
+	for(i=0;i<(*fonction).nombre;i++)
+		{
+		(*fonction).module[i] = (*fonction).reel[i] * (*fonction).reel[i] + (*fonction).imag[i] * (*fonction).imag[i];
+		}
+
+	return 0;
 	}
 
 /*
@@ -169,43 +258,6 @@ double fonctionSommeModuleCarre(fonctionT * f)
 		}
 
 	return somme;
-	}
-
-void fonctionModuleCarre(fonctionT * f, fonctionT * modCar)
-	{
-	int i;
-
-	for(i=0;i<N;i++)
-		{
-		(*modCar).reel[i] = (*f).reel[i] * (*f).reel[i] + (*f).imag[i] * (*f).imag[i];
-		}
-
-	return;
-	}
-
-void fonctionModuleCarreMax1(fonctionT * f, fonctionT * modCar)
-	{
-	int i;
-	double x;
-	double max=0.0;
-
-	fonctionModuleCarre(f, modCar);
-
-	for(i=0;i<N;i++)
-		{
-		x=(*modCar).reel[i];
-		if(x > max)
-			{
-			max=x;
-			}
-		}
-
-	for(i=0;i<N;i++)
-		{
-		(*modCar).imag[i] = (*modCar).reel[i] / max;
-		}
-
-	return;
 	}
 
 void fonctionAffiche(fonctionT * f)

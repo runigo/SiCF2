@@ -70,7 +70,7 @@ int grapheInitialise(grapheT * graphe, int nombre, int graisse, int r, int g, in
 int graphesInitialiseLongueur(graphesT * graphes, int largeur, int hauteur);
 
 
-// int grapheInitialiseCorde(grapheT * graphe, int largeur, int hauteur);
-// int grapheInitialiseSpectre(grapheT * graphe, int largeur, int hauteur);
+//int grapheInitialiseCorde(grapheT * graphe, int largeur, int hauteur);
+//int grapheInitialiseSpectre(grapheT * graphe, int largeur, int hauteur);
 
 #endif

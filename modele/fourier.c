@@ -38,7 +38,7 @@ http://www.ai.univ-paris8.fr/~audibert/tra/FFT.pdf
 void polynome(fonctionT * test, int n);
 void fourierEvaluer(fonctionT * trF, fonctionT * echang, fonctionT * racineDe1, int k, int n);
 
-int fourierModule(fourierT * fourier);
+int fourierModuleMax1(fourierT * fourier);
 
 int fourierInitialise(fourierT * fourier, int nombre)
 	{
@@ -61,16 +61,16 @@ int fourierCalcule(fourierT * fourier)
 	fourierEvaluer(&(*fourier).gauche, &(*fourier).echange, &(*fourier).racineNs2De1, 0, (*fourier).gauche.nombre);
 	fourierEvaluer(&(*fourier).droite, &(*fourier).echange, &(*fourier).racineNs2De1, 0, (*fourier).droite.nombre);
 
-	fourierModule(fourier);
+	fourierModuleMax1(fourier);
 
 	return 0;
 	}
 
-int fourierModule(fourierT * fourier)
+int fourierModuleMax1(fourierT * fourier)
 	{
-	fonctionModule(&(*fourier).spectre);
-	fonctionModule(&(*fourier).gauche);
-	fonctionModule(&(*fourier).droite);
+	float max = fonctionModuleMax1(&(*fourier).spectre);
+	fonctionModuleDivise(&(*fourier).gauche, max);
+	fonctionModuleDivise(&(*fourier).droite, max);
 
 	return 0;
 	}

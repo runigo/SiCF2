@@ -91,7 +91,7 @@ int optionsTraitement(optionsT * options, int nb, char *opt[])
 void optionsNombre(optionsT * options, char *opt)
 	{
 	int nombre = atoi(opt);
-	if(nombre>0 && nombre<NOMBRE_MAX)
+	if(nombre>NOMBRE_MIN-1 && nombre<NOMBRE_MAX+1 && ((nombre & (nombre - 1)) == 0))
 		{
 		(*options).nombre = nombre;
 		printf("Option nombre valide, nombre = %d\n", (*options).nombre);
@@ -99,7 +99,7 @@ void optionsNombre(optionsT * options, char *opt)
 	else
 		{
 		printf("Option nombre non valide, nombre = %d\n", (*options).nombre);
-		printf("	option nombre : 0.0 < nombre < %d\n", NOMBRE_MAX);
+		printf("	option nombre : %d < nombre < %d\n", NOMBRE_MIN, NOMBRE_MAX);
 		}
 	return;
 	}

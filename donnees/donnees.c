@@ -173,15 +173,14 @@ int donneesFourier(fourierT * fourier, optionsT * options)
 
 int donneesGraphes(graphesT * graphes, optionsT * options)
 	{
-		//fprintf(stderr, " Initialisation des longueurs\n");
-	graphesInitialiseLongueur(graphes, FENETRE_X, FENETRE_Y);
-
 		//fprintf(stderr, " Initialisation des couleurs et du nombre de points\n");
 	grapheInitialise(&(*graphes).corde,(*options).nombre, 5, 6, 6, 255);
 	grapheInitialise(&(*graphes).spectre,(*options).nombre, 3, 255, 6, 6);
 	grapheInitialise(&(*graphes).gauche,(*options).nombre/2, 1, 127, 63, 127);
 	grapheInitialise(&(*graphes).droite,(*options).nombre/2, 1, 127, 127, 63);
 
+		//fprintf(stderr, " Initialisation des longueurs\n");
+	graphesInitialiseLongueur(graphes, FENETRE_X, FENETRE_Y);
 
 	return 0;
 	}

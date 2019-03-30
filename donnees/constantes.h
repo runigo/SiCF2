@@ -52,32 +52,20 @@ termes.
 
 
 	//  TAILLE IMPLICITE DE LA FENÊTRE
-#define FENETRE_X 892
-#define FENETRE_Y 581
-
-	//	Taille des marges et des graphes
-#define MARGE_X 0.05
-#define MARGE_Y 0.05
-#define GRAPHE_CORDE_X 0.6
-#define GRAPHE_CORDE_Y 0.4
-#define GRAPHE_SPECTRE_X 0.6
-#define GRAPHE_SPECTRE_Y 0.4
-#define GRAPHE_CAPTEURS_X 0.6
-#define GRAPHE_CAPTEURS_Y 0.4
-
-
+#define FENETRE_X 950
+#define FENETRE_Y 688
 
 	//	PARAMÈTRES DES CAPTEURS
 #define GRAPHES 2 // Nombres de graphes
 
 	//  NOMBRE DE COMMANDES
-#define BOUTON_COMMANDES 17		// Nombres de petits boutons
-#define ROTATIF_COMMANDES 5		// Nombre de boutons rotatifs
-#define LINEAIRE_COMMANDES 4	// Nombres de commandes linéaires
-#define TRIANGLE_COMMANDES 21	// Nombres de commandes triangulaires
+#define BOUTON_COMMANDES 16		// Nombres de petits boutons
+#define ROTATIF_COMMANDES 7		// Nombre de boutons rotatifs
+#define LINEAIRE_COMMANDES 0	// Nombres de commandes linéaires
+#define TRIANGLE_COMMANDES 0	// Nombres de commandes triangulaires
 
 	//	PARAMÈTRES DES CAPTEURS
-#define CAPTEURS 6 // Nombres de capteurs
+#define CAPTEURS 5 // Nombres de capteurs
 #define DUREE_CAPTEURS 128 // Nombre de points en mémoire
 #define DY_ENERGIE (DUREE_CAPTEURS / 16) // Pour la densité d'énergie.
 

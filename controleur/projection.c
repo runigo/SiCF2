@@ -37,10 +37,13 @@ float projectionValeurAbsolue(float valeur);
 int projectionInitialise(projectionT * projection)
 	{
 	(*projection).logCouplage = 1.0 / log( (COUPLAGE_MAX/COUPLAGE_MIN) );
+	(*projection).logMasse = 1.0 / log( MASSE_MAX/MASSE_MIN );
 	(*projection).logDissipation = 1.0 / log( DISSIPATION_MAX/DISSIPATION_MIN );
 	(*projection).logJosephson = 1.0 / log( JOSEPHSON_MAX/JOSEPHSON_MIN );
 	(*projection).logAmplitude = 1.0 / log( AMPLITUDE_MAX/AMPLITUDE_MIN );
 	(*projection).logFrequence = 1.0 / log( FREQUENCE_MAX/FREQUENCE_MIN );
+	(*projection).logSimulation = 1.0 / log( DUREE_MAX );
+	(*projection).logNombre = 1.0 / log( NOMBRE_MAX/NOMBRE_MIN );
 	return 0;
 	}
 
@@ -147,14 +150,27 @@ int projectionSystemeCommandes(systemeT * systeme, projectionT * projection, com
 	(*commandes).rotatifPositionX[0]=(int)(-ratioRotatif*(*commandes).rotatifX*sin(theta));
 	(*commandes).rotatifPositionY[0]=(int)(ratioRotatif*(*commandes).rotatifY*cos(theta));
 
-	theta = DEUXPI * (*projection).logDissipation * log( (*systeme).dissipation/DISSIPATION_MIN );
+		//	Masse
+	if((*systeme).equation==4)
+		{
+		theta = DEUXPI * (*projection).logMasse * log( (*systeme).masseDroite/MASSE_MIN );
+		}
+	else
+		{
+		theta = DEUXPI * (*projection).logMasse * log( (*systeme).masseGauche/MASSE_MIN );
+		}
 	(*commandes).rotatifPositionX[1]=(int)(-ratioRotatif*(*commandes).rotatifX*sin(theta));
 	(*commandes).rotatifPositionY[1]=(int)(ratioRotatif*(*commandes).rotatifY*cos(theta));
 
-	//	Amplitude du moteur josephson
-	theta = DEUXPI * (*projection).logJosephson * log( projectionValeurAbsolue((*systeme).moteurs.courant/JOSEPHSON_MIN) );
+		//	Dissipation
+	theta = DEUXPI * (*projection).logDissipation * log( (*systeme).dissipation/DISSIPATION_MIN );
 	(*commandes).rotatifPositionX[2]=(int)(-ratioRotatif*(*commandes).rotatifX*sin(theta));
 	(*commandes).rotatifPositionY[2]=(int)(ratioRotatif*(*commandes).rotatifY*cos(theta));
+
+	//	Amplitude du moteur josephson
+	//theta = DEUXPI * (*projection).logJosephson * log( projectionValeurAbsolue((*systeme).moteurs.courant/JOSEPHSON_MIN) );
+	//(*commandes).rotatifPositionX[3]=(int)(-ratioRotatif*(*commandes).rotatifX*sin(theta));
+	//(*commandes).rotatifPositionY[3]=(int)(ratioRotatif*(*commandes).rotatifY*cos(theta));
 
 	//	Amplitude du moteur périodique
 	theta = DEUXPI * (*projection).logAmplitude * log( (*systeme).moteurs.amplitude/AMPLITUDE_MIN );
@@ -166,9 +182,29 @@ int projectionSystemeCommandes(systemeT * systeme, projectionT * projection, com
 	(*commandes).rotatifPositionX[4]=(int)(-ratioRotatif*(*commandes).rotatifX*sin(theta));
 	(*commandes).rotatifPositionY[4]=(int)(ratioRotatif*(*commandes).rotatifY*cos(theta));
 
-		//int rotatifPositionX[ROTATIF_COMMANDES]; // Position du bouton rotatif
-		//int rotatifPositionY[ROTATIF_COMMANDES];
+/*
+	//	Vitesse de la simulation
+	theta = DEUXPI * (*projection).logSimulation * log( duree );
+	(*commandes).rotatifPositionX[5]=(int)(-ratioRotatif*(*commandes).rotatifX*sin(theta));
+	(*commandes).rotatifPositionY[5]=(int)(ratioRotatif*(*commandes).rotatifY*cos(theta));
 
+	//	Nombre de pendules
+	theta = DEUXPI * (*projection).logNombre * log( (*systeme).nombre/NOMBRE_MIN );
+	(*commandes).rotatifPositionX[6]=(int)(-ratioRotatif*(*commandes).rotatifX*sin(theta));
+	(*commandes).rotatifPositionY[6]=(int)(ratioRotatif*(*commandes).rotatifY*cos(theta));
+*/
+
+					//	VERSION  SIGP
+		//	Simulation
+	theta = 0.9 * DEUXPI * duree/DUREE_MAX;
+	(*commandes).rotatifPositionX[5]=(int)(-ratioRotatif*(*commandes).rotatifX*sin(theta));
+	(*commandes).rotatifPositionY[5]=(int)(ratioRotatif*(*commandes).rotatifY*cos(theta));
+		//	(*commandes).lineairePositionX=(int)((*commandes).a * duree + (*commandes).b);
+
+		//	Nombre
+	theta = 0.9 * ((DEUXPI * (*systeme).nombre)/NOMBRE_MAX);
+	(*commandes).rotatifPositionX[6]=(int)(-ratioRotatif*(*commandes).rotatifX*sin(theta));
+	(*commandes).rotatifPositionY[6]=(int)(ratioRotatif*(*commandes).rotatifY*cos(theta));
 
 	int i;
 	for(i=0;i<BOUTON_COMMANDES;i++) (*commandes).boutonEtat[i]=0;
@@ -178,15 +214,15 @@ int projectionSystemeCommandes(systemeT * systeme, projectionT * projection, com
 	switch((*systeme).libreFixe)	//	
 		{
 		case 0:
-			(*commandes).boutonEtat[0]=1;break; // 32	Périodique
+			(*commandes).boutonEtat[0]=1;break; //		Périodique
 		case 1:
-			(*commandes).boutonEtat[1]=1;break; // 62	Libre
+			(*commandes).boutonEtat[1]=1;break; //		Libre
 		case 2:
-			(*commandes).boutonEtat[2]=1;break; // 88 	Fixe
+			(*commandes).boutonEtat[2]=1;break; //	 	Fixe
 		case 3:
-			(*commandes).boutonEtat[3]=1;break; // 115	Mixte
+			(*commandes).boutonEtat[3]=1;break; //		Mixte
 		case 4:
-			(*commandes).boutonEtat[3]=1;break; // 115	Mixte
+			(*commandes).boutonEtat[4]=1;break; //		Symétrique
 		default:
 			;
 		}
@@ -195,11 +231,11 @@ int projectionSystemeCommandes(systemeT * systeme, projectionT * projection, com
 	switch((*systeme).modeDissipation)	//	
 		{
 		case 0:
-			(*commandes).boutonEtat[5]=1;break; // 198	Nulle
+			(*commandes).boutonEtat[5]=1;break; //		Uniforme
 		case 1:
-			(*commandes).boutonEtat[4]=1;break; // 167	Uniforme
+			(*commandes).boutonEtat[6]=1;break; //		Nulle
 		case 2:
-			(*commandes).boutonEtat[6]=1;break; // 230	Extrémité
+			(*commandes).boutonEtat[7]=1;break; //		Extrémité
 		default:
 			;
 		}
@@ -207,7 +243,6 @@ int projectionSystemeCommandes(systemeT * systeme, projectionT * projection, com
 	(*commandes).boutonEtat[4]=1;
 	(*commandes).boutonEtat[5]=1;
 	(*commandes).boutonEtat[6]=1;
-*/
 	if((*systeme).moteurs.josephson > 0.0)
 		{
 		(*commandes).boutonEtat[7]=1; // 284	Marche
@@ -226,63 +261,26 @@ int projectionSystemeCommandes(systemeT * systeme, projectionT * projection, com
 			}
 		}
 
+*/
 	switch((*systeme).moteurs.generateur)	//	0:eteint, 1:sinus, 2:carre, 3:impulsion
 		{
 		case 0:
-			(*commandes).boutonEtat[11]=1;break; // 421	Arrêt
+			(*commandes).boutonEtat[8]=1;break; //		Arrêt
 		case 1:
-			(*commandes).boutonEtat[12]=1;break; // 449	Sinus
+			(*commandes).boutonEtat[9]=1;break; //		Sinus
 		case 2:
-			(*commandes).boutonEtat[13]=1;break; // 481	Carré
+			(*commandes).boutonEtat[10]=1;break; //		Carré
 		case 3:
-			(*commandes).boutonEtat[14]=1;break; // 509	Impulsion
+			(*commandes).boutonEtat[11]=1;break; //		Impulsion
 		default:
 			;
-		}
-	//(*commandes).boutonEtat[15]=0; // 536	Fluxon
-	//(*commandes).boutonEtat[16]=0; // 563	Anti F.
-
-	for(i=0;i<TRIANGLE_COMMANDES;i++) (*commandes).triangleEtat[i]=0;
-/*
-	switch((*projection).rotation)	//	
-		{
-		case 3:
-			(*commandes).triangleEtat[0]=1;break; // 
-		case 1:
-			(*commandes).triangleEtat[1]=1;break; // 
-		case 0:
-			(*commandes).triangleEtat[2]=0;break; // 
-		case -1:
-			(*commandes).triangleEtat[3]=1;break; // 
-		case -3:
-			(*commandes).triangleEtat[4]=1;break; // 
-		default:
-			;
-		}
-*/
-		//	Vitesse de la simulation
-	if(duree<DUREE)
-		{
-			if(duree==1) (*commandes).triangleEtat[5]=-1; else (*commandes).triangleEtat[6]=-1;
-			(*commandes).lineairePositionX=(int)((*commandes).a * duree + (*commandes).b);
-		}
-	else
-		{
-		if(duree>DUREE)
-			{
-			if(duree==DUREE_MAX) (*commandes).triangleEtat[10]=-1; else (*commandes).triangleEtat[9]=-1;
-			(*commandes).lineairePositionX=(int)((*commandes).A * duree + (*commandes).B);
-			}
-		else
-			{
-			(*commandes).triangleEtat[8]=1;
-			}
 		}
 
 	if(mode<0)
 		{
-		(*commandes).triangleEtat[7]=2;
+		(*commandes).boutonEtat[12]=1;
 		}
+
 	return 0;
 	}
 

@@ -185,6 +185,20 @@ int fonctionModuleCarre(fonctionT * fonction)
 	return 0;
 	}
 
+int fonctionFiltreCoupe0(fonctionT * fonction)
+	{
+	(*fonction).reel[0] = 0;
+
+	(*fonction).imag[0] = 0;
+
+	(*fonction).reel[(*fonction).nombre-1] = 0;
+
+	(*fonction).imag[(*fonction).nombre-1] = 0;
+
+	return 0;
+	}
+
+
 /*
 void fonctionReplier(fonctionT * spectre, int diviseur)
 	{// Effectue un repliement de spectre

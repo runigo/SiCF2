@@ -42,10 +42,13 @@ typedef struct ProjectionT projectionT;
 	struct ProjectionT
 		{
 		float logCouplage;
+		float logMasse;
 		float logDissipation;
 		float logJosephson;
 		float logAmplitude;
 		float logFrequence;
+		float logSimulation;
+		float logNombre;
 
 		int hauteur;
 		int largeur;

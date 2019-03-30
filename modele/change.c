@@ -37,6 +37,33 @@ void changeDioptre(systemeT * systeme);
 
 int changeCouplage(systemeT * systeme, float facteur)
 	{// Multiplie le couplage par facteur
+	float couplage;
+	int limite=0;
+	int i;
+
+	couplage = (*systeme).couplage * facteur / (*systeme).nombre;
+
+	if(couplage < COUPLAGE_MAX && couplage > COUPLAGE_MIN)
+		{
+		(*systeme).couplage=(*systeme).couplage*facteur;
+		for(i=0;i<(*systeme).nombre;i++)
+			{
+			penduleChangeCouplage(&(*systeme).pendule[i], facteur);
+			}
+		}
+	else
+		{
+		printf("Limite du couplage. ");
+		limite=1;
+		}
+
+	printf("Couplage = %6.3f\n", (*systeme).couplage);
+
+	return limite;
+	}
+/*
+int changeCouplage(systemeT * systeme, float facteur)
+	{// Multiplie le couplage par facteur
 	int i;
 	int limite=0;
 	float nouveau = (*systeme).couplage*facteur;
@@ -82,7 +109,7 @@ int changeCouplage(systemeT * systeme, float facteur)
 
 	return limite;
 	}
-
+*/
 int changeCouplageMoyenne(systemeT * systeme)
 	{// Fixe le couplage à un couplage moyen
 	float couplage;

@@ -52,7 +52,7 @@ typedef struct SystemeT systemeT;
 							//	 3 libre-fixe, 4 fixe-libre
 
 		float masseDroite;		//	Masse des pendules à droite
-		float masseGauche;		//	Masse des pendules à droite
+		float masseGauche;		//	Masse des pendules à gauche
 
 		float longueur;		//	Longueur des pendules
 		float couplage;		//	Masse des pendules

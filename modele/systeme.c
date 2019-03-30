@@ -149,14 +149,23 @@ int systemeInitialise(systemeT * systeme)
 
 int systemeInitialisePosition(systemeT * systeme, int forme)
 	{
-	(void)forme;
-
 	int i;
+
+		switch(forme)	//	
+			{
+			case 0: // Initialise
+	for(i=0;i<(*systeme).nombre;i++)
+	{
+	penduleInitialisePosition(&(*systeme).pendule[i], 0.0, 0.0);
+	};break;
+			case 1: // Initialise
 	for(i=0;i<(*systeme).nombre;i++)
 	{
 	penduleInitialisePosition(&(*systeme).pendule[i], 0.3*sin(i*0.1), 0.301*sin(i*0.1));
-	}
-
+	};break;
+			default:
+				;
+			}
 	return 0;
 	}
 

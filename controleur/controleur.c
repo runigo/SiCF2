@@ -58,6 +58,7 @@ void controleurAfficheSouris(controleurT * controleur);
 
 void controleurChangeMode(controleurT * controleur);
 void controleurChangeVitesse(controleurT * controleur, float facteur);
+int controleurChangeNombre(controleurT * controleur, int sens);
 
 int controleurDestruction(controleurT * control)
 	{
@@ -142,7 +143,7 @@ int controleurProjection(controleurT * controleur)
 	projectionFourierGraphe(&(*controleur).fourier, &(*controleur).projection, &(*controleur).graphes);
 
 		//fprintf(stderr, "projection du système sur les commandes\n");
-	//projectionSystemeCommandes(&(*controleur).systeme, &(*controleur).projection, &(*controleur).commandes, (*controleur).options.duree, (*controleur).options.modePause);
+	projectionSystemeCommandes(&(*controleur).systeme, &(*controleur).projection, &(*controleur).commandes, (*controleur).options.duree, (*controleur).options.modePause);
 
 	return (*controleur).sortie;
 	}
@@ -275,6 +276,16 @@ void controleurChangeVitesse(controleurT * controleur, float facteur)
 		}
 	fprintf(stderr, "duree = %d\n", (*controleur).options.duree);
 	return;
+	}
+
+int controleurChangeNombre(controleurT * controleur, int sens)
+	{
+	(void)controleur;
+	(void)sens;
+
+	fprintf(stderr, "controleurChangeNombre(controleurT * controleur, int sens)");
+
+	return 0;
 	}
 
 int controleurClavier(controleurT * controleur)
@@ -647,12 +658,17 @@ int controleurCommandes(controleurT * controleur, int zone)
 				changeConditionsLimites(&(*controleur).systeme, 2);break;
 			case 3: // Mixte
 				changeConditionsLimites(&(*controleur).systeme, 4);break;
+
 			case 4: // Uniforme
 				changeFormeDissipation(&(*controleur).systeme, 1);break;
-			case 5: // Nulle
+
+			case 5: // Uniforme
+				changeFormeDissipation(&(*controleur).systeme, 1);break;
+			case 6: // Nulle
 				changeFormeDissipation(&(*controleur).systeme, 0);break;
-			case 6: // Extrémité
+			case 7: // Extrémité
 				changeFormeDissipation(&(*controleur).systeme, 2);break;
+/*
 			case 7: // Marche
 				moteursChangeEtatJosephson(&(*controleur).systeme.moteurs,1);break;
 			case 8: // Arrêt
@@ -661,18 +677,31 @@ int controleurCommandes(controleurT * controleur, int zone)
 				moteursChangeJosephson(&(*controleur).systeme.moteurs,-1.0);break;
 			case 10: // Gauche
 				moteursChangeJosephson(&(*controleur).systeme.moteurs,-1.0);break;
-			case 11: // Arrêt
+*/
+			case 8: // Arrêt
 				moteursChangeGenerateur(&(*controleur).systeme.moteurs, 0);break;
-			case 12: // Sinus
+			case 9: // Sinus
 				moteursChangeGenerateur(&(*controleur).systeme.moteurs, 1);break;
-			case 13: // Carré
+			case 10: // Carré
 				moteursChangeGenerateur(&(*controleur).systeme.moteurs, 2);break;
-			case 14: // Impulsion
+			case 11: // Impulsion
 				moteursChangeGenerateur(&(*controleur).systeme.moteurs, 3);break;
+
+			case 12: // Pause
+				controleurChangeMode(controleur);break;
+			case 13: // min
+				(*controleur).duree=1;break;
+			case 14: // max
+				(*controleur).duree=DUREE_MAX;break;
+
+			case 15: // Initialise
+				systemeInitialisePosition(&(*controleur).systeme, 0);break;
+/*
 			case 15: // Fluxon
 				changeDephasage(&(*controleur).systeme, 2*PI);break;
 			case 16: // Anti F.
 				changeDephasage(&(*controleur).systeme, -2*PI);break;
+*/
 			default:
 				;
 			}
@@ -818,13 +847,17 @@ int controleurDefileCommandes(controleurT * controleur, int zone)
 				case 0:
 					changeCouplage(&(*controleur).systeme, 1.1);break;
 				case 1:
-					changeDissipation(&(*controleur).systeme, 1.1);break;
+					changeMasse(&(*controleur).systeme, 1.1);break;
 				case 2:
-					moteursChangeJosephson(&(*controleur).systeme.moteurs, 1.1);break;
+					changeDissipation(&(*controleur).systeme, 1.1);break;
 				case 3:
 					moteursChangeAmplitude(&(*controleur).systeme.moteurs, 1.1);break;
 				case 4:
 					moteursChangeFrequence(&(*controleur).systeme.moteurs, 1.1);break;
+				case 5:		// Vitesse de la simulation
+					controleurChangeVitesse(controleur, 1.1);break;
+				case 6:		// Nombre de pendules
+					controleurChangeNombre(controleur, 1);break;
 				default:
 					;
 				}
@@ -836,13 +869,17 @@ int controleurDefileCommandes(controleurT * controleur, int zone)
 				case 0:
 					changeCouplage(&(*controleur).systeme, 0.91);break;
 				case 1:
-					changeDissipation(&(*controleur).systeme, 0.91);break;
+					changeMasse(&(*controleur).systeme, 0.91);break;
 				case 2:
-					moteursChangeJosephson(&(*controleur).systeme.moteurs, 0.91);break;
+					changeDissipation(&(*controleur).systeme, 0.91);break;
 				case 3:
 					moteursChangeAmplitude(&(*controleur).systeme.moteurs, 0.91);break;
 				case 4:
 					moteursChangeFrequence(&(*controleur).systeme.moteurs, 0.91);break;
+				case 5:		// Vitesse de la simulation
+					controleurChangeVitesse(controleur, 0.91);break;
+				case 6:		// Nombre de pendules
+					controleurChangeNombre(controleur, -1);break;
 				default:
 					;
 				}

@@ -41,6 +41,7 @@ double observablesEnergieGravitationPendule(penduleT * pendule, float dt);
 double observablesEnergieHarmoniquePendule(penduleT * pendule, float dt);
 double observablesEnergieCouplagePendule(penduleT * pendule, penduleT * suivant, float dt);
 
+int observablesMiseAJourEnergie(observablesT * observables);
 int observablesMiseAJourCinetique(observablesT * observables, systemeT * systeme);
 int observablesMiseAJourRappel(observablesT * observables, systemeT * systeme);
 int observablesMiseAJourCouplage(observablesT * observables, systemeT * systeme);
@@ -62,12 +63,11 @@ int observablesInitialise(observablesT * observables)
 		(*observables).observable[j].maximumCapteur = 0;
 		for(i=0;i<DUREE_CAPTEURS;i++)
 			{
+			(*observables).observable[j].total[i]=0;
 			(*observables).observable[j].gauche[i]=0;
 			(*observables).observable[j].droite[i]=0;
 			}
 		}
-
-	//(*observables).observable[5].dureeCapteur=DY_ENERGIE;
 
 	(*observables).index=0;
 
@@ -83,13 +83,9 @@ float observablesMiseAJourAmplitude(observableT * observable)
 	max = 0.0;
 	for(i=0;i<DUREE_CAPTEURS;i++)
 		{
-		if((*observable).gauche[i] > max)
+		if((*observable).total[i] > max)
 			{
-			max = (*observable).gauche[i];
-			}
-		if((*observable).droite[i] > max)
-			{
-			max = (*observable).droite[i];
+			max = (*observable).total[i];
 			}
 		}
 	(*observable).maximumCapteur = max;
@@ -127,6 +123,21 @@ int observablesMiseAJour(observablesT * observables, systemeT * systeme)
 
 	observablesMiseAJourCouplage(observables, systeme);
 
+	observablesMiseAJourEnergie(observables);
+
+	return 0;
+	}
+
+int observablesMiseAJourEnergie(observablesT * observables)
+	{
+						// Calcul de l'énergie totale
+
+	(*observables).observable[0].gauche[(*observables).index] = (*observables).observable[1].gauche[(*observables).index] + (*observables).observable[2].gauche[(*observables).index] + (*observables).observable[3].gauche[(*observables).index];
+	(*observables).observable[0].droite[(*observables).index] = (*observables).observable[1].droite[(*observables).index] + (*observables).observable[2].droite[(*observables).index] + (*observables).observable[3].droite[(*observables).index];
+	(*observables).observable[0].total[(*observables).index] = (*observables).observable[0].gauche[(*observables).index] + (*observables).observable[0].droite[(*observables).index];
+
+	observablesMiseAJourAmplitude(&(*observables).observable[0]);
+
 	return 0;
 	}
 
@@ -145,10 +156,11 @@ int observablesMiseAJourCinetique(observablesT * observables, systemeT * systeme
 		}
 
 		// Mise à jour de l'énergie cinétique
-	(*observables).observable[0].gauche[(*observables).index]=ecGauche;
-	(*observables).observable[0].droite[(*observables).index]=ecDroite;
+	(*observables).observable[1].gauche[(*observables).index]=ecGauche;
+	(*observables).observable[1].droite[(*observables).index]=ecDroite;
+	(*observables).observable[1].total[(*observables).index]=ecGauche+ecDroite;
 
-	observablesMiseAJourAmplitude(&(*observables).observable[0]);
+	observablesMiseAJourAmplitude(&(*observables).observable[1]);
 
 	return 0;
 	}
@@ -181,12 +193,11 @@ int observablesMiseAJourRappel(observablesT * observables, systemeT * systeme)
 		break;
 		}
 
-
 		// Mise à jour de l'énergie de rappel
-	(*observables).observable[1].gauche[(*observables).index]=erGauche;
-	(*observables).observable[1].droite[(*observables).index]=erDroite;
+	(*observables).observable[3].gauche[(*observables).index]=erGauche;
+	(*observables).observable[3].droite[(*observables).index]=erDroite;
 
-	observablesMiseAJourAmplitude(&(*observables).observable[1]);
+	observablesMiseAJourAmplitude(&(*observables).observable[3]);
 
 	return 0;
 	}
@@ -215,6 +226,8 @@ int observablesMiseAJourCouplage(observablesT * observables, systemeT * systeme)
 
 	(*observables).observable[2].gauche[(*observables).index]=ekGauche;
 	(*observables).observable[2].droite[(*observables).index]=ekDroite;
+	(*observables).observable[2].total[(*observables).index]=ekGauche+ekDroite;
+
 	observablesMiseAJourAmplitude(&(*observables).observable[2]);
 
 	return 0;

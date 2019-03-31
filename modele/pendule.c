@@ -33,16 +33,16 @@ termes.
 
 
 	// Force de gravitation
-double gravitationPendul(penduleT * pendul, int choix);
+double gravitationPendul(penduleT * pendule, int choix);
 	// dt * vitesse du pendule
-double vitessePendul(penduleT * pendul);
+double vitessePendul(penduleT * pendule);
 	// Somme des forces
-double forcesPendul(penduleT * pendul, int choix, float courantJosephson);
+double forcesPendul(penduleT * pendule, int choix, float courantJosephson);
 
 	// Variation des parametres reduits
-void changeAlpha(penduleT * pendul, float facteur);
-void changeKapa(penduleT * pendul, float facteur);
-void changeGamma(penduleT * pendul, float facteur);
+void changeAlpha(penduleT * pendule, float facteur);
+void changeKapa(penduleT * pendule, float facteur);
+void changeGamma(penduleT * pendule, float facteur);
 
 
 void penduleJauge(penduleT * pendule, float jauge)
@@ -54,77 +54,77 @@ void penduleJauge(penduleT * pendule, float jauge)
 	}
 
 // Initialisation des parametres
-void penduleInitialiseParametre(penduleT * pendul, float masse, float longueur, float dissipation)
+void penduleInitialiseParametre(penduleT * pendule, float masse, float longueur, float dissipation)
 	{
-	(*pendul).masse = masse;
-	(*pendul).longueur = longueur;
-	(*pendul).dissipation = dissipation;
+	(*pendule).masse = masse;
+	(*pendule).longueur = longueur;
+	(*pendule).dissipation = dissipation;
 	return;
 	}
-void penduleInitialiseExterieur(penduleT * pendul, float couplage, float gravitation, float dt)
+void penduleInitialiseExterieur(penduleT * pendule, float couplage, float gravitation, float dt)
 	{
-	(*pendul).couplage = couplage;
-	(*pendul).gravitation = gravitation;
-	penduleInitialiseKapa(pendul, couplage, dt);
-	penduleInitialiseGamma(pendul, gravitation, dt);
-	penduleInitialiseAlpha(pendul, (*pendul).dissipation, dt);
+	(*pendule).couplage = couplage;
+	(*pendule).gravitation = gravitation;
+	penduleInitialiseKapa(pendule, couplage, dt);
+	penduleInitialiseGamma(pendule, gravitation, dt);
+	penduleInitialiseAlpha(pendule, (*pendule).dissipation, dt);
 	return;
 	}
-void penduleReinitialiseMasse(penduleT * pendul, float masse, float dt)
+void penduleReinitialiseMasse(penduleT * pendule, float masse, float dt)
 	{
-	(*pendul).masse = masse;
-	penduleInitialiseKapa(pendul, (*pendul).couplage, dt);
-	penduleInitialiseGamma(pendul, (*pendul).gravitation, dt);
-	penduleInitialiseAlpha(pendul, (*pendul).dissipation, dt);
+	(*pendule).masse = masse;
+	penduleInitialiseKapa(pendule, (*pendule).couplage, dt);
+	penduleInitialiseGamma(pendule, (*pendule).gravitation, dt);
+	penduleInitialiseAlpha(pendule, (*pendule).dissipation, dt);
 	return;
 	}
-void penduleInitialisePosition(penduleT * pendul, float ancien, float actuel)
+void penduleInitialisePosition(penduleT * pendule, float ancien, float actuel)
 	{
-	((*pendul).ancien) = ancien;
-	((*pendul).actuel) = actuel;
-	((*pendul).nouveau) = 2 * actuel - ancien;
+	((*pendule).ancien) = ancien;
+	((*pendule).actuel) = actuel;
+	((*pendule).nouveau) = 2 * actuel - ancien;
 	return;
 	}
-void penduleInitialiseDephasage(penduleT * pendul, float dephasage)
+void penduleInitialiseDephasage(penduleT * pendule, float dephasage)
 	{
-	((*pendul).dephasage)=dephasage;
+	((*pendule).dephasage)=dephasage;
 	return;
 	}
 
 // Initialisation des parametres reduits
-void penduleInitialiseAlpha(penduleT * pendul, float dissipation, float dt)
+void penduleInitialiseAlpha(penduleT * pendule, float dissipation, float dt)
 	{
-	if((*pendul).masse!=0.0)
+	if((*pendule).masse!=0.0)
 		{
-		(*pendul).alpha = - dt * dissipation / (*pendul).masse / (*pendul).longueur;
+		(*pendule).alpha = - dt * dissipation / (*pendule).masse / (*pendule).longueur;
 		}
 	else
 		{// si masse nulle, nouvelle définition de alpha
-		(*pendul).alpha = - dt * dissipation;
+		(*pendule).alpha = - dt * dissipation;
 		}
 	return;
 	}
-void penduleInitialiseKapa(penduleT * pendul, float couplage, float dt)
+void penduleInitialiseKapa(penduleT * pendule, float couplage, float dt)
 	{
-	if((*pendul).masse!=0.0)
+	if((*pendule).masse!=0.0)
 		{
-		(*pendul).kapa = - dt * dt * couplage / (*pendul).masse;
+		(*pendule).kapa = - dt * dt * couplage / (*pendule).masse;
 		}
 	else
 		{// si masse nulle, nouvelle définition de kapa
-		(*pendul).kapa = - dt * dt * couplage;
+		(*pendule).kapa = - dt * dt * couplage;
 		}
 	return;
 	}
-void penduleInitialiseGamma(penduleT * pendul, float gravitation, float dt)
+void penduleInitialiseGamma(penduleT * pendule, float gravitation, float dt)
 	{
-	if((*pendul).longueur!=0.0)
+	if((*pendule).longueur!=0.0)
 		{
-		(*pendul).gamma = - dt * dt * gravitation / (*pendul).longueur;
+		(*pendule).gamma = - dt * dt * gravitation / (*pendule).longueur;
 		}
 	else
 		{// si longueur nulle, nouvelle définition de gamma
-		(*pendul).gamma = - dt * dt * gravitation;
+		(*pendule).gamma = - dt * dt * gravitation;
 		}
 	return;
 	}
@@ -132,68 +132,69 @@ void penduleInitialiseGamma(penduleT * pendul, float gravitation, float dt)
 
 
 // Variation des parametres
-void penduleChangeMasse(penduleT * pendul, float facteur)
+void penduleChangeMasse(penduleT * pendule, float facteur)
 	{
 	if(facteur != 0.0)
 		{
-		(*pendul).masse = (*pendul).masse * facteur;
-		(*pendul).alpha = (*pendul).alpha / facteur;
-		(*pendul).kapa = (*pendul).kapa / facteur;
+		(*pendule).masse = (*pendule).masse * facteur;
+		(*pendule).alpha = (*pendule).alpha / facteur;
+		(*pendule).kapa = (*pendule).kapa / facteur;
 		}
 	return;
 	}
-void penduleChangeLongueur(penduleT * pendul, float facteur)
+void penduleChangeLongueur(penduleT * pendule, float facteur)
 	{
 	if(facteur != 0.0)
 		{
-		(*pendul).longueur = (*pendul).longueur * facteur;
-		(*pendul).gamma = (*pendul).gamma / facteur;
+		(*pendule).longueur = (*pendule).longueur * facteur;
+		(*pendule).gamma = (*pendule).gamma / facteur;
 		}
 	return;
 	}
-void penduleChangeDissipation(penduleT * pendul, float facteur)
+void penduleChangeDissipation(penduleT * pendule, float facteur)
 	{
-	(*pendul).alpha = (*pendul).alpha * facteur;
+	(*pendule).dissipation = (*pendule).dissipation * facteur;
+	(*pendule).alpha = (*pendule).alpha * facteur;
 	return;
 	}
-void penduleChangeCouplage(penduleT * pendul, float facteur)
+void penduleChangeCouplage(penduleT * pendule, float facteur)
 	{
-	(*pendul).couplage = (*pendul).couplage * facteur;
-	(*pendul).kapa = (*pendul).kapa * facteur;
+	(*pendule).couplage = (*pendule).couplage * facteur;
+	(*pendule).kapa = (*pendule).kapa * facteur;
 	return;
 	}
-void penduleChangeGravitation(penduleT * pendul, float facteur)
+void penduleChangeGravitation(penduleT * pendule, float facteur)
 	{
-	(*pendul).gamma = (*pendul).gamma * facteur;
+	(*pendule).gamma = (*pendule).gamma * facteur;
 	return;
 	}
-void penduleAjouteDephasage(penduleT * pendul, float dephasage)
+void penduleAjouteDephasage(penduleT * pendule, float dephasage)
 	{
-	(*pendul).dephasage = (*pendul).dephasage + dephasage;
+	(*pendule).dephasage = (*pendule).dephasage + dephasage;
 	return;
 	}
 
 // Evolution temporelle du pendule
 
-void penduleIncremente(penduleT * pendul)
+void penduleIncremente(penduleT * pendule)
 	{
 		// incrementation des positions
-	((*pendul).ancien)=((*pendul).actuel);
-	((*pendul).actuel)=((*pendul).nouveau);
+	((*pendule).ancien)=((*pendule).actuel);
+	((*pendule).actuel)=((*pendule).nouveau);
 	return;
 	}
 
-void penduleInertie(penduleT * pendul, int choix, float courantJosephson)
+void penduleInertie(penduleT * pendule, int choix, float courantJosephson)
 	{
 		// application du principe d'inertie
-	(*pendul).nouveau = forcesPendul(pendul, choix, courantJosephson) + 2*((*pendul).actuel) - (*pendul).ancien;
+	(*pendule).nouveau = forcesPendul(pendule, choix, courantJosephson) + 2*((*pendule).actuel) - (*pendule).ancien;
 	return;
 	}
 
-double forcesPendul(penduleT * pendul, int choix, float courantJosephson)
+double forcesPendul(penduleT * pendule, int choix, float courantJosephson)
 	{
 		// somme des forces sur le pendule
-	return ((*pendul).forceCouplage + gravitationPendul(pendul, choix) + ((*pendul).alpha)*vitessePendul(pendul) + courantJosephson);
+	return ((*pendule).forceCouplage + gravitationPendul(pendule, choix) + ((*pendule).alpha)*vitessePendul(pendule) + courantJosephson);
 	}
 
 void penduleCouplage(penduleT * m1, penduleT * m2, penduleT * m3)
@@ -209,7 +210,7 @@ void penduleCouplage(penduleT * m1, penduleT * m2, penduleT * m3)
 	return;
 	}
 
-double gravitationPendul(penduleT * pendul, int choix)
+double gravitationPendul(penduleT * pendule, int choix)
 	{
 		// Calcul de la FORCE DE RAPPEL
 	double forceRappel;
@@ -217,10 +218,10 @@ double gravitationPendul(penduleT * pendul, int choix)
 	switch(choix)
 		{
 		case 1:// gravitation
-			forceRappel = (*pendul).gamma * sin((*pendul).actuel);
+			forceRappel = (*pendule).gamma * sin((*pendule).actuel);
 		break;
 		case 2:// linearisation harmonique
-			forceRappel = (*pendul).gamma * (*pendul).actuel;
+			forceRappel = (*pendule).gamma * (*pendule).actuel;
 		break;
 		case 3:// corde vibrante
 			forceRappel = 0.0;
@@ -233,28 +234,28 @@ double gravitationPendul(penduleT * pendul, int choix)
 	return forceRappel;
 	}
 
-double vitessePendul(penduleT * pendul)
+double vitessePendul(penduleT * pendule)
 	{
 		// Retourne vdt
-	return (*pendul).actuel - (*pendul).ancien;
+	return (*pendule).actuel - (*pendule).ancien;
 	}
 
 
-void penduleAffiche(penduleT * pendul)
+void penduleAffiche(penduleT * pendule)
 	{
 		// Affichage des positions et des parametres
-	printf("   ancien    %f\n",(*pendul).ancien);
-	printf("   actuel    %f\n",(*pendul).actuel);
-	printf("   nouveau   %f\n",(*pendul).nouveau);
+	printf("   ancien    %f\n",(*pendule).ancien);
+	printf("   actuel    %f\n",(*pendule).actuel);
+	printf("   nouveau   %f\n",(*pendule).nouveau);
 
-	printf("    masse     %f\n",(*pendul).masse);
-	printf("    longueur  %f\n",(*pendul).longueur);
-	printf("    alpha    %f\n",(*pendul).alpha);
-	printf("    kapa     %f\n",(*pendul).kapa);
-	printf("    gamma    %f\n",(*pendul).gamma);
+	printf("    masse     %f\n",(*pendule).masse);
+	printf("    longueur  %f\n",(*pendule).longueur);
+	printf("    alpha    %f\n",(*pendule).alpha);
+	printf("    kapa     %f\n",(*pendule).kapa);
+	printf("    gamma    %f\n",(*pendule).gamma);
 
-	printf("forceCouplage %f\n",(*pendul).forceCouplage);
-	printf("  forceTotale %f\n",(*pendul).forceTotale);
+	printf("forceCouplage %f\n",(*pendule).forceCouplage);
+	printf("  forceTotale %f\n",(*pendule).forceTotale);
 
 	return;
 	}

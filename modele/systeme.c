@@ -134,6 +134,7 @@ int systemeInitialise(systemeT * systeme)
 */
 
 	// Masse initiale Dioptre
+/*
 	if((*systeme).equation == 4)
 		{
 	int i;
@@ -143,7 +144,7 @@ int systemeInitialise(systemeT * systeme)
 				}
 		}
 	//printf("Systeme initialisé\n");
-
+*/
 	return 0;
 	}
 

@@ -61,55 +61,7 @@ int changeCouplage(systemeT * systeme, float facteur)
 
 	return limite;
 	}
-/*
-int changeCouplage(systemeT * systeme, float facteur)
-	{// Multiplie le couplage par facteur
-	int i;
-	int limite=0;
-	float nouveau = (*systeme).couplage*facteur;
-	if(facteur > 1)
-		{
-		if(nouveau < COUPLAGE_MAX)
-			{
-			(*systeme).couplage=nouveau;
-			for(i=0;i<(*systeme).nombre;i++)
-				{
-				penduleChangeCouplage(&(*systeme).pendule[i], facteur);
-				}
 
-			printf("Couplage = %6.3f\n", (*systeme).couplage);
-			}
-		else
-			{
-			printf("Couplage maximal atteint : ");
-			printf("Couplage = %6.3f\n", (*systeme).couplage);
-			limite=1;
-			}
-		}
-
-	if(facteur < 1 )
-		{
-		if(nouveau > COUPLAGE_MIN)
-			{
-			(*systeme).couplage=nouveau;
-			for(i=0;i<(*systeme).nombre;i++)
-				{
-				penduleChangeCouplage(&(*systeme).pendule[i], facteur);
-				}
-
-			printf("Couplage = %6.3f\n", (*systeme).couplage);
-			}
-		else
-			{
-			printf("Couplage minimal atteint : ");
-			printf("Couplage = %6.3f\n", (*systeme).couplage);
-			limite=2;
-			}
-		}
-
-	return limite;
-	}
-*/
 int changeCouplageMoyenne(systemeT * systeme)
 	{// Fixe le couplage à un couplage moyen
 	float couplage;
@@ -212,34 +164,33 @@ void changeDioptre(systemeT * systeme)
 void changeMasse(systemeT * systeme, float facteur)
 	{
 	float droite = (*systeme).masseDroite;
-	float gauche = (*systeme).masseGauche;
-	if((*systeme).equation==4)
+	//float gauche = (*systeme).masseGauche;
+	float masse = droite*facteur;
+	int i;
+
+	if(masse < MASSE_MAX && masse > MASSE_MIN)
 		{
-		float masse = droite*facteur;
-		if(masse < MASSE_MAX && masse > MASSE_MIN)
+		(*systeme).masseDroite=masse;
+		if((*systeme).equation==4)
 			{
-			(*systeme).masseDroite=masse;
-			changeDioptre(systeme);
+			for(i=(*systeme).nombre/2;i<(*systeme).nombre;i++)
+				{
+				penduleChangeMasse(&(*systeme).pendule[i], facteur);
+				}
 			printf("Masse à gauche = %6.3f, masse à droite = %6.3f\n", (*systeme).masseGauche, masse);
 			}
 		else
 			{
-			printf("Masse limite atteinte\n");
+			for(i=0;i<(*systeme).nombre;i++)
+				{
+				penduleChangeMasse(&(*systeme).pendule[i], facteur);
+				}
+			printf("Masse = %6.3f\n", masse);
 			}
 		}
 	else
 		{
-		float masse = gauche*facteur;
-		if(masse < MASSE_MAX && masse > MASSE_MIN)
-			{
-			(*systeme).masseGauche=masse;
-			changeDioptre(systeme);
-			printf("Masse = %6.3f\n", masse);
-			}
-		else
-			{
-			printf("Masse limite atteinte\n");
-			}
+		printf("Masse limite atteinte\n");
 		}
 
 	return;
@@ -254,13 +205,9 @@ int changeDissipation(systemeT * systeme, float facteur)
 
 	if(dissipation < DISSIPATION_MAX && dissipation > DISSIPATION_MIN)
 		{
-		// Multiplie la dissipation du système par facteur <> 0
-		// Conserve en mémoire la dissipation du système si = 0
-		if(facteur!=0.0)
-			{
-			(*systeme).dissipation = (*systeme).dissipation * facteur;
-			}
-		// Multiplie la dissipation des pendules par facteur
+			// Enregistre la dissipation
+		(*systeme).dissipation = dissipation;
+			// Mise à jour des pendules
 		for(i=0;i<(*systeme).nombre;i++)
 			{
 			penduleChangeDissipation(&(*systeme).pendule[i], facteur);
@@ -311,47 +258,42 @@ int changeDissipationMoyenne(systemeT * systeme)
 
 void changeFormeDissipation(systemeT * systeme, int forme)
 	{// initialise une dissipation nulle(0), uniforme(1) ou extremite absorbante(2)
-	float dissipation = 0.99;
+	float dissipation = (*systeme).dissipation;
+	int i;
 
 	if ( forme == 0 )
 		{
 		dissipation = 0.0;
 		(*systeme).modeDissipation = 0;
+		for(i=0;i<(*systeme).nombre;i++)
+			{
+				// Reinitialisation de alpha
+			penduleInitialiseAlpha(&(*systeme).pendule[i], 0.0, (*systeme).moteurs.dt);
+			}
+		printf("Dissipation = %6.3f\n", 0.0);
 		}
 
 	if (  forme == 1 )
 		{
 		(*systeme).modeDissipation = 1;
-		if ( (*systeme).dissipation != 0.0 )
+		for(i=0;i<(*systeme).nombre;i++)
 			{
-			dissipation = (*systeme).dissipation;
+				// Reinitialisation de alpha
+			penduleInitialiseAlpha(&(*systeme).pendule[i], dissipation, (*systeme).moteurs.dt);
 			}
-		else
-			{
-			(*systeme).dissipation = dissipation;
-			}
-		}
-
-	// Reinitialisation de alpha
-	int i;
-	for(i=0;i<(*systeme).nombre;i++)
-		{
-		if ( forme == 2 )
-			{
-			dissipation = (*systeme).pendule[i].absorbance*dissipation;
-			}
-		penduleInitialiseAlpha(&(*systeme).pendule[i], dissipation, (*systeme).moteurs.dt);
+		printf("Dissipation = %6.3f\n", dissipation);
 		}
 
 	if ( forme == 2 )
 		{
 		(*systeme).modeDissipation = 2;
+		for(i=0;i<(*systeme).nombre;i++)
+			{
+				// Reinitialisation de alpha
+			penduleInitialiseAlpha(&(*systeme).pendule[i], (*systeme).pendule[i].absorbance*dissipation, (*systeme).moteurs.dt);
+			}
 		printf("Dissipation premier= %6.3f\n", (*systeme).pendule[0].dissipation);
 		printf("Dissipation dernier= %6.3f\n", (*systeme).pendule[(*systeme).nombre-1].dissipation);
-		}
-	else
-		{ // Cas uniforme (forme=1)
-		printf("Dissipation = %6.3f\n", dissipation);
 		}
 
 	return;

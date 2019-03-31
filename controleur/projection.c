@@ -151,14 +151,7 @@ int projectionSystemeCommandes(systemeT * systeme, projectionT * projection, com
 	(*commandes).rotatifPositionY[0]=(int)(ratioRotatif*(*commandes).rotatifY*cos(theta));
 
 		//	Masse
-	if((*systeme).equation==4)
-		{
-		theta = DEUXPI * (*projection).logMasse * log( (*systeme).masseDroite/MASSE_MIN );
-		}
-	else
-		{
-		theta = DEUXPI * (*projection).logMasse * log( (*systeme).masseGauche/MASSE_MIN );
-		}
+	theta = DEUXPI * (*projection).logMasse * log( (*systeme).masseDroite/MASSE_MIN );
 	(*commandes).rotatifPositionX[1]=(int)(-ratioRotatif*(*commandes).rotatifX*sin(theta));
 	(*commandes).rotatifPositionY[1]=(int)(ratioRotatif*(*commandes).rotatifY*cos(theta));
 
@@ -166,11 +159,6 @@ int projectionSystemeCommandes(systemeT * systeme, projectionT * projection, com
 	theta = DEUXPI * (*projection).logDissipation * log( (*systeme).dissipation/DISSIPATION_MIN );
 	(*commandes).rotatifPositionX[2]=(int)(-ratioRotatif*(*commandes).rotatifX*sin(theta));
 	(*commandes).rotatifPositionY[2]=(int)(ratioRotatif*(*commandes).rotatifY*cos(theta));
-
-	//	Amplitude du moteur josephson
-	//theta = DEUXPI * (*projection).logJosephson * log( projectionValeurAbsolue((*systeme).moteurs.courant/JOSEPHSON_MIN) );
-	//(*commandes).rotatifPositionX[3]=(int)(-ratioRotatif*(*commandes).rotatifX*sin(theta));
-	//(*commandes).rotatifPositionY[3]=(int)(ratioRotatif*(*commandes).rotatifY*cos(theta));
 
 	//	Amplitude du moteur périodique
 	theta = DEUXPI * (*projection).logAmplitude * log( (*systeme).moteurs.amplitude/AMPLITUDE_MIN );
@@ -182,24 +170,10 @@ int projectionSystemeCommandes(systemeT * systeme, projectionT * projection, com
 	(*commandes).rotatifPositionX[4]=(int)(-ratioRotatif*(*commandes).rotatifX*sin(theta));
 	(*commandes).rotatifPositionY[4]=(int)(ratioRotatif*(*commandes).rotatifY*cos(theta));
 
-/*
-	//	Vitesse de la simulation
-	theta = DEUXPI * (*projection).logSimulation * log( duree );
-	(*commandes).rotatifPositionX[5]=(int)(-ratioRotatif*(*commandes).rotatifX*sin(theta));
-	(*commandes).rotatifPositionY[5]=(int)(ratioRotatif*(*commandes).rotatifY*cos(theta));
-
-	//	Nombre de pendules
-	theta = DEUXPI * (*projection).logNombre * log( (*systeme).nombre/NOMBRE_MIN );
-	(*commandes).rotatifPositionX[6]=(int)(-ratioRotatif*(*commandes).rotatifX*sin(theta));
-	(*commandes).rotatifPositionY[6]=(int)(ratioRotatif*(*commandes).rotatifY*cos(theta));
-*/
-
-					//	VERSION  SIGP
 		//	Simulation
 	theta = 0.9 * DEUXPI * duree/DUREE_MAX;
 	(*commandes).rotatifPositionX[5]=(int)(-ratioRotatif*(*commandes).rotatifX*sin(theta));
 	(*commandes).rotatifPositionY[5]=(int)(ratioRotatif*(*commandes).rotatifY*cos(theta));
-		//	(*commandes).lineairePositionX=(int)((*commandes).a * duree + (*commandes).b);
 
 		//	Nombre
 	theta = 0.9 * ((DEUXPI * (*systeme).nombre)/NOMBRE_MAX);
@@ -239,29 +213,7 @@ int projectionSystemeCommandes(systemeT * systeme, projectionT * projection, com
 		default:
 			;
 		}
-/*
-	(*commandes).boutonEtat[4]=1;
-	(*commandes).boutonEtat[5]=1;
-	(*commandes).boutonEtat[6]=1;
-	if((*systeme).moteurs.josephson > 0.0)
-		{
-		(*commandes).boutonEtat[7]=1; // 284	Marche
-		(*commandes).boutonEtat[9]=1; // 339	Droite
-		}
-	else
-		{
-		if((*systeme).moteurs.josephson < 0.0)
-			{
-			(*commandes).boutonEtat[7]=1; // 284	Marche
-			(*commandes).boutonEtat[10]=1; // 367	Gauche
-			}
-		else
-			{
-			(*commandes).boutonEtat[8]=1; // 311	Arrêt
-			}
-		}
 
-*/
 	switch((*systeme).moteurs.generateur)	//	0:eteint, 1:sinus, 2:carre, 3:impulsion
 		{
 		case 0:
@@ -292,40 +244,20 @@ int projectionObservablesCapteurs(observablesT * observables, projectionT * proj
 
 	for(j=0;j<CAPTEURS;j++)
 		{
-		if(j!=5)
+		if((*observables).observable[j].maximumCapteur!=0.0)
 			{
-			if((*observables).observable[j].maximumCapteur!=0.0)
-				{
-				a = -(float)((*capteurs).capteur[j].hauteur) / (*observables).observable[j].maximumCapteur;
-				}
-			else
-				{
-				a = 0.0;
-				}
-			y0 = (*capteurs).capteur[j].yZero;
-			for(i=0;i<DUREE_CAPTEURS;i++)
-				{
-				k=(i+(*observables).index+1)%DUREE_CAPTEURS;
-				(*capteurs).capteur[j].gauche[i].y = (int)(a*(*observables).observable[j].gauche[k]) + y0;
-				(*capteurs).capteur[j].droite[i].y = (int)(a*(*observables).observable[j].droite[k]) + y0;
-				}
+			a = -(float)((*capteurs).capteur[j].hauteur) / (*observables).observable[j].maximumCapteur;
 			}
 		else
 			{
-			if((*observables).observable[j].maximumCapteur!=0.0)
-				{
-				a = -(float)((*capteurs).capteur[j].hauteur) / (*observables).observable[j].maximumCapteur;
-				}
-			else
-				{
-				a = 0.0;
-				}
-			y0 = (*capteurs).capteur[j].yZero;
-			for(i=0;i<DY_ENERGIE;i++)
-				{
-				(*capteurs).capteur[j].gauche[i].y = (int)(a*(*observables).observable[j].gauche[i]) + y0;
-				(*capteurs).capteur[j].droite[i].y = (int)(a*(*observables).observable[j].droite[i]) + y0;
-				}
+			a = 0.0;
+			}
+		y0 = (*capteurs).capteur[j].yZero;
+		for(i=0;i<DUREE_CAPTEURS;i++)
+			{
+			k=(i+(*observables).index+1)%DUREE_CAPTEURS;
+			(*capteurs).capteur[j].gauche[i].y = (int)(a*(*observables).observable[j].gauche[k]) + y0;
+			(*capteurs).capteur[j].droite[i].y = (int)(a*(*observables).observable[j].droite[k]) + y0;
 			}
 		}
 

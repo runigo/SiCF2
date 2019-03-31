@@ -568,7 +568,7 @@ int controleurDefile(controleurT * controleur)
 		{
 		controleurDefileCommandes(controleur, 1);
 		}
-	else
+	/*else
 		{
 		if((*controleur).commandes.sourisY>(*controleur).commandes.bas)
 			{
@@ -578,7 +578,7 @@ int controleurDefile(controleurT * controleur)
 			{
 			controleurDefilePointDeVue(controleur);
 			}
-		}
+		}*/
 	return 0;
 	}
 
@@ -624,7 +624,7 @@ void controleurBoutonSouris(controleurT * controleur, int appui)
 				controleurCommandes(controleur, 1);
 				}
 			}
-		else
+	/*	else
 			{
 			if((*controleur).commandes.sourisY>(*controleur).commandes.bas)
 				{
@@ -634,7 +634,7 @@ void controleurBoutonSouris(controleurT * controleur, int appui)
 				{
 				controleurCommandes(controleur, 0);
 				}
-			}
+			}*/
 		}
 	return;
 	}
@@ -658,26 +658,17 @@ int controleurCommandes(controleurT * controleur, int zone)
 				changeConditionsLimites(&(*controleur).systeme, 2);break;
 			case 3: // Mixte
 				changeConditionsLimites(&(*controleur).systeme, 4);break;
-
+/*
 			case 4: // Uniforme
 				changeFormeDissipation(&(*controleur).systeme, 1);break;
-
+*/
 			case 5: // Uniforme
 				changeFormeDissipation(&(*controleur).systeme, 1);break;
 			case 6: // Nulle
 				changeFormeDissipation(&(*controleur).systeme, 0);break;
 			case 7: // Extrémité
 				changeFormeDissipation(&(*controleur).systeme, 2);break;
-/*
-			case 7: // Marche
-				moteursChangeEtatJosephson(&(*controleur).systeme.moteurs,1);break;
-			case 8: // Arrêt
-				moteursChangeEtatJosephson(&(*controleur).systeme.moteurs,0);break;
-			case 9: // Droite
-				moteursChangeJosephson(&(*controleur).systeme.moteurs,-1.0);break;
-			case 10: // Gauche
-				moteursChangeJosephson(&(*controleur).systeme.moteurs,-1.0);break;
-*/
+
 			case 8: // Arrêt
 				moteursChangeGenerateur(&(*controleur).systeme.moteurs, 0);break;
 			case 9: // Sinus
@@ -696,67 +687,12 @@ int controleurCommandes(controleurT * controleur, int zone)
 
 			case 15: // Initialise
 				systemeInitialisePosition(&(*controleur).systeme, 0);break;
-/*
-			case 15: // Fluxon
-				changeDephasage(&(*controleur).systeme, 2*PI);break;
-			case 16: // Anti F.
-				changeDephasage(&(*controleur).systeme, -2*PI);break;
-*/
+
 			default:
 				;
 			}
 		}
-	if(zone==3)
-		{
-		commande = commandeTriangles(&(*controleur).commandes);
-		switch(commande)	//	
-			{
-		/*	case 0:
-				(*controleur).projection.rotation=3;break;
-			case 1:
-				(*controleur).projection.rotation=1;break;
-			case 2:
-				(*controleur).projection.rotation=0;break;
-			case 3:
-				(*controleur).projection.rotation=-1;break;
-			case 4:
-				(*controleur).projection.rotation=-3;break; */
-			case 5:
-				controleurChangeVitesse(controleur, 0.32);break;
-			case 6:
-				controleurChangeVitesse(controleur, 0.91);break;
-			case 7:
-				controleurChangeMode(controleur);break;
-			case 8:
-				controleurChangeVitesse(controleur, -1.0);break;
-			case 9:
-				controleurChangeVitesse(controleur, 1.1);break;
-			case 10:
-				controleurChangeVitesse(controleur, 3.1);break;
-			case 11:
-				systemeInitialisePosition(&(*controleur).systeme, 1);break;
-			case 12:
-				systemeInitialisePosition(&(*controleur).systeme, 2);break;
-			case 13:
-				systemeInitialisePosition(&(*controleur).systeme, 3);break;
-			case 14:
-				systemeInitialisePosition(&(*controleur).systeme, 4);break;
-			case 15:
-				systemeInitialisePosition(&(*controleur).systeme, 5);break;
-			case 16:
-				systemeInitialisePosition(&(*controleur).systeme, 6);break;
-			case 17:
-				controleurInitialiseParametres(controleur, 1);break;
-			case 18:
-				controleurInitialiseParametres(controleur, 2);break;
-			case 19:
-				controleurInitialiseParametres(controleur, 3);break;
-			case 20:
-				controleurInitialiseParametres(controleur, 4);break;
-			default:
-				;
-			}
-		}
+
 	return 0;
 	}
 
@@ -885,7 +821,7 @@ int controleurDefileCommandes(controleurT * controleur, int zone)
 				}
 			}
 		}
-
+/*
 	if(zone==3)
 		{
 		commande = commandeLineaires(&(*controleur).commandes);
@@ -922,6 +858,7 @@ int controleurDefileCommandes(controleurT * controleur, int zone)
 				}
 			}
 		}
+*/
 	return 0;
 	}
 

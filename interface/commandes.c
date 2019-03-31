@@ -33,9 +33,6 @@ termes.
 
 int commandesInitialiseBoutons(commandesT * commandes, int largeur, int hauteur)
 	{
-
-	//	PANNEAU DROIT
-
 		 // Zone des boutons rotatifs
 	(*commandes).rotatifs=(int)(0.84*largeur); //		Zone des boutons rotatifs
 		// BOUTONS ROTATIFS SUIVANT X
@@ -48,8 +45,8 @@ int commandesInitialiseBoutons(commandesT * commandes, int largeur, int hauteur)
 	(*commandes).rotatifCentre[2]=(int)(0.376453*hauteur); //		Dissipation
 	(*commandes).rotatifCentre[3]=(int)(0.536337*hauteur); //		Amplitude
 	(*commandes).rotatifCentre[4]=(int)(0.671512*hauteur); //		Fréquence
-	(*commandes).rotatifCentre[4]=(int)(0.829942*hauteur); //		Simulation
-	(*commandes).rotatifCentre[4]=(int)(0.937500*hauteur); //		Nombre
+	(*commandes).rotatifCentre[5]=(int)(0.829942*hauteur); //		Simulation
+	(*commandes).rotatifCentre[6]=(int)(0.937500*hauteur); //		Nombre
 
 		 // Zone des petits boutons
 	(*commandes).boutons=(int)(0.946459412781*largeur); // Zone des petits boutons
@@ -75,64 +72,6 @@ int commandesInitialiseBoutons(commandesT * commandes, int largeur, int hauteur)
 	(*commandes).boutonCentre[14]=(int)(0.875000*hauteur); //		max
 	(*commandes).boutonCentre[15]=(int)(0.933140*hauteur); //		Initialise
 
-
-	//	PANNEAU BAS
-
-		 // Zone du panneau
-	(*commandes).bas=(int)(0.855742296919*hauteur); // 611 / 714
-/*
-		// BOUTONS LINEAIRES SUIVANT Y
-	(*commandes).lineaireY=(int)(0.0392156862745*hauteur); // 693-636/2 =  / 714 // Rayon suivant Y
-	(*commandes).lineairesCentre=(int)(0.958181818182*hauteur); // 693+636/2 =  / 714 // Position Y des boutons linéaires
-		// BOUTONS LINEAIRES SUIVANT X
-	(*commandes).lineaireX=(int)(0.0306563039724*largeur); // 332-261/2 / 1158	Rayon suivant X
-	(*commandes).lineaireCentre[0]=(int)(0.20067264574*largeur); // 261	Hauteur
-	(*commandes).lineaireCentre[1]=(int)(0.20067264574*largeur); // 332	Distance
-	(*commandes).lineaireCentre[2]=(int)(0.257847533632*largeur); // 414+596/2	Simulation < temps réèl
-	(*commandes).lineaireCentre[3]=(int)(0.406950672646*largeur); // 414+596/2	Simulation > temps réèl	
-
-		// BOUTONS TRIANGULAIRES SUIVANT Y
-	(*commandes).triangleY=(int)(0.0168067226891*hauteur); // Rayon suivant Y // 12 / 714
-	(*commandes).trianglesCentre=(int)(0.920168067227*hauteur); // 657 // Position Y des petits triangles
-	(*commandes).trianglesLumiere=(int)(0.960784313725*hauteur); // 685 // Position Y des lumière
-		// BOUTONS TRIANGULAIRES SUIVANT X
-	(*commandes).triangleX=(int)(0.0120898100173*largeur); // Rayon suivant X // 14 / 1158
-	(*commandes).triangleCentre[0]=(int)(0.047495682*largeur); // 	rotation gauche rapide
-	(*commandes).triangleCentre[1]=(int)(0.076856649*largeur); // 	rotation gauche lente
-	(*commandes).triangleCentre[2]=(int)(0.104490501*largeur); //  	arrêt
-	(*commandes).triangleCentre[3]=(int)(0.129533679*largeur); // 	rotation droite lente
-	(*commandes).triangleCentre[4]=(int)(0.158031088*largeur); // 	rotation droite rapide
-
-	(*commandes).triangleCentre[5]=(int)(0.240932642*largeur); // 	simulation très ralenti
-	(*commandes).triangleCentre[6]=(int)(0.27806563*largeur); // 	simulation ralenti
-	(*commandes).triangleCentre[7]=(int)(0.311744387*largeur); // 	pause
-	(*commandes).triangleCentre[8]=(int)(0.352331606*largeur); // 	temps réèl
-	(*commandes).triangleCentre[9]=(int)(0.385146805*largeur); // 	simulation accéléré
-	(*commandes).triangleCentre[10]=(int)(0.423143351*largeur); // 	simulation trés accéléré
-
-	(*commandes).triangleCentre[11]=(int)(0.511226252*largeur); // 	1
-	(*commandes).triangleCentre[12]=(int)(0.540587219*largeur); // 	2
-	(*commandes).triangleCentre[13]=(int)(0.568221071*largeur); // 	3
-	(*commandes).triangleCentre[14]=(int)(0.59671848*largeur); // 	4
-	(*commandes).triangleCentre[15]=(int)(0.625215889*largeur); // 	5
-	(*commandes).triangleCentre[16]=(int)(0.654576857*largeur); // 	6
-
-	(*commandes).triangleCentre[17]=(int)(0.713298791*largeur); // 	1
-	(*commandes).triangleCentre[18]=(int)(0.7417962*largeur); // 	2
-	(*commandes).triangleCentre[19]=(int)(0.769430052*largeur); // 	3
-	(*commandes).triangleCentre[20]=(int)(0.799654577*largeur); // 	4
-*/
-		//	Vitesse de la simulation
-/*
-	(*commandes).a=(0.277*largeur-0.23*largeur)/(DUREE-2);
-	//(*commandes).a=(((*commandes).triangleCentre[6]-(*commandes).triangleCentre[5])/(DUREE-2)));
-	(*commandes).b=0.23*largeur-(*commandes).a;	//	Droite duree < DUREE
-	//(*commandes).b=((*commandes).triangleCentre[5]-(*commandes).a);	//	Droite duree < DUREE
-	(*commandes).A=(0.42*largeur-0.38*largeur)/(DUREE_MAX-DUREE-1);
-	//(*commandes).A=(((*commandes).triangleCentre[10]-(*commandes).triangleCentre[9])/(DUREE_MAX-DUREE-1));
-	(*commandes).B=0.38*largeur-(*commandes).A*(DUREE+1);	//	Droite duree > DUREE
-	//(*commandes).B=((*commandes).triangleCentre[9]-(*commandes).A*(DUREE+1));	//	Droite duree > DUREE
-*/
 	return 0;
 	}
 
@@ -151,14 +90,7 @@ int commandesInitialiseSouris(commandesT * commandes, int sourisX, int sourisY)
 			rayonY=(*commandes).rotatifY;
 			}
 		}
-	else 
-		{
-		if(sourisY>(*commandes).bas) // Zone du bas
-			{
-			rayonX=(*commandes).triangleX;
-			rayonY=(*commandes).triangleY;
-			}
-		}
+
 		// POSITION DE LA SOURIS
 	(*commandes).sourisX = sourisX; // position X de la souris
 	(*commandes).sourisY = sourisY; // position Y de la souris
@@ -193,34 +125,6 @@ int commandeRotatifs(commandesT * commandes)
 		for(i=0;i<ROTATIF_COMMANDES;i++)
 			{
 			if((*commandes).rotatifCentre[i]>(*commandes).sourisHaut && (*commandes).rotatifCentre[i]<(*commandes).sourisBas)
-				return i;
-			}
-		}
-	return -1;
-	}
-
-int commandeTriangles(commandesT * commandes)
-	{
-	int i;
-	if((*commandes).trianglesCentre>(*commandes).sourisHaut && (*commandes).trianglesCentre<(*commandes).sourisBas)
-		{
-		for(i=0;i<TRIANGLE_COMMANDES;i++)
-			{
-			if((*commandes).triangleCentre[i]>(*commandes).sourisGauche && (*commandes).triangleCentre[i]<(*commandes).sourisDroite)
-				return i;
-			}
-		}
-	return -1;
-	}
-
-int commandeLineaires(commandesT * commandes)
-	{
-	int i;
-	if((*commandes).lineairesCentre>(*commandes).sourisHaut && (*commandes).lineairesCentre<(*commandes).sourisBas)
-		{
-		for(i=0;i<LINEAIRE_COMMANDES;i++)
-			{
-			if((*commandes).lineaireCentre[i]>(*commandes).sourisGauche && (*commandes).lineaireCentre[i]<(*commandes).sourisDroite)
 				return i;
 			}
 		}

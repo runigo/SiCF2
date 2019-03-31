@@ -253,7 +253,7 @@ int graphiqueCommandes(graphiqueT * graphique, commandesT * commandes)
 		SDL_RenderDrawLine((*graphique).rendu, X+1, Y, x+1, y);
 		SDL_RenderDrawLine((*graphique).rendu, X, Y+1, x, y+1);
 		}
-
+/*
 	centrage = 6;
 	coordonnee.w=12;
 	coordonnee.h=12;
@@ -283,7 +283,7 @@ int graphiqueCommandes(graphiqueT * graphique, commandesT * commandes)
 				}
 			}
 		}
-
+*/
 	return 0;
 	}
 

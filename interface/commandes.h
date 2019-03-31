@@ -62,39 +62,11 @@ typedef struct CommandesT commandesT;
 		int sourisHaut; // position Y de la souris - demiBouton
 		int sourisBas; // position Y de la souris + demiBouton
 
-	//	PANNEAU BAS
-
-		 // Zone du panneau
-		int bas; // 611 / 714
-
-		// BOUTONS LINEAIRES SUIVANT Y
-		int lineaireY; //  Rayon suivant Y
-		int lineairesCentre; //  Position Y des boutons linéaires
-		// BOUTONS LINEAIRES SUIVANT X
-		int lineaireX; //  Rayon suivant X
-		int lineaireCentre[LINEAIRE_COMMANDES]; // Centre suivant X
-
-		// BOUTONS TRIANGULAIRES SUIVANT Y
-		int triangleY; // Rayon suivant Y
-		int trianglesCentre; //  Position Y des petits triangles
-		int trianglesLumiere; //  Position Y des lumières
-		// BOUTONS TRIANGULAIRES SUIVANT X
-		int triangleX; // Rayon suivant X 
-		int triangleCentre[TRIANGLE_COMMANDES]; // Centre suivant X
-		int triangleEtat[TRIANGLE_COMMANDES]; // État de la commande
-		int lineairePositionX; // Position de simulation <> DUREE
-		float a;
-		float b;	//	Droite duree < DUREE
-		float A;
-		float B;	//	Droite duree > DUREE
-
 		};
 
 int commandesInitialiseBoutons(commandesT * commandes, int largeur, int hauteur);
 int commandesInitialiseSouris(commandesT * commandes, int sourisX, int sourisY);
 int commandeBoutons(commandesT * commandes);
 int commandeRotatifs(commandesT * commandes);
-int commandeTriangles(commandesT * commandes);
-int commandeLineaires(commandesT * commandes);
 
 #endif

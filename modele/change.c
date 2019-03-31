@@ -251,9 +251,8 @@ int changeDissipation(systemeT * systeme, float facteur)
 	int limite=0;
 
 	float dissipation = (*systeme).dissipation * facteur;
-	float dissipationMaximale = DISSIPATION_MAX_DT/(*systeme).moteurs.dt;
 
-	if(dissipation < dissipationMaximale && dissipation > DISSIPATION_MIN)
+	if(dissipation < DISSIPATION_MAX && dissipation > DISSIPATION_MIN)
 		{
 		// Multiplie la dissipation du système par facteur <> 0
 		// Conserve en mémoire la dissipation du système si = 0
@@ -315,10 +314,14 @@ void changeFormeDissipation(systemeT * systeme, int forme)
 	float dissipation = 0.99;
 
 	if ( forme == 0 )
+		{
 		dissipation = 0.0;
+		(*systeme).modeDissipation = 0;
+		}
 
 	if (  forme == 1 )
 		{
+		(*systeme).modeDissipation = 1;
 		if ( (*systeme).dissipation != 0.0 )
 			{
 			dissipation = (*systeme).dissipation;
@@ -335,13 +338,14 @@ void changeFormeDissipation(systemeT * systeme, int forme)
 		{
 		if ( forme == 2 )
 			{
-			dissipation = (*systeme).pendule[i].dissipation;
+			dissipation = (*systeme).pendule[i].absorbance*dissipation;
 			}
 		penduleInitialiseAlpha(&(*systeme).pendule[i], dissipation, (*systeme).moteurs.dt);
 		}
 
 	if ( forme == 2 )
 		{
+		(*systeme).modeDissipation = 2;
 		printf("Dissipation premier= %6.3f\n", (*systeme).pendule[0].dissipation);
 		printf("Dissipation dernier= %6.3f\n", (*systeme).pendule[(*systeme).nombre-1].dissipation);
 		}

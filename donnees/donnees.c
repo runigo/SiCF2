@@ -136,7 +136,7 @@ int donneesSysteme(systemeT * systeme, optionsT * options)
 
 		// Caractéristique de la chaîne
 
-	(*systeme).libreFixe = 1;	// 0 periodique, 1 libre, 2 fixe
+	(*systeme).libreFixe = 2;	// 0 periodique, 1 libre, 2 fixe
 	(*systeme).nombre = (*options).nombre;		// nombre de pendule
 	(*systeme).equation = (*options).equation;	// 1 : pendule pesant, 2 : linéarisation
 												// 3 : corde, 4 : dioptre
@@ -158,7 +158,7 @@ int donneesSysteme(systemeT * systeme, optionsT * options)
 	changeFormeDissipation(systeme, 1);
 	changeFormeDissipation(systeme, 0);
 	changeConditionsLimites(systeme, (*systeme).libreFixe);
-	systemeInitialisePosition(systeme, 1);
+	systemeInitialisePosition(systeme, 0);
 
 	return 0;
 	}

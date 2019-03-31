@@ -231,9 +231,9 @@ int projectionSystemeCommandes(systemeT * systeme, projectionT * projection, com
 	switch((*systeme).modeDissipation)	//	
 		{
 		case 0:
-			(*commandes).boutonEtat[5]=1;break; //		Uniforme
-		case 1:
 			(*commandes).boutonEtat[6]=1;break; //		Nulle
+		case 1:
+			(*commandes).boutonEtat[5]=1;break; //		Uniforme
 		case 2:
 			(*commandes).boutonEtat[7]=1;break; //		Extrémité
 		default:

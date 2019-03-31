@@ -113,7 +113,7 @@ termes.
 
 #define DISSIPATION_MAX 333	//	Coeficient de frottement visqueux maximal
 //#define DISSIPATION_MAX 333	//	Coeficient de frottement visqueux
-#define DISSIPATION_MAX_DT 0.333
+//#define DISSIPATION_MAX_DT 0.333
 #define DISSIPATION_MIN 0.033	//	Valeur minimale
 
 #define FREQUENCE_MAX 77	//	Valeur maximale de la fréquence du moteur

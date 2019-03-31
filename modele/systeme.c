@@ -154,15 +154,15 @@ int systemeInitialisePosition(systemeT * systeme, int forme)
 		switch(forme)	//	
 			{
 			case 0: // Initialise
-	for(i=0;i<(*systeme).nombre;i++)
-	{
-	penduleInitialisePosition(&(*systeme).pendule[i], 0.0, 0.0);
-	};break;
+				for(i=0;i<(*systeme).nombre;i++)
+					{
+					penduleInitialisePosition(&(*systeme).pendule[i], 0.0, 0.0);
+					};break;
 			case 1: // Initialise
-	for(i=0;i<(*systeme).nombre;i++)
-	{
-	penduleInitialisePosition(&(*systeme).pendule[i], 0.3*sin(i*0.1), 0.301*sin(i*0.1));
-	};break;
+				for(i=0;i<(*systeme).nombre;i++)
+					{
+					penduleInitialisePosition(&(*systeme).pendule[i], 0.3*sin(i*0.1), 0.301*sin(i*0.1));
+					};break;
 			default:
 				;
 			}
@@ -242,12 +242,12 @@ void systemeInitialiseLimiteInfini(systemeT * systeme)
 
 	for(i=0;i<(*systeme).nombre;i++)
 		{
-		(*systeme).pendule[i].dissipation = 0.0;
+		(*systeme).pendule[i].absorbance = 0.0;
 		}
 
 	for(i=1;i<(*systeme).nombre/6;i++)
 		{
-		(*systeme).pendule[(*systeme).nombre-i].dissipation = 10*(1.0-i/(float)((*systeme).nombre/6));
+		(*systeme).pendule[(*systeme).nombre-i].absorbance = 1.0-(float)i/((float)(*systeme).nombre/6.0);
 		}
 
 

@@ -65,9 +65,10 @@ termes.
 #define TRIANGLE_COMMANDES 0	// Nombres de commandes triangulaires
 
 	//	PARAMÈTRES DES CAPTEURS
-#define CAPTEURS 5 // Nombres de capteurs
+
+#define OBSERVABLES 4 // Nombres d'observables
+#define CAPTEURS 6 // Nombres de capteurs
 #define DUREE_CAPTEURS 128 // Nombre de points en mémoire
-#define DY_ENERGIE (DUREE_CAPTEURS / 16) // Pour la densité d'énergie.
 
 			//	PARAMÈTRES DE DISCRÉTISATION TEMPORELLE DU SYSTÈME
 

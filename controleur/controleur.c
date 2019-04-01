@@ -128,6 +128,7 @@ int controleurProjection(controleurT * controleur)
 		(*controleur).graphique.hauteur=hauteur;
 		graphesInitialiseLongueur(&(*controleur).graphes, largeur, hauteur);
 		commandesInitialiseBoutons(&(*controleur).commandes, largeur, hauteur);
+		capteursMiseAJourLongueur(&(*controleur).capteurs, largeur, hauteur);
 			//fprintf(stderr, "Réinitialisation de la taille de la fenêtre dans la projection\n");
 		projectionInitialiseLongueurs(&(*controleur).projection, hauteur, largeur);
 		}
@@ -159,6 +160,9 @@ int controleurEvolutionSysteme(controleurT * controleur)
 		//fprintf(stderr, "Calcul des spectres\n");
 	fourierCalcule(&(*controleur).fourier);
 
+		//fprintf(stderr, "Mise à jour des observables\n");
+	observablesMiseAJour(&(*controleur).observables, &(*controleur).systeme);
+
 	return 0;
 	}
 
@@ -172,7 +176,7 @@ int controleurConstructionGraphique(controleurT * controleur)
 	graphiqueCommandes(&(*controleur).graphique, &(*controleur).commandes);
 
 		//fprintf(stderr, "Dessin des capteurs\n");
-	//graphiqueCapteurs(&(*controleur).graphique, &(*controleur).capteurs);
+	graphiqueCapteurs(&(*controleur).graphique, &(*controleur).capteurs);
 
 		//fprintf(stderr, "Dessin des graphes\n");
 	graphiqueCorde(&(*controleur).graphique, &(*controleur).graphes.corde);

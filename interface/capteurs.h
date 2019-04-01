@@ -41,7 +41,7 @@ typedef struct CapteurT capteurT;
 		{
 		SDL_Point gauche[DUREE_CAPTEURS];
 		SDL_Point droite[DUREE_CAPTEURS];
-		//SDL_Point moyenne[DUREE_CAPTEURS];
+		SDL_Point somme[DUREE_CAPTEURS];
 
 		int yZero; // Positon de l'origine
 		int xZero; // Positon de l'origine

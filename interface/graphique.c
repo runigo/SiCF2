@@ -253,37 +253,6 @@ int graphiqueCommandes(graphiqueT * graphique, commandesT * commandes)
 		SDL_RenderDrawLine((*graphique).rendu, X+1, Y, x+1, y);
 		SDL_RenderDrawLine((*graphique).rendu, X, Y+1, x, y+1);
 		}
-/*
-	centrage = 6;
-	coordonnee.w=12;
-	coordonnee.h=12;
-	coordonnee.y = (*commandes).trianglesLumiere - centrage;	// Positon Y de la zone du bas
-	for(i=0;i<TRIANGLE_COMMANDES;i++)
-		{
-		if((*commandes).triangleEtat[i]==1)			//	1 VERT
-			{
-			coordonnee.x = (*commandes).triangleCentre[i] - centrage; // Positon X des boutons triangulaire
-			SDL_RenderCopy((*graphique).rendu, (*graphique).lumiereVerte, NULL, &coordonnee);
-			}
-		else
-			{
-			if((*commandes).triangleEtat[i]==2)	//	2 ROUGE
-				{
-				coordonnee.x = (*commandes).triangleCentre[i] - centrage; // Positon X des boutons triangulaire
-				SDL_RenderCopy((*graphique).rendu, (*graphique).lumiereRouge, NULL, &coordonnee);
-				}
-			else
-				{
-				coordonnee.x=(*commandes).lineairePositionX;	//	JAUNE ORANGE
-				//coordonnee.x=(*commandes).triangleCentre[i];	//	JAUNE ORANGE
-				if((*commandes).triangleEtat[9]==-1)
-					{
-					SDL_RenderCopy((*graphique).rendu, (*graphique).lumiereOrange, NULL, &coordonnee);
-					}
-				}
-			}
-		}
-*/
 	return 0;
 	}
 
@@ -291,29 +260,25 @@ int graphiqueCapteurs(graphiqueT * graphique, capteursT * capteurs)
 	{
 	int i, j;
 
-		// Grandeurs à gauche
-	graphiqueChangeCouleur(graphique, (*graphique).gauche);
+		// Energie
+	graphiqueChangeCouleur(graphique, (*graphique).grisF);
 
-	SDL_RenderDrawLines((*graphique).rendu, (*capteurs).capteur[0].gauche, DUREE_CAPTEURS);
-	SDL_RenderDrawLines((*graphique).rendu, (*capteurs).capteur[1].gauche, DUREE_CAPTEURS);
-	SDL_RenderDrawLines((*graphique).rendu, (*capteurs).capteur[2].gauche, DUREE_CAPTEURS);
-
+	SDL_RenderDrawLines((*graphique).rendu, (*capteurs).capteur[0].somme, DUREE_CAPTEURS);
 	SDL_RenderDrawLines((*graphique).rendu, (*capteurs).capteur[3].gauche, DUREE_CAPTEURS);
-	SDL_RenderDrawLines((*graphique).rendu, (*capteurs).capteur[4].gauche, DUREE_CAPTEURS);
-	//SDL_RenderDrawLines((*graphique).rendu, (*capteurs).capteur[5].gauche, DY_ENERGIE);
-
-		// Grandeurs à droite
-	graphiqueChangeCouleur(graphique, (*graphique).droite);
-
-	SDL_RenderDrawLines((*graphique).rendu, (*capteurs).capteur[0].droite, DUREE_CAPTEURS);
-	SDL_RenderDrawLines((*graphique).rendu, (*capteurs).capteur[1].droite, DUREE_CAPTEURS);
-	SDL_RenderDrawLines((*graphique).rendu, (*capteurs).capteur[2].droite, DUREE_CAPTEURS);
-
 	SDL_RenderDrawLines((*graphique).rendu, (*capteurs).capteur[3].droite, DUREE_CAPTEURS);
-	SDL_RenderDrawLines((*graphique).rendu, (*capteurs).capteur[4].droite, DUREE_CAPTEURS);
-	//SDL_RenderDrawLines((*graphique).rendu, (*capteurs).capteur[5].droite, DY_ENERGIE);
 
 
+		// Cinetique
+	graphiqueChangeCouleur(graphique, (*graphique).vertF);
+	SDL_RenderDrawLines((*graphique).rendu, (*capteurs).capteur[1].somme, DUREE_CAPTEURS);
+
+		// Couplage
+	graphiqueChangeCouleur(graphique, (*graphique).orangeF);
+	SDL_RenderDrawLines((*graphique).rendu, (*capteurs).capteur[2].somme, DUREE_CAPTEURS);
+
+						// 0 : Energie, 1 : Cinetique, 2 : Couplage, 3 : Rappel
+
+						//		0, 1, 2 : Somme, 3, 4, 5 : droite/gauche
 		// Epaississement du trait
 	for(j=0;j<CAPTEURS;j++)
 		{
@@ -322,10 +287,13 @@ int graphiqueCapteurs(graphiqueT * graphique, capteursT * capteurs)
 			(*capteurs).capteur[j].droite[i].y = (*capteurs).capteur[j].droite[i].y + 1;
 			}
 		}
-	SDL_RenderDrawLines((*graphique).rendu, (*capteurs).capteur[0].droite, DUREE_CAPTEURS);
-	SDL_RenderDrawLines((*graphique).rendu, (*capteurs).capteur[1].droite, DUREE_CAPTEURS);
-	SDL_RenderDrawLines((*graphique).rendu, (*capteurs).capteur[2].droite, DUREE_CAPTEURS);
+		// Energie
+	graphiqueChangeCouleur(graphique, (*graphique).grisF);
 
+	SDL_RenderDrawLines((*graphique).rendu, (*capteurs).capteur[0].somme, DUREE_CAPTEURS);
+	SDL_RenderDrawLines((*graphique).rendu, (*capteurs).capteur[3].gauche, DUREE_CAPTEURS);
+	SDL_RenderDrawLines((*graphique).rendu, (*capteurs).capteur[3].droite, DUREE_CAPTEURS);
+/*
 	graphiqueChangeCouleur(graphique, (*graphique).gauche);
 	for(j=0;j<CAPTEURS;j++)
 		{
@@ -337,7 +305,7 @@ int graphiqueCapteurs(graphiqueT * graphique, capteursT * capteurs)
 	SDL_RenderDrawLines((*graphique).rendu, (*capteurs).capteur[0].gauche, DUREE_CAPTEURS);
 	SDL_RenderDrawLines((*graphique).rendu, (*capteurs).capteur[1].gauche, DUREE_CAPTEURS);
 	SDL_RenderDrawLines((*graphique).rendu, (*capteurs).capteur[2].gauche, DUREE_CAPTEURS);
-
+*/
 
 	return 0;
 	}

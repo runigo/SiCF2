@@ -41,17 +41,18 @@ termes.
 typedef struct ObservableT observableT;
 	struct ObservableT
 		{
-		float total[DUREE_CAPTEURS];
 		float gauche[DUREE_CAPTEURS];
 		float droite[DUREE_CAPTEURS];
+		float somme[DUREE_CAPTEURS];
 		float maximumCapteur;
+		float maximumSomme;
 		int dureeCapteur;
 		};
 
 typedef struct ObservablesT observablesT;
 	struct ObservablesT
 		{
-		observableT observable[CAPTEURS];
+		observableT observable[OBSERVABLES];// 0 : Energie, 1 : Cinetique, 2 : Couplage, 3 : Rappel
 		int index; // instant présent
 		};
 

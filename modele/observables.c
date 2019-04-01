@@ -57,13 +57,13 @@ float observablesAbsolue(float valeur)
 int observablesInitialise(observablesT * observables)
 	{
 	int i, j;
-	for(j=0;j<CAPTEURS;j++)
+	for(j=0;j<OBSERVABLES;j++)
 		{
 		(*observables).observable[j].dureeCapteur=DUREE_CAPTEURS;
 		(*observables).observable[j].maximumCapteur = 0;
 		for(i=0;i<DUREE_CAPTEURS;i++)
 			{
-			(*observables).observable[j].total[i]=0;
+			(*observables).observable[j].somme[i]=0;
 			(*observables).observable[j].gauche[i]=0;
 			(*observables).observable[j].droite[i]=0;
 			}
@@ -76,16 +76,30 @@ int observablesInitialise(observablesT * observables)
 
 float observablesMiseAJourAmplitude(observableT * observable)
 	{
-				// Calcul le maximum d'un capteur
+				// Calcul les maximums d'un capteur
 	int i;
 	float max;
 
 	max = 0.0;
 	for(i=0;i<DUREE_CAPTEURS;i++)
 		{
-		if((*observable).total[i] > max)
+		if((*observable).somme[i] > max)
 			{
-			max = (*observable).total[i];
+			max = (*observable).somme[i];
+			}
+		}
+	(*observable).maximumSomme = max;
+
+	max = 0.0;
+	for(i=0;i<DUREE_CAPTEURS;i++)
+		{
+		if((*observable).gauche[i] > max)
+			{
+			max = (*observable).gauche[i];
+			}
+		if((*observable).droite[i] > max)
+			{
+			max = (*observable).droite[i];
 			}
 		}
 	(*observable).maximumCapteur = max;
@@ -95,10 +109,10 @@ float observablesMiseAJourAmplitude(observableT * observable)
 
 int observablesMiseAJourAmplitudes(observablesT * observables)
 	{
-				// Mise à jour des maximum des capteurs
+				// Mise à jour des maximums des capteurs
 	int j;
 
-	for(j=0;j<CAPTEURS;j++)
+	for(j=0;j<OBSERVABLES;j++)
 		{
 		observablesMiseAJourAmplitude(&(*observables).observable[j]);
 		}
@@ -125,6 +139,8 @@ int observablesMiseAJour(observablesT * observables, systemeT * systeme)
 
 	observablesMiseAJourEnergie(observables);
 
+	observablesMiseAJourAmplitudes(observables);
+
 	return 0;
 	}
 
@@ -134,9 +150,9 @@ int observablesMiseAJourEnergie(observablesT * observables)
 
 	(*observables).observable[0].gauche[(*observables).index] = (*observables).observable[1].gauche[(*observables).index] + (*observables).observable[2].gauche[(*observables).index] + (*observables).observable[3].gauche[(*observables).index];
 	(*observables).observable[0].droite[(*observables).index] = (*observables).observable[1].droite[(*observables).index] + (*observables).observable[2].droite[(*observables).index] + (*observables).observable[3].droite[(*observables).index];
-	(*observables).observable[0].total[(*observables).index] = (*observables).observable[0].gauche[(*observables).index] + (*observables).observable[0].droite[(*observables).index];
+	(*observables).observable[0].somme[(*observables).index] = (*observables).observable[0].gauche[(*observables).index] + (*observables).observable[0].droite[(*observables).index];
 
-	observablesMiseAJourAmplitude(&(*observables).observable[0]);
+	//observablesMiseAJourAmplitude(&(*observables).observable[0]);
 
 	return 0;
 	}
@@ -158,9 +174,9 @@ int observablesMiseAJourCinetique(observablesT * observables, systemeT * systeme
 		// Mise à jour de l'énergie cinétique
 	(*observables).observable[1].gauche[(*observables).index]=ecGauche;
 	(*observables).observable[1].droite[(*observables).index]=ecDroite;
-	(*observables).observable[1].total[(*observables).index]=ecGauche+ecDroite;
+	(*observables).observable[1].somme[(*observables).index]=ecGauche+ecDroite;
 
-	observablesMiseAJourAmplitude(&(*observables).observable[1]);
+	//observablesMiseAJourAmplitude(&(*observables).observable[1]);
 
 	return 0;
 	}
@@ -197,7 +213,7 @@ int observablesMiseAJourRappel(observablesT * observables, systemeT * systeme)
 	(*observables).observable[3].gauche[(*observables).index]=erGauche;
 	(*observables).observable[3].droite[(*observables).index]=erDroite;
 
-	observablesMiseAJourAmplitude(&(*observables).observable[3]);
+	//observablesMiseAJourAmplitude(&(*observables).observable[3]);
 
 	return 0;
 	}
@@ -216,17 +232,9 @@ int observablesMiseAJourCouplage(observablesT * observables, systemeT * systeme)
 		ekDroite = ekDroite + observablesEnergieCouplagePendule(&((*systeme).pendule[i-1+j]), &((*systeme).pendule[i+j]), (*systeme).moteurs.dt);
 		}
 
-//	float dt = (*systeme).moteurs.dt;
-//	for(i=1;i<(*systeme).nombre;i++)
-//		{
-//		ectotal=ectotal+observablesEnergieCouplagePendule(&((*systeme).pendule[i-1]), &((*systeme).pendule[i]), dt);
-//		}
-//	if((*systeme).libreFixe==0)
-//		ectotal=ectotal+observablesEnergieCouplagePendule(&((*systeme).pendule[N-1]), &((*systeme).pendule[0]), dt);
-
 	(*observables).observable[2].gauche[(*observables).index]=ekGauche;
 	(*observables).observable[2].droite[(*observables).index]=ekDroite;
-	(*observables).observable[2].total[(*observables).index]=ekGauche+ekDroite;
+	(*observables).observable[2].somme[(*observables).index]=ekGauche+ekDroite;
 
 	observablesMiseAJourAmplitude(&(*observables).observable[2]);
 

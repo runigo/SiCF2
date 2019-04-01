@@ -240,25 +240,49 @@ int projectionObservablesCapteurs(observablesT * observables, projectionT * proj
 	{
 	(void)projection;
 	float a;
-	int i, j, k, y0;
-
-	for(j=0;j<CAPTEURS;j++)
+	int i, k, y0;
+						// 0 : Energie, 1 : Cinetique, 2 : Couplage, 3 : Rappel
+						//		0, 1, 2 : Somme, 3, 4, 5 : droite/gauche
+		//	SOMME
+	if((*observables).observable[0].maximumSomme!=0.0)
 		{
-		if((*observables).observable[j].maximumCapteur!=0.0)
-			{
-			a = -(float)((*capteurs).capteur[j].hauteur) / (*observables).observable[j].maximumCapteur;
-			}
-		else
-			{
-			a = 0.0;
-			}
-		y0 = (*capteurs).capteur[j].yZero;
-		for(i=0;i<DUREE_CAPTEURS;i++)
-			{
-			k=(i+(*observables).index+1)%DUREE_CAPTEURS;
-			(*capteurs).capteur[j].gauche[i].y = (int)(a*(*observables).observable[j].gauche[k]) + y0;
-			(*capteurs).capteur[j].droite[i].y = (int)(a*(*observables).observable[j].droite[k]) + y0;
-			}
+		a = -(float)((*capteurs).capteur[0].hauteur) / (*observables).observable[0].maximumSomme;
+		}
+	else
+		{
+	//fprintf(stderr, "(*observables).observable[0].maximumSomme==0.0\n");
+		a = 0.0;
+		}
+	y0 = (*capteurs).capteur[0].yZero;
+	for(i=0;i<DUREE_CAPTEURS;i++)
+		{
+		k=(i+(*observables).index+1)%DUREE_CAPTEURS;
+		(*capteurs).capteur[0].somme[i].y = (int)(a*(*observables).observable[0].somme[k]) + y0;
+		(*capteurs).capteur[1].somme[i].y = (int)(a*(*observables).observable[1].somme[k]) + y0;
+		(*capteurs).capteur[2].somme[i].y = (int)(a*(*observables).observable[2].somme[k]) + y0;
+		}
+
+
+		//	GAUCHE DROITE
+	if((*observables).observable[0].maximumCapteur!=0.0)
+		{
+		a = -(float)((*capteurs).capteur[3].hauteur) / (*observables).observable[0].maximumCapteur;
+		}
+	else
+		{
+	//fprintf(stderr, "(*observables).observable[0].maximumSomme==0.0\n");
+		a = 0.0;
+		}
+	y0 = (*capteurs).capteur[3].yZero;
+	for(i=0;i<DUREE_CAPTEURS;i++)
+		{
+		k=(i+(*observables).index+1)%DUREE_CAPTEURS;
+		(*capteurs).capteur[3].gauche[i].y = (int)(a*(*observables).observable[0].gauche[k]) + y0;
+		(*capteurs).capteur[3].droite[i].y = (int)(a*(*observables).observable[0].droite[k]) + y0;
+		(*capteurs).capteur[4].gauche[i].y = (int)(a*(*observables).observable[1].gauche[k]) + y0;
+		(*capteurs).capteur[4].droite[i].y = (int)(a*(*observables).observable[1].droite[k]) + y0;
+		(*capteurs).capteur[5].gauche[i].y = (int)(a*(*observables).observable[2].gauche[k]) + y0;
+		(*capteurs).capteur[5].droite[i].y = (int)(a*(*observables).observable[2].droite[k]) + y0;
 		}
 
 	return 0;

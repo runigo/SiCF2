@@ -59,6 +59,8 @@ int donneesControleur(controleurT * controleur)
 		fprintf(stderr, " Initialisation des graphes\n");
 	donneesGraphes(&(*controleur).graphes, &(*controleur).options);
 
+	capteursInitialise(&(*controleur).capteurs);
+
 		//fprintf(stderr, " Initialisation de la projection\n");
 	projectionInitialise(&(*controleur).projection);
 		//fprintf(stderr, "projectionInitialiseLongueurs\n");
@@ -80,6 +82,7 @@ int donneesControleur(controleurT * controleur)
 	(*controleur).graphique.hauteur=hauteur;
 
 	commandesInitialiseBoutons(&(*controleur).commandes, largeur, hauteur);
+	capteursMiseAJourLongueur(&(*controleur).capteurs, largeur, hauteur);
 	projectionInitialiseLongueurs(&(*controleur).projection, largeur, hauteur);// hauteur, largeur, ratio de distance
 
 	SDL_PumpEvents();

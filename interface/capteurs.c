@@ -60,47 +60,54 @@ int capteursInitialise(capteursT * capteurs)
 
 int capteursMiseAJourLongueur(capteursT * capteurs, int largeur, int hauteur)
 	{
-	float xSomme =0.05;
-	float ySomme =0.79;
-	float xGaucheDroite =0.45;
-	float yGaucheDroite =0.79;
+	float xSomme =0.087368*largeur;
+	float ySomme =0.957849*hauteur;
+	float xGaucheDroite =0.455789*largeur;
+	float yGaucheDroite =0.953*hauteur;
 
-	(*capteurs).capteur[0].xZero=(int)(xSomme*largeur); // 	x
-	(*capteurs).capteur[0].yZero=(int)(ySomme*hauteur); // Energie
+	// Position de l'origine
 
-	(*capteurs).capteur[1].xZero=(int)(xSomme*largeur); // x
-	(*capteurs).capteur[1].yZero=(int)(ySomme*hauteur); // Cinetique
+	(*capteurs).capteur[0].xZero=(int)(xSomme); // 	x
+	(*capteurs).capteur[0].yZero=(int)(ySomme); // Energie
 
-	(*capteurs).capteur[2].xZero=(int)(xSomme*largeur); // x
-	(*capteurs).capteur[2].yZero=(int)(ySomme*hauteur); // Couplage
+	(*capteurs).capteur[1].xZero=(int)(xSomme); // x
+	(*capteurs).capteur[1].yZero=(int)(ySomme); // Cinetique
 
-	(*capteurs).capteur[3].xZero=(int)(xGaucheDroite*largeur); // 	x
-	(*capteurs).capteur[3].yZero=(int)(yGaucheDroite*hauteur); // Energie
+	(*capteurs).capteur[2].xZero=(int)(xSomme); // x
+	(*capteurs).capteur[2].yZero=(int)(ySomme); // Couplage
 
-	(*capteurs).capteur[4].xZero=(int)(xGaucheDroite*largeur); // x
-	(*capteurs).capteur[4].yZero=(int)(yGaucheDroite*hauteur); // Cinetique
+	(*capteurs).capteur[3].xZero=(int)(xGaucheDroite); // 	x
+	(*capteurs).capteur[3].yZero=(int)(yGaucheDroite); // Energie
 
-	(*capteurs).capteur[5].xZero=(int)(xGaucheDroite*largeur); // x
-	(*capteurs).capteur[5].yZero=(int)(yGaucheDroite*hauteur); // Coupllage
+	(*capteurs).capteur[4].xZero=(int)(xGaucheDroite); // x
+	(*capteurs).capteur[4].yZero=(int)(yGaucheDroite); // Cinetique
+
+	(*capteurs).capteur[5].xZero=(int)(xGaucheDroite); // x
+	(*capteurs).capteur[5].yZero=(int)(yGaucheDroite); // Couplage
+
+	// Longueur des axes
 
 	int j;
 	for(j=0;j<CAPTEURS;j++)
 		{
-		(*capteurs).capteur[j].largeur=(int)(0.17713*largeur); // longueur de l'axe x 164 165 165 / 892
-		(*capteurs).capteur[j].hauteur=(int)(0.123*hauteur); // longueur de l'axe y 91 / 653
+		(*capteurs).capteur[j].largeur=(int)(0.321053*largeur); // longueur de l'axe x 0.408421-0.087368
+		(*capteurs).capteur[j].hauteur=(int)(0.190407*hauteur); // longueur de l'axe y 0.767442-0.957849
 		}
 
+	// Axe des x
 
 	float a;
-	int i, x0;
+	int i, k, x0;
 	for(j=0;j<CAPTEURS;j++)
 		{
 		x0=(*capteurs).capteur[j].xZero;
 		a=(float)((*capteurs).capteur[j].largeur) / (float)(DUREE_CAPTEURS);
 		for(i=0;i<DUREE_CAPTEURS;i++)
 			{
-			(*capteurs).capteur[j].gauche[i].x=(int)(a*i)+x0;
-			(*capteurs).capteur[j].droite[i].x=(int)(a*i)+x0;
+			k=(int)(a*i)+x0;
+			(*capteurs).capteur[j].gauche[i].x=k;
+			(*capteurs).capteur[j].droite[i].x=k;
+			(*capteurs).capteur[j].somme[i].x=k;
 			}
 		}
 

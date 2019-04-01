@@ -62,6 +62,10 @@ typedef struct CommandesT commandesT;
 		int sourisHaut; // position Y de la souris - demiBouton
 		int sourisBas; // position Y de la souris + demiBouton
 
+	//	PANNEAU BAS
+		 // Zone du panneau
+		int bas; //
+
 		};
 
 int commandesInitialiseBoutons(commandesT * commandes, int largeur, int hauteur);

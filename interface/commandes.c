@@ -72,6 +72,9 @@ int commandesInitialiseBoutons(commandesT * commandes, int largeur, int hauteur)
 	(*commandes).boutonCentre[14]=(int)(0.875000*hauteur); //		max
 	(*commandes).boutonCentre[15]=(int)(0.933140*hauteur); //		Initialise
 
+	//	PANNEAU BAS
+	(*commandes).bas=(int)(0.447674*hauteur); // Zone du panneau
+
 	return 0;
 	}
 

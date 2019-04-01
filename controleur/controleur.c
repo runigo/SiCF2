@@ -143,6 +143,7 @@ int controleurProjection(controleurT * controleur)
 	projectionSystemeGraphe(&(*controleur).systeme, &(*controleur).projection, &(*controleur).graphes);
 	projectionFourierGraphe(&(*controleur).fourier, &(*controleur).projection, &(*controleur).graphes);
 
+	projectionObservablesCapteurs(&(*controleur).observables, &(*controleur).projection, &(*controleur).capteurs);
 		//fprintf(stderr, "projection du système sur les commandes\n");
 	projectionSystemeCommandes(&(*controleur).systeme, &(*controleur).projection, &(*controleur).commandes, (*controleur).options.duree, (*controleur).options.modePause);
 
@@ -411,7 +412,7 @@ int controleurClavier(controleurT * controleur)
 			controleurAfficheSouris(controleur);
 			break;
 		case SDLK_F5:
-			observablesAfficheEnergie(&(*controleur).systeme);
+			observablesAffiche(&(*controleur).observables);
 			break;
 		case SDLK_F6:
 			moteursAfficheHorloge(&(*controleur).systeme.moteurs);
@@ -685,9 +686,9 @@ int controleurCommandes(controleurT * controleur, int zone)
 			case 12: // Pause
 				controleurChangeMode(controleur);break;
 			case 13: // min
-				(*controleur).duree=1;break;
+				(*controleur).options.duree=1;break;
 			case 14: // max
-				(*controleur).duree=DUREE_MAX;break;
+				(*controleur).options.duree=DUREE_MAX;break;
 
 			case 15: // Initialise
 				systemeInitialisePosition(&(*controleur).systeme, 0);break;

@@ -196,7 +196,7 @@ int projectionSystemeCommandes(systemeT * systeme, projectionT * projection, com
 		case 3:
 			(*commandes).boutonEtat[3]=1;break; //		Mixte
 		case 4:
-			(*commandes).boutonEtat[4]=1;break; //		Symétrique
+			(*commandes).boutonEtat[3]=1;break; //		Symétrique
 		default:
 			;
 		}
@@ -231,6 +231,16 @@ int projectionSystemeCommandes(systemeT * systeme, projectionT * projection, com
 	if(mode<0)
 		{
 		(*commandes).boutonEtat[12]=1;
+		}
+
+	if(duree==1)
+		{
+		(*commandes).boutonEtat[13]=1;
+		}
+
+	if(duree==DUREE_MAX)
+		{
+		(*commandes).boutonEtat[14]=1;
 		}
 
 	return 0;

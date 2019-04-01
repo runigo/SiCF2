@@ -50,16 +50,18 @@ int donneesControleur(controleurT * controleur)
 	(*controleur).sortie = 0;	// Sortie de SiCP si <> 0
 	(*controleur).appui = 0;	// Appuie sur la souris
 
-		fprintf(stderr, " Initialisation du système\n");
+		//fprintf(stderr, " Initialisation du système\n");
 	donneesSysteme(&(*controleur).systeme, &(*controleur).options);
 
-		fprintf(stderr, " Initialisation de fourier\n");
+		//fprintf(stderr, " Initialisation de fourier\n");
 	donneesFourier(&(*controleur).fourier, &(*controleur).options);
 
-		fprintf(stderr, " Initialisation des graphes\n");
+		//fprintf(stderr, " Initialisation des graphes\n");
 	donneesGraphes(&(*controleur).graphes, &(*controleur).options);
 
+		//fprintf(stderr, " Initialisation des capteurs\n");
 	capteursInitialise(&(*controleur).capteurs);
+	capteursMiseAJourLongueur(&(*controleur).capteurs, FENETRE_X, FENETRE_Y);
 
 		//fprintf(stderr, " Initialisation de la projection\n");
 	projectionInitialise(&(*controleur).projection);

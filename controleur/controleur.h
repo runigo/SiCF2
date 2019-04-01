@@ -66,7 +66,7 @@ typedef struct ControleurT controleurT;
 
 		horlogeT horloge;			//	Horloge SDL
 
-		int duree;		// nombre d'incrémentation du système par affichage
+		//int duree;		// nombre d'incrémentation du système par affichage
 		int modePause;	// pause de l'évolution du système si = 1
 		int sortie;		//	sortie de SiCP si > 0
 

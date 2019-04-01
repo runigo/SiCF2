@@ -245,12 +245,15 @@ int observablesAffiche(observablesT * observables)
 	{
 	printf("\nSTATISTIQUES\n");
 
-	printf("	temperature à gauche %f \n", (*observables).observable[0].gauche[(*observables).index]);
-	printf("	temperature à droite %f \n\n", (*observables).observable[0].droite[(*observables).index]);
-	printf("	nombre à gauche %f \n", (*observables).observable[1].gauche[(*observables).index]);
-	printf("	nombre à droite %f \n\n", (*observables).observable[1].droite[(*observables).index]);
-	printf("	libre parcours moyen à gauche %f \n", (*observables).observable[2].gauche[(*observables).index]);
-	printf("	libre parcours moyen à droite %f \n\n", (*observables).observable[2].droite[(*observables).index]);
+	printf("	Energie à gauche %f \n", (*observables).observable[0].gauche[(*observables).index]);
+	printf("	Energie à droite %f \n\n", (*observables).observable[0].droite[(*observables).index]);
+	printf("		Somme		 %f \n\n", (*observables).observable[0].somme[(*observables).index]);
+	printf("	Cinetique à gauche %f \n", (*observables).observable[1].gauche[(*observables).index]);
+	printf("	Cinetique à droite %f \n\n", (*observables).observable[1].droite[(*observables).index]);
+	printf("		Somme		 %f \n\n", (*observables).observable[1].somme[(*observables).index]);
+	printf("	Couplage à gauche %f \n", (*observables).observable[2].gauche[(*observables).index]);
+	printf("	Couplage à droite %f \n\n", (*observables).observable[2].droite[(*observables).index]);
+	printf("		Somme		 %f \n\n", (*observables).observable[2].somme[(*observables).index]);
 	return 0;
 	}
 

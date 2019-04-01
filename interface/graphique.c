@@ -291,8 +291,8 @@ int graphiqueCapteurs(graphiqueT * graphique, capteursT * capteurs)
 	graphiqueChangeCouleur(graphique, (*graphique).grisF);
 
 	SDL_RenderDrawLines((*graphique).rendu, (*capteurs).capteur[0].somme, DUREE_CAPTEURS);
-	SDL_RenderDrawLines((*graphique).rendu, (*capteurs).capteur[3].gauche, DUREE_CAPTEURS);
-	SDL_RenderDrawLines((*graphique).rendu, (*capteurs).capteur[3].droite, DUREE_CAPTEURS);
+	//SDL_RenderDrawLines((*graphique).rendu, (*capteurs).capteur[3].gauche, DUREE_CAPTEURS);
+	//SDL_RenderDrawLines((*graphique).rendu, (*capteurs).capteur[3].droite, DUREE_CAPTEURS);
 /*
 	graphiqueChangeCouleur(graphique, (*graphique).gauche);
 	for(j=0;j<CAPTEURS;j++)

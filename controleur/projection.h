@@ -62,6 +62,7 @@ int projectionSystemeFourier(systemeT * systeme, fourierT * fourier);
 
 int projectionSystemeGraphe(systemeT * systeme, projectionT * projection, graphesT * graphes);
 int projectionFourierGraphe(fourierT * fourier, projectionT * projection, graphesT * graphes);
+int projectionObservablesCapteurs(observablesT * observables, projectionT * projection, capteursT * capteurs);
 int projectionSystemeCommandes(systemeT * systeme, projectionT * projection, commandesT * commandes, int duree, int mode);
 
 int projectionAffichePointDeVue(projectionT * projection);

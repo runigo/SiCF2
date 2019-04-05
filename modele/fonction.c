@@ -1,5 +1,5 @@
 /*
-Copyright mars 2019, Stephan Runigo
+Copyright avril 2019, Stephan Runigo
 runigo@free.fr
 SiCF 2.0  simulateur de corde vibrante et spectre
 Ce logiciel est un programme informatique servant à simuler l'équation
@@ -47,13 +47,7 @@ int fonctionInitialise(fonctionT * f, int nombre)
 		(*f).reel[i] = 0;
 		(*f).imag[i] = 0;
 		}
-/*
-	for(i=0;i<(*f).nombre;i++)
-		{
-		(*f).reel[i] = module * cos(frequence*i);
-		(*f).imag[i] = module * sin(frequence*i);
-		}
-*/
+
 	return 0;
 	}
 

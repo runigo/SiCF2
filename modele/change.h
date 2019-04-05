@@ -1,5 +1,5 @@
 /*
-Copyright mars 2019, Stephan Runigo
+Copyright avril 2019, Stephan Runigo
 runigo@free.fr
 SiCF 2.0  simulateur de corde vibrante et spectre
 Ce logiciel est un programme informatique servant à simuler l'équation
@@ -42,7 +42,7 @@ void changeGravitation(systemeT * systeme, float facteur);
 void changeMasse(systemeT * systeme, float facteur);
 
 //void changeFormeDioptre(systemeT * systeme, float facteur);
-void changeEquation(systemeT * systeme, int equation);
+//void changeEquation(systemeT * systeme, int equation);
 
 int changeDissipation(systemeT * systeme, float facteur);
 int changeDissipationMoyenne(systemeT * systemes);

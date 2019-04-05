@@ -1,9 +1,10 @@
 /*
-Copyright juillet 2018, Stephan Runigo
+Copyright avril 2019, Stephan Runigo
 runigo@free.fr
-SiCP 2.3.2 simulateur de chaîne de pendules
+SiCF 2.0  simulateur de corde vibrante et spectre
 Ce logiciel est un programme informatique servant à simuler l'équation
-d'une chaîne de pendules et à en donner une représentation graphique.
+d'une corde vibrante, à calculer sa transformée de fourier, et à donner
+une représentation graphique de ces fonctions.
 Ce logiciel est régi par la licence CeCILL soumise au droit français et
 respectant les principes de diffusion des logiciels libres. Vous pouvez
 utiliser, modifier et/ou redistribuer ce programme sous les conditions
@@ -14,7 +15,7 @@ de modification et de redistribution accordés par cette licence, il n'est
 offert aux utilisateurs qu'une garantie limitée. Pour les mêmes raisons,
 seule une responsabilité restreinte pèse sur l'auteur du programme, le
 titulaire des droits patrimoniaux et les concédants successifs.
-A cet égard  l'attention de l'utilisateur est attirée sur les risques
+A cet égard l'attention de l'utilisateur est attirée sur les risques
 associés au chargement, à l'utilisation, à la modification et/ou au
 développement et à la reproduction du logiciel par l'utilisateur étant
 donné sa spécificité de logiciel libre, qui peut le rendre complexe à
@@ -41,7 +42,7 @@ void optionsDuree(optionsT * options, char *opt);
 
 void optionsModeMenu(optionsT * options, int menu);	// Option menu : 0, SiCP : 1, SiCF : 2, SiGP : 3
 
-void optionsEquation(optionsT * options, char *opt);
+//void optionsEquation(optionsT * options, char *opt);
 
 void optionsSupport(optionsT * options, char *opt);
 void optionsNombre(optionsT * options, char *opt);
@@ -70,8 +71,8 @@ int optionsTraitement(optionsT * options, int nb, char *opt[])
 			optionsDt(options, opt[i+1]);	// discrétisation du temps
 		if(strcmp(opt[i], "nombre")==0 && opt[i+1]!=NULL)
 			optionsNombre(options, opt[i+1]);  // Nombre de pendules
-		if(strcmp(opt[i], "equation")==0 && opt[i+1]!=NULL)
-			optionsEquation(options, opt[i+1]);	// choix de l'équation
+	//	if(strcmp(opt[i], "equation")==0 && opt[i+1]!=NULL)
+	//		optionsEquation(options, opt[i+1]);	// choix de l'équation
 		if(strcmp(opt[i], "soliton")==0 && opt[i+1]!=NULL)
 			optionsSoliton(options, opt[i+1]);	// Nombre initial de solitons
 		if(strcmp(opt[i], "support")==0 && opt[i+1]!=NULL)

@@ -333,6 +333,7 @@ int graphiqueSpectre(graphiqueT * graphique, grapheT * graphe)
 int graphiqueCorde(graphiqueT * graphique, grapheT * graphe)
 	{
 	int i, j;
+	int maximum = (*graphe).yZero + (*graphe).hauteur/2;
 
 		// Couleur du graphe
 	graphiqueChangeCouleur(graphique, (*graphe).couleur);
@@ -344,6 +345,10 @@ int graphiqueCorde(graphiqueT * graphique, grapheT * graphe)
 		for(i=0;i<(*graphe).nombre;i++)
 			{
 			(*graphe).point[i].y = (*graphe).point[i].y + 1;
+			if((*graphe).point[i].y > maximum)
+				{
+				(*graphe).point[i].y = maximum;
+				}
 			}
 		}
 

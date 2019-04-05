@@ -1,5 +1,5 @@
 /*
-Copyright mars 2019, Stephan Runigo
+Copyright avril 2019, Stephan Runigo
 runigo@free.fr
 SiCF 2.0  simulateur de corde vibrante et spectre
 Ce logiciel est un programme informatique servant à simuler l'équation
@@ -288,7 +288,7 @@ int controleurChangeNombre(controleurT * controleur, int sens)
 	(void)controleur;
 	(void)sens;
 
-	fprintf(stderr, "controleurChangeNombre(controleurT * controleur, int sens)");
+	//fprintf(stderr, "controleurChangeNombre(controleurT * controleur, int sens)");
 
 	return 0;
 	}
@@ -332,8 +332,7 @@ int controleurClavier(controleurT * controleur)
 			changeConditionsLimites(&(*controleur).systeme, 2); // fixes
 			break;
 		case SDLK_b:
-			fprintf(stderr, "Commande désactivée depuis SiCP 1.4.1");
-			//changeConditionsLimites(&(*controleur).systeme, 3); // libre fixe
+			changeConditionsLimites(&(*controleur).systeme, 3); // libre fixe
 			break;
 		case SDLK_n:
 			changeConditionsLimites(&(*controleur).systeme, 3); // fixe libre

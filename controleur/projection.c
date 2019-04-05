@@ -89,6 +89,7 @@ int projectionSystemeGraphe(systemeT * systeme, projectionT * projection, graphe
 	{
 		// Projection du système sur le graphe
 	(void)projection;
+	int maximum = (*graphes).corde.yZero + (*graphes).corde.hauteur/2;
 
 	(*graphes).corde.nombre = (*systeme).nombre;
 
@@ -97,6 +98,10 @@ int projectionSystemeGraphe(systemeT * systeme, projectionT * projection, graphe
 	for(i=0;i<(*systeme).nombre;i++)
 		{
 		(*graphes).corde.point[i].y = (*graphes).corde.yZero + (int)((*graphes).corde.hauteur*(*systeme).pendule[i].nouveau);
+		if((*graphes).corde.point[i].y > maximum)
+			{
+			(*graphes).corde.point[i].y = maximum;
+			}
 		}
 	return 0;
 	}

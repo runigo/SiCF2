@@ -65,6 +65,8 @@ the signals and the positions of the different controls.
     % Draw axes
     \draw [<->,draw=gray,thick] (0,7) node (yaxis) [above] {$\acute{e}nergie$}
         |- (16,0) node (xaxis) [right] {$t$};
+    \node[scale=0.9] at (-1.45,6.5) {$cin\acute{e}tique$};
+    \node[scale=0.9] at (-1.40,5.7) {$couplage$};
   \end{scope}
 %   ENERGIE
   \begin{scope}[xshift=1.3 cm,yshift=\hauteur cm]
@@ -77,8 +79,8 @@ the signals and the positions of the different controls.
 %
   \fill[panneaucontroles] (20.1,21.3) rectangle (27.6,30.7);
   \begin{scope}[xshift=22.7 cm,yshift=27.0cm]
-    \fill[petitbouton] (3.5,-4.15) circle (0.3cm);
-    \node[scale=\scl] at (3.3,-3.45) {\Large{Symétrique}};
+   % \fill[petitbouton] (3.5,-4.15) circle (0.3cm);
+   % \node[scale=\scl] at (3.3,-3.45) {\Large{Symétrique}};
     \fill[petitbouton] (3.5,-1.9) circle (0.3cm);
     \node[scale=\scl] at (3.5,-1.20) {\Large{Mixte}};
     \fill[petitbouton] (3.5,-0.45) circle (0.3cm);
@@ -101,7 +103,7 @@ the signals and the positions of the different controls.
   \end{scope}
 
   \begin{scope}[xshift=22.7 cm,yshift=23.3cm,scale=0.70]
-    \node[scale=\scl] at (0,2.6) {\LARGE \textbf{Masse droite}};
+    \node[scale=\scl] at (0,2.6) {\LARGE \textbf{Masse}};
     \clip[rounded corners] (-2,-2) rectangle (2,2);
     \fill[black!30!,rounded corners,draw=black,thick] (-2,-2) rectangle (2,2);
     \draw[very thick,rounded corners](-2,-2) rectangle (2,2);
@@ -207,7 +209,7 @@ the signals and the positions of the different controls.
   \end{scope}
 %
   \begin{scope}[xshift=22.7 cm,yshift=-2.0cm,scale=0.65]
-    \node[scale=\scl] at (0,2.6) {\Large \textbf{Nombre}};
+  %  \node[scale=\scl] at (0,2.6) {\Large \textbf{Nombre}};
     \clip[rounded corners] (-2,-2) rectangle (2,2);
     \fill[black!30!,rounded corners,draw=black,thick] (-2,-2) rectangle (2,2);
     \draw[very thick,rounded corners](-2,-2) rectangle (2,2);

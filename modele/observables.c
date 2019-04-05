@@ -1,5 +1,5 @@
 /*
-Copyright mars 2019, Stephan Runigo
+Copyright avril 2019, Stephan Runigo
 runigo@free.fr
 SiCF 2.0  simulateur de corde vibrante et spectre
 Ce logiciel est un programme informatique servant à simuler l'équation
@@ -45,6 +45,17 @@ int observablesMiseAJourEnergie(observablesT * observables);
 int observablesMiseAJourCinetique(observablesT * observables, systemeT * systeme);
 int observablesMiseAJourRappel(observablesT * observables, systemeT * systeme);
 int observablesMiseAJourCouplage(observablesT * observables, systemeT * systeme);
+
+		// Calculs énergétiques
+double observablesEnergieCinetiquePendul(penduleT * pendule, float dt);
+double observablesEnergieGravitationPendul(penduleT * pendule, float dt);
+double observablesEnergieHarmoniquePendul(penduleT * pendule, float dt);
+double observablesEnergieCouplagePendul(penduleT * pendule, penduleT * suivant, float dt);
+
+double observablesEnergieCinetiqueSystem(systemeT * systeme);
+double observablesEnergieGravitationSystem(systemeT * systeme);
+double observablesEnergieHarmoniqueSystem(systemeT * systeme);
+double observablesEnergieCouplageSystem(systemeT * systeme);
 
 float observablesAbsolue(float valeur);
 

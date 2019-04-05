@@ -1,5 +1,5 @@
 /*
-Copyright mars 2019, Stephan Runigo
+Copyright avril 2019, Stephan Runigo
 runigo@free.fr
 SiCF 2.0  simulateur de corde vibrante et spectre
 Ce logiciel est un programme informatique servant à simuler l'équation
@@ -52,8 +52,8 @@ termes.
 
 
 	//  TAILLE IMPLICITE DE LA FENÊTRE
-#define FENETRE_X 950
-#define FENETRE_Y 688
+#define FENETRE_X 938
+#define FENETRE_Y 680
 
 	//	PARAMÈTRES DES CAPTEURS
 #define GRAPHES 2 // Nombres de graphes
@@ -61,8 +61,6 @@ termes.
 	//  NOMBRE DE COMMANDES
 #define BOUTON_COMMANDES 16		// Nombres de petits boutons
 #define ROTATIF_COMMANDES 7		// Nombre de boutons rotatifs
-#define LINEAIRE_COMMANDES 0	// Nombres de commandes linéaires
-#define TRIANGLE_COMMANDES 0	// Nombres de commandes triangulaires
 
 	//	PARAMÈTRES DES CAPTEURS
 
@@ -88,7 +86,7 @@ termes.
 
 #define NOMBRE_MIN 8 // Nombre minimal de pendules
 //#define NOMBRE 64 // Nombre implicite de pendules
-#define NOMBRE 512 // Nombre implicite de pendules
+#define NOMBRE 256 // Nombre implicite de pendules
 #define NOMBRE_MAX 1024 // Nombre maximal de pendules
 
 #define ABSORPTION 2.1 // Facteur de l'extrémité absorbante
@@ -109,19 +107,17 @@ termes.
 #define GRAVITATION_MAX 77 // Gravitation maximale.
 #define GRAVITATION_MIN 0.07 // Gravitation minimale.
 
-#define MASSE_MAX 77
+#define MASSE_MAX 55
 #define MASSE_MIN 0.7
 
 #define DISSIPATION_MAX 333	//	Coeficient de frottement visqueux maximal
-//#define DISSIPATION_MAX 333	//	Coeficient de frottement visqueux
-//#define DISSIPATION_MAX_DT 0.333
 #define DISSIPATION_MIN 0.033	//	Valeur minimale
 
 #define FREQUENCE_MAX 77	//	Valeur maximale de la fréquence du moteur
 #define FREQUENCE_MIN 0.077	//	Valeur minimale de la fréquence du moteur
 
 #define AMPLITUDE_MAX 7.7	//	Valeur maximale de l'amplitude du moteur
-#define AMPLITUDE_MIN 0.077	//	Valeur minimale de l'amplitude du moteur
+#define AMPLITUDE_MIN 0.0077	//	Valeur minimale de l'amplitude du moteur
 
 #define JOSEPHSON_MAX 77.7	//	Valeur maximale de l'amplitude du courant josephson
 #define JOSEPHSON_MIN 0.077	//	Valeur minimale de l'amplitude du courant josephson

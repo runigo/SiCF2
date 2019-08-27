@@ -1,14 +1,14 @@
 # SiCF2
 
-Corde vibrante et transformé de Fourier
+Corde vibrante et transformation de Fourier
 
 Ce logiciel est régi par la licence CeCILL
-s
+
 NOM
-		SiCF2 - Simulateur de corde vibrante et spectre de fréquence
+	SiCF2 - Simulateur de corde vibrante et spectre de fréquence
 
 SYNOPSIS
-		./SiCF2 [ OPTION VALEUR ]...
+	./SiCF2 [ OPTION VALEUR ]...
 
 OPTION
 

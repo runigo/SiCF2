@@ -39,14 +39,17 @@ OBJDIR = ./obj
 
 all : $(EXEC)
 
-$(EXEC) : $(OBJDIR)/principale.o $(OBJDIR)/options.o $(OBJDIR)/donnees.o $(OBJDIR)/controleur.o $(OBJDIR)/projection.o $(OBJDIR)/graphique.o $(OBJDIR)/observables.o $(OBJDIR)/graphes.o $(OBJDIR)/commandes.o $(OBJDIR)/capteurs.o $(OBJDIR)/horloge.o $(OBJDIR)/interface.o $(OBJDIR)/change.o $(OBJDIR)/systeme.o $(OBJDIR)/moteurs.o $(OBJDIR)/fourier.o $(OBJDIR)/fonction.o $(OBJDIR)/pendule.o
-	$(CC) -g $(OBJDIR)/principale.o $(OBJDIR)/options.o $(OBJDIR)/donnees.o $(OBJDIR)/controleur.o $(OBJDIR)/projection.o $(OBJDIR)/graphique.o $(OBJDIR)/observables.o $(OBJDIR)/graphes.o $(OBJDIR)/commandes.o $(OBJDIR)/capteurs.o $(OBJDIR)/horloge.o $(OBJDIR)/interface.o $(OBJDIR)/change.o $(OBJDIR)/systeme.o $(OBJDIR)/moteurs.o $(OBJDIR)/fourier.o $(OBJDIR)/pendule.o $(OBJDIR)/fonction.o `sdl2-config --libs` $(LDFLAGS) -o $(EXEC)
+$(EXEC) : $(OBJDIR)/principale.o $(OBJDIR)/options.o $(OBJDIR)/fichier.o $(OBJDIR)/donnees.o $(OBJDIR)/controleur.o $(OBJDIR)/projection.o $(OBJDIR)/graphique.o $(OBJDIR)/observables.o $(OBJDIR)/graphes.o $(OBJDIR)/commandes.o $(OBJDIR)/capteurs.o $(OBJDIR)/horloge.o $(OBJDIR)/interface.o $(OBJDIR)/change.o $(OBJDIR)/systeme.o $(OBJDIR)/moteurs.o $(OBJDIR)/fourier.o $(OBJDIR)/fonction.o $(OBJDIR)/pendule.o
+	$(CC) -g $(OBJDIR)/principale.o $(OBJDIR)/options.o $(OBJDIR)/fichier.o $(OBJDIR)/donnees.o $(OBJDIR)/controleur.o $(OBJDIR)/projection.o $(OBJDIR)/graphique.o $(OBJDIR)/observables.o $(OBJDIR)/graphes.o $(OBJDIR)/commandes.o $(OBJDIR)/capteurs.o $(OBJDIR)/horloge.o $(OBJDIR)/interface.o $(OBJDIR)/change.o $(OBJDIR)/systeme.o $(OBJDIR)/moteurs.o $(OBJDIR)/fourier.o $(OBJDIR)/pendule.o $(OBJDIR)/fonction.o `sdl2-config --libs` $(LDFLAGS) -o $(EXEC)
 
 $(OBJDIR)/principale.o : controleur/principale.c controleur/principale.h
 	$(CC) -c -g controleur/principale.c $(CFLAGS) -o $@
 
 $(OBJDIR)/options.o : controleur/options.c controleur/options.h
 	$(CC) -c -g controleur/options.c $(CFLAGS) -o $@
+
+$(OBJDIR)/fichier.o : donnees/fichier.c donnees/fichier.h
+	$(CC) -c -g donnees/fichier.c $(CFLAGS) -o $@
 
 $(OBJDIR)/donnees.o : donnees/donnees.c donnees/donnees.h
 	$(CC) -c -g donnees/donnees.c $(CFLAGS) -o $@

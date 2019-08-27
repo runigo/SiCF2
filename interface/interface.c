@@ -34,8 +34,8 @@ termes.
 
 int interfaceInitialisationSDL(void)
 	{
-		// Initialisation de la SDL
-	//assert(SDL_Init(SDL_INIT_VIDEO) == 0);
+		// Initialisation de la librairie SDL
+
 	if(0 != SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER))
 		{
 		fprintf(stderr, "Erreur SDL_Init : %s \n", SDL_GetError());
@@ -52,10 +52,8 @@ int interfaceInitialisation(interfaceT * interface)
 
 
 		// Création de la fenêtre
-	(*interface).fenetre = SDL_CreateWindow("SiCP2", 0, 
-							0, FENETRE_X, FENETRE_Y, 
-							//SDL_WINDOW_FULLSCREEN_DESKTOP |
-							//SDL_WINDOW_MAXIMIZED |
+	(*interface).fenetre = SDL_CreateWindow("SiCF2", SDL_WINDOWPOS_UNDEFINED, 
+							SDL_WINDOWPOS_UNDEFINED, FENETRE_X, FENETRE_Y,
 							SDL_WINDOW_RESIZABLE |
 							SDL_WINDOW_SHOWN
 							);
@@ -64,22 +62,11 @@ int interfaceInitialisation(interfaceT * interface)
 		fprintf(stderr, "interfaceInitialisation : Erreur SDL_CreateWindow : %s \n", SDL_GetError());
 		return EXIT_FAILURE;
 		}
-/*
-		// Création du rendu
-	(*interface).rendu = SDL_CreateRenderer((*interface).fenetre, -1 , 
-					SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-	if(NULL == (*interface).rendu)
-		{
-		fprintf(stderr, "interfaceInitialisation : Erreur SDL_CreateRenderer : %s \n", SDL_GetError());
-		return EXIT_FAILURE;
-		}
-*/
 	return 0;
 	}
 
 int interfaceDestruction(interfaceT * interface)
 	{
-	//SDL_DestroyRenderer((*interface).rendu);
 	SDL_DestroyWindow((*interface).fenetre);
 	return 0;
 	}

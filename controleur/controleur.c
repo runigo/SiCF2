@@ -1,7 +1,7 @@
 /*
-Copyright avril 2019, Stephan Runigo
+Copyright août 2019, Stephan Runigo
 runigo@free.fr
-SiCF 2.0  simulateur de corde vibrante et spectre
+SiCF 2.1  simulateur de corde vibrante et spectre
 Ce logiciel est un programme informatique servant à simuler l'équation
 d'une corde vibrante, à calculer sa transformée de fourier, et à donner
 une représentation graphique de ces fonctions.
@@ -456,28 +456,79 @@ int controleurClavierMaj(controleurT * controleur)
 			systemeInitialisePosition(&(*controleur).systeme, 1);break;
 		case SDLK_e:
 			fprintf(stderr, "Réinitialisation du système\n");
-			systemeInitialisePosition(&(*controleur).systeme, 2);break;
+			fichierFonction(&(*controleur).systeme, 2);break;
 		case SDLK_r:
 			fprintf(stderr, "Réinitialisation du système\n");
-			systemeInitialisePosition(&(*controleur).systeme, 3);break;
+			fichierFonction(&(*controleur).systeme, 3);break;
 		case SDLK_t:
 			fprintf(stderr, "Réinitialisation du système\n");
-			systemeInitialisePosition(&(*controleur).systeme, 4);break;
+			fichierFonction(&(*controleur).systeme, 4);break;
 		case SDLK_y:
 			fprintf(stderr, "Réinitialisation du système\n");
-			systemeInitialisePosition(&(*controleur).systeme, 5);break;
+			fichierFonction(&(*controleur).systeme, 5);break;
 		case SDLK_u:
 			fprintf(stderr, "Réinitialisation du système\n");
-			systemeInitialisePosition(&(*controleur).systeme, 6);break;
+			fichierFonction(&(*controleur).systeme, 6);break;
 		case SDLK_i:
 			fprintf(stderr, "Réinitialisation du système\n");
-			systemeInitialisePosition(&(*controleur).systeme, 7);break;
+			fichierFonction(&(*controleur).systeme, 7);break;
 		case SDLK_o:
 			fprintf(stderr, "Réinitialisation du système\n");
-			systemeInitialisePosition(&(*controleur).systeme, 8);break;
+			fichierFonction(&(*controleur).systeme, 8);break;
 		case SDLK_p:
 			fprintf(stderr, "Réinitialisation du système\n");
-			systemeInitialisePosition(&(*controleur).systeme, 9);break;
+			fichierFonction(&(*controleur).systeme, 9);break;
+
+		case SDLK_q:
+			fprintf(stderr, "Réinitialisation du système\n");
+			fichierLecture(&(*controleur).systeme, 10);break;
+		case SDLK_s:
+			fprintf(stderr, "Réinitialisation du système\n");
+			fichierLecture(&(*controleur).systeme, 11);break;
+		case SDLK_d:
+			fprintf(stderr, "Réinitialisation du système\n");
+			fichierLecture(&(*controleur).systeme, 12);break;
+		case SDLK_f:
+			fprintf(stderr, "Réinitialisation du système\n");
+			fichierLecture(&(*controleur).systeme, 13);break;
+		case SDLK_g:
+			fprintf(stderr, "Réinitialisation du système\n");
+			fichierLecture(&(*controleur).systeme, 14);break;
+		case SDLK_h:
+			fprintf(stderr, "Réinitialisation du système\n");
+			fichierLecture(&(*controleur).systeme, 15);break;
+		case SDLK_j:
+			fprintf(stderr, "Réinitialisation du système\n");
+			fichierLecture(&(*controleur).systeme, 16);break;
+		case SDLK_k:
+			fprintf(stderr, "Réinitialisation du système\n");
+			fichierLecture(&(*controleur).systeme, 17);break;
+		case SDLK_l:
+			fprintf(stderr, "Réinitialisation du système\n");
+			fichierLecture(&(*controleur).systeme, 18);break;
+		case SDLK_m:
+			fprintf(stderr, "Réinitialisation du système\n");
+			fichierLecture(&(*controleur).systeme, 19);break;
+
+		case SDLK_w:
+			fprintf(stderr, "Réinitialisation du système\n");
+			fichierLecture(&(*controleur).systeme, 20);break;
+		case SDLK_x:
+			fprintf(stderr, "Réinitialisation du système\n");
+			fichierLecture(&(*controleur).systeme, 21);break;
+		case SDLK_c:
+			fprintf(stderr, "Réinitialisation du système\n");
+			fichierLecture(&(*controleur).systeme, 22);break;
+		case SDLK_v:
+			fprintf(stderr, "Réinitialisation du système\n");
+			fichierLecture(&(*controleur).systeme, 23);break;
+		case SDLK_b:
+			fprintf(stderr, "Réinitialisation du système\n");
+			fichierLecture(&(*controleur).systeme, 24);break;
+		case SDLK_n:
+			fprintf(stderr, "Réinitialisation du système\n");
+			fichierLecture(&(*controleur).systeme, 25);break;
+
 
 		default:
 			;
@@ -498,46 +549,55 @@ int controleurClavierCtrl(controleurT * controleur)
 		case SDLK_BACKSPACE:
 			controleurChangeMode(controleur);break;
 
-	// Choix du modeClavier
-	/*	case SDLK_F1: // Commande de la chaîne
-			(*controleur).modeClavier = 1;break;
-		case SDLK_F2: // Graphisme
-			(*controleur).modeClavier = 2;break;
-		case SDLK_F3: // Sauvegarde
-			(*controleur).modeClavier = 3;break;
-		case SDLK_F4: // 
-			(*controleur).modeClavier = 4;break;
-	*/
-
-	// Déplacement du point de vue
-/*
-		case SDLK_a:
-			projectionChangePhi(&(*controleur).projection, 0.01);break;
-		case SDLK_z:
-			projectionChangePhi(&(*controleur).projection, 0.01);break;
-		case SDLK_e:
-			projectionChangePhi(&(*controleur).projection, 0.09);break;
-		case SDLK_r:
-			projectionChangePhi(&(*controleur).projection, 0.09);break;
-
+		// Ecriture des fichiers
 		case SDLK_q:
-			projectionChangePsi(&(*controleur).projection, -0.09);break;
+			fprintf(stderr, "Sauvegarde du système\n");
+			fichierEcriture(&(*controleur).systeme, 0);break;
 		case SDLK_s:
-			projectionChangePsi(&(*controleur).projection, -0.01);break;
+			fprintf(stderr, "Sauvegarde du système\n");
+			fichierEcriture(&(*controleur).systeme, 1);break;
 		case SDLK_d:
-			projectionChangePsi(&(*controleur).projection, 0.01);break;
+			fprintf(stderr, "Sauvegarde du système\n");
+			fichierEcriture(&(*controleur).systeme, 2);break;
 		case SDLK_f:
-			projectionChangePsi(&(*controleur).projection, 0.09);break;
-
+			fprintf(stderr, "Sauvegarde du système\n");
+			fichierEcriture(&(*controleur).systeme, 3);break;
+		case SDLK_g:
+			fprintf(stderr, "Sauvegarde du système\n");
+			fichierEcriture(&(*controleur).systeme, 4);break;
+		case SDLK_h:
+			fprintf(stderr, "Sauvegarde du système\n");
+			fichierEcriture(&(*controleur).systeme, 5);break;
+		case SDLK_j:
+			fprintf(stderr, "Sauvegarde du système\n");
+			fichierEcriture(&(*controleur).systeme, 6);break;
+		case SDLK_k:
+			fprintf(stderr, "Sauvegarde du système\n");
+			fichierEcriture(&(*controleur).systeme, 7);break;
+		case SDLK_l:
+			fprintf(stderr, "Sauvegarde du système\n");
+			fichierEcriture(&(*controleur).systeme, 8);break;
+		case SDLK_m:
+			fprintf(stderr, "Sauvegarde du système\n");
+			fichierEcriture(&(*controleur).systeme, 9);break;
 		case SDLK_w:
-			projectionChangePhi(&(*controleur).projection, -0.01);break;
+			fprintf(stderr, "Sauvegarde du système\n");
+			fichierEcriture(&(*controleur).systeme, 10);break;
 		case SDLK_x:
-			projectionChangePhi(&(*controleur).projection, -0.01);break;
+			fprintf(stderr, "Sauvegarde du système\n");
+			fichierEcriture(&(*controleur).systeme, 11);break;
 		case SDLK_c:
-			projectionChangePhi(&(*controleur).projection, -0.09);break;
+			fprintf(stderr, "Sauvegarde du système\n");
+			fichierEcriture(&(*controleur).systeme, 12);break;
 		case SDLK_v:
-			projectionChangePhi(&(*controleur).projection, -0.09);break;
-*/
+			fprintf(stderr, "Sauvegarde du système\n");
+			fichierEcriture(&(*controleur).systeme, 13);break;
+		case SDLK_b:
+			fprintf(stderr, "Sauvegarde du système\n");
+			fichierEcriture(&(*controleur).systeme, 14);break;
+		case SDLK_n:
+			fprintf(stderr, "Sauvegarde du système\n");
+			fichierEcriture(&(*controleur).systeme, 15);break;
 		default:
 			;
 		}

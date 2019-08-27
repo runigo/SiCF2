@@ -57,14 +57,14 @@ int optionsTraitement(optionsT * options, int nb, char *opt[])
 
 	do
 		{
-		if(strcmp(opt[i], "fond")==0 && opt[i+1]!=NULL)
-			optionsFond(options, opt[i+1]);  // Couleur du fond 
-		if(strcmp(opt[i], "modePause")==0 && opt[i+1]!=NULL)
-			optionsModePause(options, opt[i+1]);  // Mode système en pause
-		if(strcmp(opt[i], "modeDemo")==0 && opt[i+1]!=NULL)
-			optionsModeDemo(options, opt[i+1]);  // 0 : SiCP, 1 Graphique démo, 2 Commande démo
-		if(strcmp(opt[i], "duree")==0 && opt[i+1]!=NULL)
-			optionsDuree(options, opt[i+1]);	// Nombre d'évolution du système entre les affichages
+		//if(strcmp(opt[i], "fond")==0 && opt[i+1]!=NULL)
+			//optionsFond(options, opt[i+1]);  // Couleur du fond 
+		//if(strcmp(opt[i], "modePause")==0 && opt[i+1]!=NULL)
+			//optionsModePause(options, opt[i+1]);  // Mode système en pause
+		//if(strcmp(opt[i], "modeDemo")==0 && opt[i+1]!=NULL)
+			//optionsModeDemo(options, opt[i+1]);  // 0 : SiCP, 1 Graphique démo, 2 Commande démo
+		//if(strcmp(opt[i], "duree")==0 && opt[i+1]!=NULL)
+			//optionsDuree(options, opt[i+1]);	// Nombre d'évolution du système entre les affichages
 
 			// OPTIONS SiCP
 		if(strcmp(opt[i], "dt")==0 && opt[i+1]!=NULL)
@@ -73,10 +73,10 @@ int optionsTraitement(optionsT * options, int nb, char *opt[])
 			optionsNombre(options, opt[i+1]);  // Nombre de pendules
 	//	if(strcmp(opt[i], "equation")==0 && opt[i+1]!=NULL)
 	//		optionsEquation(options, opt[i+1]);	// choix de l'équation
-		if(strcmp(opt[i], "soliton")==0 && opt[i+1]!=NULL)
-			optionsSoliton(options, opt[i+1]);	// Nombre initial de solitons
-		if(strcmp(opt[i], "support")==0 && opt[i+1]!=NULL)
-			optionsSupport(options, opt[i+1]);	// Avec ou sans support
+		//if(strcmp(opt[i], "soliton")==0 && opt[i+1]!=NULL)
+			//optionsSoliton(options, opt[i+1]);	// Nombre initial de solitons
+		//if(strcmp(opt[i], "support")==0 && opt[i+1]!=NULL)
+			//optionsSupport(options, opt[i+1]);	// Avec ou sans support
 
 		if(strcmp(opt[i], "aide")==0)
 			optionsAide();	// Affiche l'aide.

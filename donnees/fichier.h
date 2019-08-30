@@ -34,10 +34,10 @@ termes.
 #define _FICHIER_
 #include <stdio.h>
 
-#include "../modele/systeme.h"
+#include "../modele/change.h"
 
-void fichierEcriture(systemeT * systeme, int numero);
-void fichierLecture(systemeT * systeme, int numero);
-void fichierFonction(systemeT * systeme, int numero);
+int fichierEcriture(systemeT * systeme, int numero);
+int fichierLecture(systemeT * systeme, int numero);
+int fichierFonction(systemeT * systeme, int numero);
 
 #endif

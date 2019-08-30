@@ -160,10 +160,9 @@ int donneesSysteme(systemeT * systeme, optionsT * options)
 
 		//fprintf(stderr, " Initialisation du système\n");
 	systemeInitialise(systeme);
-	changeFormeDissipation(systeme, 1);
-	changeFormeDissipation(systeme, 0);
+
+	changeFormeDissipation(systeme, (*systeme).modeDissipation);
 	changeConditionsLimites(systeme, (*systeme).libreFixe);
-	systemeInitialisePosition(systeme, 0);
 
 	return 0;
 	}

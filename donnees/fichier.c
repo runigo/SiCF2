@@ -32,6 +32,11 @@ termes.
 
 #include "fichier.h"
 
+int fichierEcritureParametre(systemeT * systeme, int numero);
+int fichierLectureParametre(systemeT * systeme, int numero);
+int fichierEcriturePosition(systemeT * systeme, int numero);
+int fichierLecturePosition(systemeT * systeme, int numero);
+
 int fichierFonctionNulle(systemeT * systeme);
 int fichierFonctionTriangle(systemeT * systeme, int numero);
 int fichierFonctionCarre(systemeT * systeme, int numero);
@@ -39,7 +44,296 @@ int fichierFonctionSinus(systemeT * systeme, int numero);
 
 
 
-void fichierEcriture(systemeT * systeme, int numero)
+int fichierEcriture(systemeT * systeme, int numero)
+	{
+	fichierEcritureParametre(systeme, numero);
+	fichierEcriturePosition(systeme, numero);
+	return 0;
+	}
+
+int fichierLecture(systemeT * systeme, int numero)
+	{
+	fichierLectureParametre(systeme, numero);
+	fichierLecturePosition(systeme, numero);
+	return 0;
+	}
+
+int fichierEcritureParametre(systemeT * systeme, int numero)
+	{
+	FILE *fichier; /* pointeur sur FILE */
+	double parametre;
+
+	switch (numero)
+		{
+		case 0 :
+			fichier = fopen("./donnees/enregistrement/parametre_a.sicf", "w");break;
+		case 1 :
+			fichier = fopen("./donnees/enregistrement/parametre_z.sicf", "w");break;
+		case 2 :
+			fichier = fopen("./donnees/enregistrement/parametre_e.sicf", "w");break;
+		case 3 :
+			fichier = fopen("./donnees/enregistrement/parametre_r.sicf", "w");break;
+		case 4 :
+			fichier = fopen("./donnees/enregistrement/parametre_t.sicf", "w");break;
+		case 5 :
+			fichier = fopen("./donnees/enregistrement/parametre_y.sicf", "w");break;
+		case 6 :
+			fichier = fopen("./donnees/enregistrement/parametre_u.sicf", "w");break;
+		case 7 :
+			fichier = fopen("./donnees/enregistrement/parametre_i.sicf", "w");break;
+		case 8 :
+			fichier = fopen("./donnees/enregistrement/parametre_o.sicf", "w");break;
+		case 9 :
+			fichier = fopen("./donnees/enregistrement/parametre_p.sicf", "w");break;
+		case 10 :
+			fichier = fopen("./donnees/enregistrement/parametre_q.sicf", "w");break;
+		case 11 :
+			fichier = fopen("./donnees/enregistrement/parametre_s.sicf", "w");break;
+		case 12 :
+			fichier = fopen("./donnees/enregistrement/parametre_d.sicf", "w");break;
+		case 13 :
+			fichier = fopen("./donnees/enregistrement/parametre_f.sicf", "w");break;
+		case 14 :
+			fichier = fopen("./donnees/enregistrement/parametre_g.sicf", "w");break;
+		case 15 :
+			fichier = fopen("./donnees/enregistrement/parametre_h.sicf", "w");break;
+		case 16 :
+			fichier = fopen("./donnees/enregistrement/parametre_j.sicf", "w");break;
+		case 17 :
+			fichier = fopen("./donnees/enregistrement/parametre_k.sicf", "w");break;
+		case 18 :
+			fichier = fopen("./donnees/enregistrement/parametre_l.sicf", "w");break;
+		case 19 :
+			fichier = fopen("./donnees/enregistrement/parametre_m.sicf", "w");break;
+		case 20 :
+			fichier = fopen("./donnees/enregistrement/parametre_w.sicf", "w");break;
+		case 21 :
+			fichier = fopen("./donnees/enregistrement/parametre_x.sicf", "w");break;
+		case 22 :
+			fichier = fopen("./donnees/enregistrement/parametre_c.sicf", "w");break;
+		case 23 :
+			fichier = fopen("./donnees/enregistrement/parametre_v.sicf", "w");break;
+		case 24 :
+			fichier = fopen("./donnees/enregistrement/parametre_b.sicf", "w");break;
+		case 25 :
+			fichier = fopen("./donnees/enregistrement/parametre_n.sicf", "w");break;
+		default:
+			;
+		}
+
+		// Initialisation du moteurs
+		parametre = (*systeme).moteurs.dt;
+		fprintf(fichier, "%f\n", parametre);
+	
+		parametre = (*systeme).moteurs.chrono;
+		fprintf(fichier, "%f\n", parametre);
+
+		parametre = (*systeme).moteurs.courant;
+		fprintf(fichier, "%f\n", parametre);
+
+		parametre = (*systeme).moteurs.josephson;
+		fprintf(fichier, "%f\n", parametre);
+
+		parametre = (*systeme).moteurs.generateur;
+		fprintf(fichier, "%f\n", parametre);
+
+		parametre = (*systeme).moteurs.amplitude;
+		fprintf(fichier, "%f\n", parametre);
+
+		parametre = (*systeme).moteurs.frequence;
+		fprintf(fichier, "%f\n", parametre);
+
+		parametre = (*systeme).moteurs.phi;
+		fprintf(fichier, "%f\n", parametre);
+
+		// Caractéristique de la chaîne
+		parametre = (*systeme).libreFixe;
+		fprintf(fichier, "%f\n", parametre);
+		parametre = (*systeme).nombre;
+		fprintf(fichier, "%f\n", parametre);
+		parametre = (*systeme).equation;
+		fprintf(fichier, "%f\n", parametre);
+
+		// Paramètres physiques
+		parametre = (*systeme).gravitation;
+		fprintf(fichier, "%f\n", parametre);
+
+		parametre = (*systeme).masseDroite;
+		fprintf(fichier, "%f\n", parametre);
+
+		parametre = (*systeme).masseGauche;
+		fprintf(fichier, "%f\n", parametre);
+
+		parametre = (*systeme).longueur;
+		fprintf(fichier, "%f\n", parametre);
+
+		parametre = (*systeme).dissipation;
+		fprintf(fichier, "%f\n", parametre);
+
+		parametre = (*systeme).modeDissipation;
+		fprintf(fichier, "%f\n", parametre);
+
+		parametre = (*systeme).couplage;
+		fprintf(fichier, "%f\n", parametre);
+
+		parametre = (*systeme).dephasage;
+		fprintf(fichier, "%f\n", parametre);
+
+
+		//fprintf(stderr, " Initialisation du système\n");
+	//systemeInitialise(systeme);
+	//changeFormeDissipation(systeme, (*systeme).modeDissipation);
+	//changeConditionsLimites(systeme, (*systeme).libreFixe);
+
+	fclose(fichier);
+
+	return 0;
+	}
+
+int fichierLectureParametre(systemeT * systeme, int numero)
+	{
+	FILE *fichier; /* pointeur sur FILE */
+	float parametre = 0;
+
+	switch (numero)
+		{
+		case 0 :
+			fichier = fopen("./donnees/enregistrement/parametre_a.sicf", "r");break;
+		case 1 :
+			fichier = fopen("./donnees/enregistrement/parametre_z.sicf", "r");break;
+		case 2 :
+			fichier = fopen("./donnees/enregistrement/parametre_e.sicf", "r");break;
+		case 3 :
+			fichier = fopen("./donnees/enregistrement/parametre_r.sicf", "r");break;
+		case 4 :
+			fichier = fopen("./donnees/enregistrement/parametre_t.sicf", "r");break;
+		case 5 :
+			fichier = fopen("./donnees/enregistrement/parametre_y.sicf", "r");break;
+		case 6 :
+			fichier = fopen("./donnees/enregistrement/parametre_u.sicf", "r");break;
+		case 7 :
+			fichier = fopen("./donnees/enregistrement/parametre_i.sicf", "r");break;
+		case 8 :
+			fichier = fopen("./donnees/enregistrement/parametre_o.sicf", "r");break;
+		case 9 :
+			fichier = fopen("./donnees/enregistrement/parametre_p.sicf", "r");break;
+		case 10 :
+			fichier = fopen("./donnees/enregistrement/parametre_q.sicf", "r");break;
+		case 11 :
+			fichier = fopen("./donnees/enregistrement/parametre_s.sicf", "r");break;
+		case 12 :
+			fichier = fopen("./donnees/enregistrement/parametre_d.sicf", "r");break;
+		case 13 :
+			fichier = fopen("./donnees/enregistrement/parametre_f.sicf", "r");break;
+		case 14 :
+			fichier = fopen("./donnees/enregistrement/parametre_g.sicf", "r");break;
+		case 15 :
+			fichier = fopen("./donnees/enregistrement/parametre_h.sicf", "r");break;
+		case 16 :
+			fichier = fopen("./donnees/enregistrement/parametre_j.sicf", "r");break;
+		case 17 :
+			fichier = fopen("./donnees/enregistrement/parametre_k.sicf", "r");break;
+		case 18 :
+			fichier = fopen("./donnees/enregistrement/parametre_l.sicf", "r");break;
+		case 19 :
+			fichier = fopen("./donnees/enregistrement/parametre_m.sicf", "r");break;
+		case 20 :
+			fichier = fopen("./donnees/enregistrement/parametre_w.sicf", "r");break;
+		case 21 :
+			fichier = fopen("./donnees/enregistrement/parametre_x.sicf", "r");break;
+		case 22 :
+			fichier = fopen("./donnees/enregistrement/parametre_c.sicf", "r");break;
+		case 23 :
+			fichier = fopen("./donnees/enregistrement/parametre_v.sicf", "r");break;
+		case 24 :
+			fichier = fopen("./donnees/enregistrement/parametre_b.sicf", "r");break;
+		case 25 :
+			fichier = fopen("./donnees/enregistrement/parametre_n.sicf", "r");break;
+		default:
+			;
+		}
+	//fichier = fopen("fluxon.sicp", "r");  /* read */
+	if(fichier == NULL)
+		{
+		printf("Erreur d'ouverture du fichier de réinitialisation\n");
+		printf("	Vérifier le répertoire donnees/enregistrement\n");
+		}
+	else
+		{
+		// Initialisation du moteurs
+		fscanf(fichier, "%f\n", &parametre);
+		(*systeme).moteurs.dt = parametre;
+	
+		fscanf(fichier, "%f\n", &parametre);
+		(*systeme).moteurs.chrono = parametre;
+
+		fscanf(fichier, "%f\n", &parametre);
+		(*systeme).moteurs.courant = parametre;
+
+		fscanf(fichier, "%f\n", &parametre);
+		(*systeme).moteurs.josephson = parametre;
+
+		fscanf(fichier, "%f\n", &parametre);
+		(*systeme).moteurs.generateur = parametre;
+
+		fscanf(fichier, "%f\n", &parametre);
+		(*systeme).moteurs.amplitude = parametre;
+
+		fscanf(fichier, "%f\n", &parametre);
+		(*systeme).moteurs.frequence = parametre;
+
+		fscanf(fichier, "%f\n", &parametre);
+		(*systeme).moteurs.phi = parametre;
+
+		// Caractéristique de la chaîne
+		fscanf(fichier, "%f\n", &parametre);
+		(*systeme).libreFixe = parametre;
+
+		fscanf(fichier, "%f\n", &parametre);
+		(*systeme).nombre = parametre;
+
+		fscanf(fichier, "%f\n", &parametre);
+		(*systeme).equation = parametre;
+
+
+		// Paramètres physiques
+		fscanf(fichier, "%f\n", &parametre);
+		(*systeme).gravitation = parametre;
+
+		fscanf(fichier, "%f\n", &parametre);
+		(*systeme).masseDroite = parametre;
+
+		fscanf(fichier, "%f\n", &parametre);
+		(*systeme).masseGauche = parametre;
+
+		fscanf(fichier, "%f\n", &parametre);
+		(*systeme).longueur = parametre;
+
+		fscanf(fichier, "%f\n", &parametre);
+		(*systeme).dissipation = parametre;
+
+		fscanf(fichier, "%f\n", &parametre);
+		(*systeme).modeDissipation = parametre;
+
+		fscanf(fichier, "%f\n", &parametre);
+		(*systeme).couplage = parametre;
+
+		fscanf(fichier, "%f\n", &parametre);
+		(*systeme).dephasage = parametre;
+
+		fclose(fichier);
+
+			//fprintf(stderr, " Initialisation du système\n");
+		systemeInitialise(systeme);
+		changeFormeDissipation(systeme, (*systeme).modeDissipation);
+		changeConditionsLimites(systeme, (*systeme).libreFixe);
+
+		}
+
+	return 0;
+	}
+
+int fichierEcriturePosition(systemeT * systeme, int numero)
 	{
 	FILE *fichier; /* pointeur sur FILE */
 	double ancien, actuel;
@@ -48,36 +342,56 @@ void fichierEcriture(systemeT * systeme, int numero)
 	switch (numero)
 		{
 		case 0 :
-			fichier = fopen("./donnees/enregistrement/position_q.sicf", "w");break;
+			fichier = fopen("./donnees/enregistrement/position_a.sicf", "w");break;
 		case 1 :
-			fichier = fopen("./donnees/enregistrement/position_s.sicf", "w");break;
+			fichier = fopen("./donnees/enregistrement/position_z.sicf", "w");break;
 		case 2 :
-			fichier = fopen("./donnees/enregistrement/position_d.sicf", "w");break;
+			fichier = fopen("./donnees/enregistrement/position_e.sicf", "w");break;
 		case 3 :
-			fichier = fopen("./donnees/enregistrement/position_f.sicf", "w");break;
+			fichier = fopen("./donnees/enregistrement/position_r.sicf", "w");break;
 		case 4 :
-			fichier = fopen("./donnees/enregistrement/position_g.sicf", "w");break;
+			fichier = fopen("./donnees/enregistrement/position_t.sicf", "w");break;
 		case 5 :
-			fichier = fopen("./donnees/enregistrement/position_h.sicf", "w");break;
+			fichier = fopen("./donnees/enregistrement/position_y.sicf", "w");break;
 		case 6 :
-			fichier = fopen("./donnees/enregistrement/position_j.sicf", "w");break;
+			fichier = fopen("./donnees/enregistrement/position_u.sicf", "w");break;
 		case 7 :
-			fichier = fopen("./donnees/enregistrement/position_k.sicf", "w");break;
+			fichier = fopen("./donnees/enregistrement/position_i.sicf", "w");break;
 		case 8 :
-			fichier = fopen("./donnees/enregistrement/position_l.sicf", "w");break;
+			fichier = fopen("./donnees/enregistrement/position_o.sicf", "w");break;
 		case 9 :
-			fichier = fopen("./donnees/enregistrement/position_m.sicf", "w");break;
+			fichier = fopen("./donnees/enregistrement/position_p.sicf", "w");break;
 		case 10 :
-			fichier = fopen("./donnees/enregistrement/position_w.sicf", "w");break;
+			fichier = fopen("./donnees/enregistrement/position_q.sicf", "w");break;
 		case 11 :
-			fichier = fopen("./donnees/enregistrement/position_x.sicf", "w");break;
+			fichier = fopen("./donnees/enregistrement/position_s.sicf", "w");break;
 		case 12 :
-			fichier = fopen("./donnees/enregistrement/position_c.sicf", "w");break;
+			fichier = fopen("./donnees/enregistrement/position_d.sicf", "w");break;
 		case 13 :
-			fichier = fopen("./donnees/enregistrement/position_v.sicf", "w");break;
+			fichier = fopen("./donnees/enregistrement/position_f.sicf", "w");break;
 		case 14 :
-			fichier = fopen("./donnees/enregistrement/position_b.sicf", "w");break;
+			fichier = fopen("./donnees/enregistrement/position_g.sicf", "w");break;
 		case 15 :
+			fichier = fopen("./donnees/enregistrement/position_h.sicf", "w");break;
+		case 16 :
+			fichier = fopen("./donnees/enregistrement/position_j.sicf", "w");break;
+		case 17 :
+			fichier = fopen("./donnees/enregistrement/position_k.sicf", "w");break;
+		case 18 :
+			fichier = fopen("./donnees/enregistrement/position_l.sicf", "w");break;
+		case 19 :
+			fichier = fopen("./donnees/enregistrement/position_m.sicf", "w");break;
+		case 20 :
+			fichier = fopen("./donnees/enregistrement/position_w.sicf", "w");break;
+		case 21 :
+			fichier = fopen("./donnees/enregistrement/position_x.sicf", "w");break;
+		case 22 :
+			fichier = fopen("./donnees/enregistrement/position_c.sicf", "w");break;
+		case 23 :
+			fichier = fopen("./donnees/enregistrement/position_v.sicf", "w");break;
+		case 24 :
+			fichier = fopen("./donnees/enregistrement/position_b.sicf", "w");break;
+		case 25 :
 			fichier = fopen("./donnees/enregistrement/position_n.sicf", "w");break;
 		default:
 			;
@@ -93,10 +407,10 @@ void fichierEcriture(systemeT * systeme, int numero)
 		}
 	fclose(fichier);
 
-	return;
+	return 0;
 	}
 
-void fichierLecture(systemeT * systeme, int numero)
+int fichierLecturePosition(systemeT * systeme, int numero)
 	{
 	FILE *fichier; /* pointeur sur FILE */
 	float ancien, actuel;
@@ -104,42 +418,62 @@ void fichierLecture(systemeT * systeme, int numero)
 
 	switch (numero)
 		{
-		case 10 : // Touche Q
+		case 0 :
+			fichier = fopen("./donnees/enregistrement/position_a.sicf", "r");break;
+		case 1 :
+			fichier = fopen("./donnees/enregistrement/position_z.sicf", "r");break;
+		case 2 :
+			fichier = fopen("./donnees/enregistrement/position_e.sicf", "r");break;
+		case 3 :
+			fichier = fopen("./donnees/enregistrement/position_r.sicf", "r");break;
+		case 4 :
+			fichier = fopen("./donnees/enregistrement/position_t.sicf", "r");break;
+		case 5 :
+			fichier = fopen("./donnees/enregistrement/position_y.sicf", "r");break;
+		case 6 :
+			fichier = fopen("./donnees/enregistrement/position_u.sicf", "r");break;
+		case 7 :
+			fichier = fopen("./donnees/enregistrement/position_i.sicf", "r");break;
+		case 8 :
+			fichier = fopen("./donnees/enregistrement/position_o.sicf", "r");break;
+		case 9 :
+			fichier = fopen("./donnees/enregistrement/position_p.sicf", "r");break;
+		case 10 :
 			fichier = fopen("./donnees/enregistrement/position_q.sicf", "r");break;
-		case 11 : // Touche S
+		case 11 :
 			fichier = fopen("./donnees/enregistrement/position_s.sicf", "r");break;
-		case 12 : // Touche D
+		case 12 :
 			fichier = fopen("./donnees/enregistrement/position_d.sicf", "r");break;
-		case 13 : // Touche F
+		case 13 :
 			fichier = fopen("./donnees/enregistrement/position_f.sicf", "r");break;
-		case 14 : // Touche G
+		case 14 :
 			fichier = fopen("./donnees/enregistrement/position_g.sicf", "r");break;
-		case 15 : // Touche H
+		case 15 :
 			fichier = fopen("./donnees/enregistrement/position_h.sicf", "r");break;
-		case 16 : // Touche J
+		case 16 :
 			fichier = fopen("./donnees/enregistrement/position_j.sicf", "r");break;
-		case 17 : // Touche K
+		case 17 :
 			fichier = fopen("./donnees/enregistrement/position_k.sicf", "r");break;
-		case 18 : // Touche L
+		case 18 :
 			fichier = fopen("./donnees/enregistrement/position_l.sicf", "r");break;
-		case 19 : // Touche M
+		case 19 :
 			fichier = fopen("./donnees/enregistrement/position_m.sicf", "r");break;
-		case 20 : // Touche W
+		case 20 :
 			fichier = fopen("./donnees/enregistrement/position_w.sicf", "r");break;
-		case 21 : // Touche X
+		case 21 :
 			fichier = fopen("./donnees/enregistrement/position_x.sicf", "r");break;
-		case 22 : // Touche C
+		case 22 :
 			fichier = fopen("./donnees/enregistrement/position_c.sicf", "r");break;
-		case 23 : // Touche V
+		case 23 :
 			fichier = fopen("./donnees/enregistrement/position_v.sicf", "r");break;
-		case 24 : // Touche B
+		case 24 :
 			fichier = fopen("./donnees/enregistrement/position_b.sicf", "r");break;
-		case 25 : // Touche N
+		case 25 :
 			fichier = fopen("./donnees/enregistrement/position_n.sicf", "r");break;
 		default:
 			;
 		}
-	//fichier = fopen("fluxon.sicp", "r");  /* read */
+
 	if(fichier == NULL)
 		{
 		printf("Erreur d'ouverture du fichier de réinitialisation\n");
@@ -157,10 +491,10 @@ void fichierLecture(systemeT * systeme, int numero)
 		fclose(fichier);
 		}
 
-	return;
+	return 0;
 	}
 
-void fichierFonction(systemeT * systeme, int numero)
+int fichierFonction(systemeT * systeme, int numero)
 	{
 	switch (numero)
 		{
@@ -204,10 +538,22 @@ void fichierFonction(systemeT * systeme, int numero)
 			fichierFonctionCarre(systeme, 4);break;
 		case 19: // Touche M
 			fichierFonctionCarre(systeme, 5);break;
+		case 20: // Touche W
+			fichierFonctionSinus(systeme, 1);break;
+		case 21: // Touche X
+			fichierFonctionSinus(systeme, 2);break;
+		case 22: // Touche C
+			fichierFonctionSinus(systeme, 3);break;
+		case 23: // Touche V
+			fichierFonctionSinus(systeme, 4);break;
+		case 24: // Touche B
+			fichierFonctionSinus(systeme, 5);break;
+		case 25: // Touche N
+			fichierFonctionCarre(systeme, 1);break;
 		default:
 			;
 		}
-	return;
+	return 0;
 	}
 
 int fichierFonctionNulle(systemeT * systeme)

@@ -465,37 +465,36 @@ int controleurClavierMaj(controleurT * controleur)
 			//controleurChangeMode(controleur);break;
 
 
-	// Réinitialisation du système
 		case SDLK_a:
 			fprintf(stderr, "Réinitialisation du système\n");
-			systemeInitialisePosition(&(*controleur).systeme, 0);break;
+			fichierLecture(&(*controleur).systeme, 0);break;
 		case SDLK_z:
 			fprintf(stderr, "Réinitialisation du système\n");
-			systemeInitialisePosition(&(*controleur).systeme, 1);break;
+			fichierLecture(&(*controleur).systeme, 1);break;
 		case SDLK_e:
 			fprintf(stderr, "Réinitialisation du système\n");
-			fichierFonction(&(*controleur).systeme, 2);break;
+			fichierLecture(&(*controleur).systeme, 2);break;
 		case SDLK_r:
 			fprintf(stderr, "Réinitialisation du système\n");
-			fichierFonction(&(*controleur).systeme, 3);break;
+			fichierLecture(&(*controleur).systeme, 3);break;
 		case SDLK_t:
 			fprintf(stderr, "Réinitialisation du système\n");
-			fichierFonction(&(*controleur).systeme, 4);break;
+			fichierLecture(&(*controleur).systeme, 4);break;
 		case SDLK_y:
 			fprintf(stderr, "Réinitialisation du système\n");
-			fichierFonction(&(*controleur).systeme, 5);break;
+			fichierLecture(&(*controleur).systeme, 5);break;
 		case SDLK_u:
 			fprintf(stderr, "Réinitialisation du système\n");
-			fichierFonction(&(*controleur).systeme, 6);break;
+			fichierLecture(&(*controleur).systeme, 6);break;
 		case SDLK_i:
 			fprintf(stderr, "Réinitialisation du système\n");
-			fichierFonction(&(*controleur).systeme, 7);break;
+			fichierLecture(&(*controleur).systeme, 7);break;
 		case SDLK_o:
 			fprintf(stderr, "Réinitialisation du système\n");
-			fichierFonction(&(*controleur).systeme, 8);break;
+			fichierLecture(&(*controleur).systeme, 8);break;
 		case SDLK_p:
 			fprintf(stderr, "Réinitialisation du système\n");
-			fichierFonction(&(*controleur).systeme, 9);break;
+			fichierLecture(&(*controleur).systeme, 9);break;
 
 		case SDLK_q:
 			fprintf(stderr, "Réinitialisation du système\n");
@@ -567,55 +566,85 @@ int controleurClavierCtrl(controleurT * controleur)
 		case SDLK_BACKSPACE:
 			controleurChangeMode(controleur);break;
 
-		// Ecriture des fichiers
+	// Réinitialisation du système
+		case SDLK_a:
+			fprintf(stderr, "Réinitialisation du système\n");
+			systemeInitialisePosition(&(*controleur).systeme, 0);break;
+		case SDLK_z:
+			fprintf(stderr, "Réinitialisation du système\n");
+			systemeInitialisePosition(&(*controleur).systeme, 1);break;
+		case SDLK_e:
+			fprintf(stderr, "Réinitialisation du système\n");
+			fichierFonction(&(*controleur).systeme, 2);break;
+		case SDLK_r:
+			fprintf(stderr, "Réinitialisation du système\n");
+			fichierFonction(&(*controleur).systeme, 3);break;
+		case SDLK_t:
+			fprintf(stderr, "Réinitialisation du système\n");
+			fichierFonction(&(*controleur).systeme, 4);break;
+		case SDLK_y:
+			fprintf(stderr, "Réinitialisation du système\n");
+			fichierFonction(&(*controleur).systeme, 5);break;
+		case SDLK_u:
+			fprintf(stderr, "Réinitialisation du système\n");
+			fichierFonction(&(*controleur).systeme, 6);break;
+		case SDLK_i:
+			fprintf(stderr, "Réinitialisation du système\n");
+			fichierFonction(&(*controleur).systeme, 7);break;
+		case SDLK_o:
+			fprintf(stderr, "Réinitialisation du système\n");
+			fichierFonction(&(*controleur).systeme, 8);break;
+		case SDLK_p:
+			fprintf(stderr, "Réinitialisation du système\n");
+			fichierFonction(&(*controleur).systeme, 9);break;
 		case SDLK_q:
 			fprintf(stderr, "Sauvegarde du système\n");
-			fichierEcriture(&(*controleur).systeme, 0);break;
+			fichierEcriture(&(*controleur).systeme, 10);break;
 		case SDLK_s:
 			fprintf(stderr, "Sauvegarde du système\n");
-			fichierEcriture(&(*controleur).systeme, 1);break;
+			fichierEcriture(&(*controleur).systeme, 11);break;
 		case SDLK_d:
 			fprintf(stderr, "Sauvegarde du système\n");
-			fichierEcriture(&(*controleur).systeme, 2);break;
+			fichierEcriture(&(*controleur).systeme, 12);break;
 		case SDLK_f:
 			fprintf(stderr, "Sauvegarde du système\n");
-			fichierEcriture(&(*controleur).systeme, 3);break;
+			fichierEcriture(&(*controleur).systeme, 13);break;
 		case SDLK_g:
 			fprintf(stderr, "Sauvegarde du système\n");
-			fichierEcriture(&(*controleur).systeme, 4);break;
+			fichierEcriture(&(*controleur).systeme, 14);break;
 		case SDLK_h:
 			fprintf(stderr, "Sauvegarde du système\n");
-			fichierEcriture(&(*controleur).systeme, 5);break;
+			fichierEcriture(&(*controleur).systeme, 15);break;
 		case SDLK_j:
 			fprintf(stderr, "Sauvegarde du système\n");
-			fichierEcriture(&(*controleur).systeme, 6);break;
+			fichierEcriture(&(*controleur).systeme, 16);break;
 		case SDLK_k:
 			fprintf(stderr, "Sauvegarde du système\n");
-			fichierEcriture(&(*controleur).systeme, 7);break;
+			fichierEcriture(&(*controleur).systeme, 17);break;
 		case SDLK_l:
 			fprintf(stderr, "Sauvegarde du système\n");
-			fichierEcriture(&(*controleur).systeme, 8);break;
+			fichierEcriture(&(*controleur).systeme, 18);break;
 		case SDLK_m:
 			fprintf(stderr, "Sauvegarde du système\n");
-			fichierEcriture(&(*controleur).systeme, 9);break;
+			fichierEcriture(&(*controleur).systeme, 19);break;
 		case SDLK_w:
 			fprintf(stderr, "Sauvegarde du système\n");
-			fichierEcriture(&(*controleur).systeme, 10);break;
+			fichierEcriture(&(*controleur).systeme, 20);break;
 		case SDLK_x:
 			fprintf(stderr, "Sauvegarde du système\n");
-			fichierEcriture(&(*controleur).systeme, 11);break;
+			fichierEcriture(&(*controleur).systeme, 21);break;
 		case SDLK_c:
 			fprintf(stderr, "Sauvegarde du système\n");
-			fichierEcriture(&(*controleur).systeme, 12);break;
+			fichierEcriture(&(*controleur).systeme, 22);break;
 		case SDLK_v:
 			fprintf(stderr, "Sauvegarde du système\n");
-			fichierEcriture(&(*controleur).systeme, 13);break;
+			fichierEcriture(&(*controleur).systeme, 23);break;
 		case SDLK_b:
 			fprintf(stderr, "Sauvegarde du système\n");
-			fichierEcriture(&(*controleur).systeme, 14);break;
+			fichierEcriture(&(*controleur).systeme, 24);break;
 		case SDLK_n:
 			fprintf(stderr, "Sauvegarde du système\n");
-			fichierEcriture(&(*controleur).systeme, 15);break;
+			fichierEcriture(&(*controleur).systeme, 25);break;
 		default:
 			;
 		}
@@ -636,55 +665,85 @@ int controleurClavierCtrlMaj(controleurT * controleur)
 			controleurChangeMode(controleur);break;
 
 		// Ecriture des fichiers
-		case SDLK_q:
-			fprintf(stderr, "Clavier controlMaj\n");break;
-			//fichierEcriture(&(*controleur).systeme, 0);
-/*		case SDLK_s:
+		case SDLK_a:
+			fprintf(stderr, "Sauvegarde du système\n");
+			fichierEcriture(&(*controleur).systeme, 0);break;
+		case SDLK_z:
 			fprintf(stderr, "Sauvegarde du système\n");
 			fichierEcriture(&(*controleur).systeme, 1);break;
-		case SDLK_d:
+		case SDLK_e:
 			fprintf(stderr, "Sauvegarde du système\n");
 			fichierEcriture(&(*controleur).systeme, 2);break;
-		case SDLK_f:
+		case SDLK_r:
 			fprintf(stderr, "Sauvegarde du système\n");
 			fichierEcriture(&(*controleur).systeme, 3);break;
-		case SDLK_g:
+		case SDLK_t:
 			fprintf(stderr, "Sauvegarde du système\n");
 			fichierEcriture(&(*controleur).systeme, 4);break;
-		case SDLK_h:
+		case SDLK_y:
 			fprintf(stderr, "Sauvegarde du système\n");
 			fichierEcriture(&(*controleur).systeme, 5);break;
-		case SDLK_j:
+		case SDLK_u:
 			fprintf(stderr, "Sauvegarde du système\n");
 			fichierEcriture(&(*controleur).systeme, 6);break;
-		case SDLK_k:
+		case SDLK_i:
 			fprintf(stderr, "Sauvegarde du système\n");
 			fichierEcriture(&(*controleur).systeme, 7);break;
-		case SDLK_l:
+		case SDLK_o:
 			fprintf(stderr, "Sauvegarde du système\n");
 			fichierEcriture(&(*controleur).systeme, 8);break;
-		case SDLK_m:
+		case SDLK_p:
 			fprintf(stderr, "Sauvegarde du système\n");
 			fichierEcriture(&(*controleur).systeme, 9);break;
-		case SDLK_w:
+		case SDLK_q:
 			fprintf(stderr, "Sauvegarde du système\n");
 			fichierEcriture(&(*controleur).systeme, 10);break;
-		case SDLK_x:
+		case SDLK_s:
 			fprintf(stderr, "Sauvegarde du système\n");
 			fichierEcriture(&(*controleur).systeme, 11);break;
-		case SDLK_c:
+		case SDLK_d:
 			fprintf(stderr, "Sauvegarde du système\n");
 			fichierEcriture(&(*controleur).systeme, 12);break;
-		case SDLK_v:
+		case SDLK_f:
 			fprintf(stderr, "Sauvegarde du système\n");
 			fichierEcriture(&(*controleur).systeme, 13);break;
-		case SDLK_b:
+		case SDLK_g:
 			fprintf(stderr, "Sauvegarde du système\n");
 			fichierEcriture(&(*controleur).systeme, 14);break;
-		case SDLK_n:
+		case SDLK_h:
 			fprintf(stderr, "Sauvegarde du système\n");
 			fichierEcriture(&(*controleur).systeme, 15);break;
-	*/	default:
+		case SDLK_j:
+			fprintf(stderr, "Sauvegarde du système\n");
+			fichierEcriture(&(*controleur).systeme, 16);break;
+		case SDLK_k:
+			fprintf(stderr, "Sauvegarde du système\n");
+			fichierEcriture(&(*controleur).systeme, 17);break;
+		case SDLK_l:
+			fprintf(stderr, "Sauvegarde du système\n");
+			fichierEcriture(&(*controleur).systeme, 18);break;
+		case SDLK_m:
+			fprintf(stderr, "Sauvegarde du système\n");
+			fichierEcriture(&(*controleur).systeme, 19);break;
+		case SDLK_w:
+			fprintf(stderr, "Sauvegarde du système\n");
+			fichierEcriture(&(*controleur).systeme, 20);break;
+		case SDLK_x:
+			fprintf(stderr, "Sauvegarde du système\n");
+			fichierEcriture(&(*controleur).systeme, 21);break;
+		case SDLK_c:
+			fprintf(stderr, "Sauvegarde du système\n");
+			fichierEcriture(&(*controleur).systeme, 22);break;
+		case SDLK_v:
+			fprintf(stderr, "Sauvegarde du système\n");
+			fichierEcriture(&(*controleur).systeme, 23);break;
+		case SDLK_b:
+			fprintf(stderr, "Sauvegarde du système\n");
+			fichierEcriture(&(*controleur).systeme, 24);break;
+		case SDLK_n:
+			fprintf(stderr, "Sauvegarde du système\n");
+			fichierEcriture(&(*controleur).systeme, 25);break;
+		default:
 			;
 		}
 	return (*controleur).sortie;

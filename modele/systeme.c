@@ -120,31 +120,9 @@ int systemeInitialise(systemeT * systeme)
 	// Initialisation des pendules
 	systemeInitialisePendule(systeme);
 
-	// Initialise les conditions aux limites
-	//systemeChangeLimite(systeme);
-
 	// Extrémité absorbante
 	systemeInitialiseLimiteInfini(systeme);
-/*
-	// Dissipation initiale Corde
-	if((*systeme).equation == 3 || (*systeme).equation == 4)
-		{
-		changeFormeDissipation(systeme, 2);
-		}
-*/
-
-	// Masse initiale Dioptre
-/*
-	if((*systeme).equation == 4)
-		{
-	int i;
-			for(i=(*systeme).nombre/2;i<(*systeme).nombre;i++)
-				{
-				penduleReinitialiseMasse(&(*systeme).pendule[i], (*systeme).masseDroite, (*systeme).moteurs.dt);
-				}
-		}
-	//printf("Systeme initialisé\n");
-*/
+	systemeInitialisePosition(systeme, 0);
 	return 0;
 	}
 

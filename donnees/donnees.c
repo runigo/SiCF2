@@ -1,7 +1,7 @@
 /*
-Copyright mars 2019, Stephan Runigo
+Copyright octobre 2020, Stephan Runigo
 runigo@free.fr
-SiCF 2.0  simulateur de corde vibrante et spectre
+SiCF 2.2  simulateur de corde vibrante et spectre
 Ce logiciel est un programme informatique servant à simuler l'équation
 d'une corde vibrante, à calculer sa transformée de fourier, et à donner
 une représentation graphique de ces fonctions.
@@ -131,9 +131,12 @@ int donneesSysteme(systemeT * systeme, optionsT * options)
 
 	(*systeme).moteurs.chrono = 0.0;
 
+	(*systeme).moteurs.etatJosephson = 0;			//	-1, 0, 1
+	(*systeme).moteurs.courantJosephson = sqrt(JOSEPHSON_MAX*JOSEPHSON_MIN);
+/*
 	(*systeme).moteurs.courant=3.0;		// Mémoire courant Josephson si = 0
 	(*systeme).moteurs.josephson=0;//-3*(*options).dt*(*options).dt;
-
+*/
 	(*systeme).moteurs.generateur = 0;	// éteint, sinus, carre, impulsion
 	(*systeme).moteurs.amplitude=0.3;		// Amplitude du générateur de signaux
 	(*systeme).moteurs.frequence=1.0;	// Fréquence du générateur de signaux

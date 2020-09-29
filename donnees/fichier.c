@@ -34,6 +34,10 @@ termes.
 
 int fichierEcritureParametre(systemeT * systeme, char * nom);
 int fichierLectureParametre(systemeT * systeme, char * nom);
+
+
+int fichierInitialiseSysteme(systemeT * systeme, fourierT * fourier, graphesT * graphes);
+
 int fichierEcriturePosition(systemeT * systeme, char * nom);
 int fichierLecturePosition(systemeT * systeme, char * nom);
 
@@ -49,18 +53,42 @@ int fichierEcriture(systemeT * systeme, char * nom)
 	fichierEcritureParametre(systeme, nom);
 	fprintf(stderr, "Ecriture des positions %s\n", nom);
 	fichierEcriturePosition(systeme, nom);
+
 	return 0;
 	}
 
-int fichierLecture(systemeT * systeme, char * nom)
+int fichierLecture(systemeT * systeme, fourierT * fourier, graphesT * graphes, char * nom)
 	{
 			fprintf(stderr, "Réinitialisation du système\n");
-	fprintf(stderr, "Initialisation des paramètres %s\n", nom);
+
+		fprintf(stderr, "Initialisation des paramètres %s\n", nom);
 	fichierLectureParametre(systeme, nom);
-	fprintf(stderr, "Initialisation des positions %s\n", nom);
+
+		fprintf(stderr, "Initialisation du système %s\n", nom);
+	fichierInitialiseSysteme(systeme, fourier, graphes);
+
+		fprintf(stderr, "Initialisation des positions %s\n", nom);
 	fichierLecturePosition(systeme, nom);
+
 	return 0;
 	}
+
+int fichierInitialiseSysteme(systemeT * systeme, fourierT * fourier, graphesT * graphes)
+	{
+            	// Réinitialisation du système
+
+	systemeInitialise(systeme);
+
+	changeFormeDissipation(systeme, (*systeme).modeDissipation);
+
+	changeConditionsLimites(systeme, (*systeme).libreFixe);
+
+	graphesInitialiseNombre(graphes, (*systeme).nombre);
+	fourierInitialise(fourier, (*systeme).nombre);
+
+	return 0;
+	}
+
 
 int fichierEcritureParametre(systemeT * systeme, char * nom)
 	{
@@ -236,18 +264,14 @@ int fichierLectureParametre(systemeT * systeme, char * nom)
 		systemeInitialiseDissipation(systeme, reel);
 
 		fscanf(fichier, "%f\n", &reel); // Déphasage du premier pendule
+		(*systeme).pendule[0].dephasage = reel;
 
 		fclose(fichier);
 
-	changeFormeDissipation(systeme, (*systeme).modeDissipation);
-	changeConditionsLimites(systeme, (*systeme).libreFixe);
-	(*systeme).pendule[0].dephasage = reel;
-	//penduleAjouteDephasage(&(*systeme).premier->pendule, (*systeme).moteurs.dephasage);
 		}
 
 	return 0;
 	}
-
 
 int fichierEcriturePosition(systemeT * systeme, char * nom)
 	{

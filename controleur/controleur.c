@@ -121,10 +121,10 @@ int controleurProjection(controleurT * controleur)
 	SDL_GetWindowSize((*controleur).interface.fenetre, &largeur, &hauteur);
 
 		// Réinitialisation des longueurs si la fenêtre a changé de taille
-	if((*controleur).graphique.largeur!=largeur || (*controleur).graphique.hauteur!=hauteur)
+	if((*controleur).graphique.fenetreX!=largeur || (*controleur).graphique.fenetreY!=hauteur)
 		{
-		(*controleur).graphique.largeur=largeur;
-		(*controleur).graphique.hauteur=hauteur;
+		(*controleur).graphique.fenetreX=largeur;
+		(*controleur).graphique.fenetreY=hauteur;
 		graphesInitialiseLongueur(&(*controleur).graphes, largeur, hauteur);
 		commandesInitialiseBoutons(&(*controleur).commandes, largeur, hauteur);
 		capteursMiseAJourLongueur(&(*controleur).capteurs, largeur, hauteur);
@@ -305,6 +305,27 @@ void controleurChangeVitesse(controleurT * controleur, float facteur)
 	return;
 	}
 
+void controleurInitialiseVitesse(controleurT * controleur, int duree)
+	{
+	if(duree < 0)
+		{
+		(*controleur).options.duree = DUREE;
+		}
+	else
+		{
+		if(duree > 0 &&  duree < DUREE_MAX)
+			{
+			(*controleur).options.duree = duree;
+			}
+		else
+			{
+			(*controleur).options.duree = DUREE_MAX;
+			}
+		}
+	fprintf(stderr, "duree = %d\n", (*controleur).options.duree);
+	return;
+	}
+
 int controleurChangeNombre(controleurT * controleur, int sens)
 	{
 	(void)controleur;
@@ -390,19 +411,6 @@ int controleurInitialiseFluxons(controleurT * controleur)
 	moteursChangeJosephsonMoyenne(&(*controleur).systeme.moteurs);
 
 	return 0;
-	}
-
-void controleurAfficheSouris(controleurT * controleur)
-	{
-	fprintf(stderr, "(*controleur).graphique.largeur = %d\n", (*controleur).graphique.largeur);
-	fprintf(stderr, "(*controleur).commandes.sourisX = %d\n", (*controleur).commandes.sourisX);
-	fprintf(stderr, "(*controleur).graphique.hauteur = %d\n", (*controleur).graphique.hauteur);
-	fprintf(stderr, "(*controleur).commandes.sourisY = %d\n\n", (*controleur).commandes.sourisY);
-
-	fprintf(stderr, "Position X = %f\n", (float)(*controleur).commandes.sourisX/(*controleur).graphique.largeur);
-	fprintf(stderr, "Position Y = %f\n", (float)(*controleur).commandes.sourisY/(*controleur).graphique.hauteur);
-
-	return ;
 	}
 
 //////////////////////////////////////////////////////////////////////////////////////

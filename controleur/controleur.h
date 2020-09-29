@@ -68,7 +68,7 @@ typedef struct ControleurT controleurT;
 		horlogeT horloge;			//	Horloge SDL
 
 		//int duree;		// nombre d'incrémentation du système par affichage
-		int modePause;	// pause de l'évolution du système si = 1
+		//int modePause;	// pause de l'évolution du système si = 1
 		int sortie;		//	sortie de SiCP si > 0
 
 		int appui;		//	1 si le bouton de la souris est appuyé, 0 sinon.
@@ -81,6 +81,7 @@ int controleurSimulationGraphique(controleurT * control);
 
 void controleurChangeMode(controleurT * controleur);
 void controleurChangeVitesse(controleurT * controleur, float facteur);
+void controleurInitialiseVitesse(controleurT * controleur, int duree);
 
 int controleurDestruction(controleurT * control);
 

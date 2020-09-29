@@ -1,9 +1,10 @@
 /*
-Copyright septembre 2020, Stephan Runigo
+Copyright octobre 2020, Stephan Runigo
 runigo@free.fr
-SiCP 2.4.4 simulateur de chaîne de pendules
+SiCF 2.2  simulateur de corde vibrante et spectre
 Ce logiciel est un programme informatique servant à simuler l'équation
-d'une chaîne de pendules et à en donner une représentation graphique.
+d'une corde vibrante, à calculer sa transformée de fourier, et à donner
+une représentation graphique de ces fonctions.
 Ce logiciel est régi par la licence CeCILL soumise au droit français et
 respectant les principes de diffusion des logiciels libres. Vous pouvez
 utiliser, modifier et/ou redistribuer ce programme sous les conditions
@@ -166,32 +167,31 @@ int controleurCommandes(controleurT * controleur, int zone)
 				changeConditionsLimites(&(*controleur).systeme, 2);break;
 			case 3: // Mixte
 				changeConditionsLimites(&(*controleur).systeme, 4);break;
-			case 4: // Uniforme
+			case 4: // Symétrique
+				//changeFormeDissipation(&(*controleur).systeme, 1);
+				break;
+			case 5: // Uniforme
 				changeFormeDissipation(&(*controleur).systeme, 1);break;
-			case 5: // Nulle
+			case 6: // Nulle
 				changeFormeDissipation(&(*controleur).systeme, 0);break;
-			case 6: // Extrémité
+			case 7: // Extrémité
 				changeFormeDissipation(&(*controleur).systeme, 2);break;
-			case 7: // Marche
-				moteursInitialiseEtatJosephson(&(*controleur).systeme.moteurs,1);break;
 			case 8: // Arrêt
-				moteursInitialiseEtatJosephson(&(*controleur).systeme.moteurs,0);break;
-			case 9: // Droite
-				moteursSensJosephson(&(*controleur).systeme.moteurs,1);break;
-			case 10: // Gauche
-				moteursSensJosephson(&(*controleur).systeme.moteurs,-1);break;
-			case 11: // Arrêt
 				moteursChangeGenerateur(&(*controleur).systeme.moteurs, 0);break;
-			case 12: // Sinus
+			case 9: // Sinus
 				moteursChangeGenerateur(&(*controleur).systeme.moteurs, 1);break;
-			case 13: // Carré
+			case 10: // Carré
 				moteursChangeGenerateur(&(*controleur).systeme.moteurs, 2);break;
-			case 14: // Impulsion
+			case 11: // Impulsion
 				moteursChangeGenerateur(&(*controleur).systeme.moteurs, 3);break;
-			case 15: // Fluxon
-				changeDephasage(&(*controleur).systeme, 1);break;
-			case 16: // Anti F.
-				changeDephasage(&(*controleur).systeme, -1);break;
+			case 12: // Pause
+				controleurChangeMode(controleur);break;
+			case 13: // Min
+				controleurInitialiseVitesse(controleur, 1);break;
+			case 14: // Max
+				controleurInitialiseVitesse(controleur, DUREE_MAX);break;
+			case 15: // Initialise
+				systemeInitialisePosition(&(*controleur).systeme, 0);break;
 			default:
 				;
 			}
@@ -238,16 +238,16 @@ int controleurCommandes(controleurT * controleur, int zone)
 			case 16:
 				systemeInitialisePosition(&(*controleur).systeme, 6);break;
 			case 17:
-			    fichierLecture(&(*controleur).systeme, "aaa");break;
+			    fichierLecture(&(*controleur).systeme, &(*controleur).fourier, &(*controleur).graphes, "aaa");break;
 				//controleurInitialiseNombre(controleur, 1);break;
 			case 18:
-			    fichierLecture(&(*controleur).systeme, "bbb");break;
+			    fichierLecture(&(*controleur).systeme, &(*controleur).fourier, &(*controleur).graphes, "bbb");break;
 				//controleurInitialiseNombre(controleur, 2);break;
 			case 19:
-			    fichierLecture(&(*controleur).systeme, "ccc");break;
+			    fichierLecture(&(*controleur).systeme, &(*controleur).fourier, &(*controleur).graphes, "ccc");break;
 				//controleurInitialiseNombre(controleur, 3);break;
 			case 20:
-			    fichierLecture(&(*controleur).systeme, "ddd");break;
+			    fichierLecture(&(*controleur).systeme, &(*controleur).fourier, &(*controleur).graphes, "ddd");break;
 				//controleurInitialiseNombre(controleur, 4);break;
 			default:
 				;
@@ -269,13 +269,15 @@ int controleurDefileCommandes(controleurT * controleur, int zone)
 				case 0:
 					changeCouplage(&(*controleur).systeme, 1.1);break;
 				case 1:
-					changeDissipation(&(*controleur).systeme, 1.1);break;
+					changeMasse(&(*controleur).systeme, 1.1);break;
 				case 2:
-					moteursChangeJosephson(&(*controleur).systeme.moteurs, 1.1);break;
+					changeDissipation(&(*controleur).systeme, 1.1);break;
 				case 3:
 					moteursChangeAmplitude(&(*controleur).systeme.moteurs, 1.1);break;
 				case 4:
 					moteursChangeFrequence(&(*controleur).systeme.moteurs, 1.1);break;
+				case 5:
+					controleurChangeVitesse(controleur, 1.1);break;
 				default:
 					;
 				}
@@ -287,13 +289,15 @@ int controleurDefileCommandes(controleurT * controleur, int zone)
 				case 0:
 					changeCouplage(&(*controleur).systeme, 0.91);break;
 				case 1:
-					changeDissipation(&(*controleur).systeme, 0.91);break;
+					changeMasse(&(*controleur).systeme, 0.91);break;
 				case 2:
-					moteursChangeJosephson(&(*controleur).systeme.moteurs, 0.91);break;
+					changeDissipation(&(*controleur).systeme, 0.91);break;
 				case 3:
 					moteursChangeAmplitude(&(*controleur).systeme.moteurs, 0.91);break;
 				case 4:
 					moteursChangeFrequence(&(*controleur).systeme.moteurs, 0.91);break;
+				case 5:
+					controleurChangeVitesse(controleur, 0.91);break;
 				default:
 					;
 				}
@@ -341,10 +345,12 @@ int controleurDefileCommandes(controleurT * controleur, int zone)
 
 int controleurSourisAffiche(controleurT * controleur)
 	{
-	//fprintf(stderr, "(*controleur).graphique.fenetreY = %d\n", (*controleur).graphique.fenetreY);
+	fprintf(stderr, "(*controleur).graphique.fenetreY = %d\n", (*controleur).graphique.fenetreY);
 	fprintf(stderr, "(*controleur).commandes.sourisY = %d\n", (*controleur).commandes.sourisY);
-	//fprintf(stderr, "(*controleur).graphique.fenetreX = %d\n", (*controleur).graphique.fenetreX);
+	fprintf(stderr, "RAPPORT = %f\n", (float)(*controleur).commandes.sourisY / (*controleur).graphique.fenetreY);
+	fprintf(stderr, "(*controleur).graphique.fenetreX = %d\n", (*controleur).graphique.fenetreX);
 	fprintf(stderr, "(*controleur).commandes.sourisX = %d\n", (*controleur).commandes.sourisX);
+	fprintf(stderr, "RAPPORT = %f\n", (float)(*controleur).commandes.sourisX / (*controleur).graphique.fenetreX);
 
 	return 0;
 	}

@@ -104,15 +104,15 @@ int systemeInitialiseMasseDroite(systemeT * systeme, float masse)
 	if(masse>=MASSE_MIN && masse<=MASSE_MAX)
 		{
 		(*systeme).masseDroite = masse;
+		printf("(*systeme).masseDroite = %f\n", (*systeme).masseDroite);
 		return 0;
 		}
 	else
 		{
 		(*systeme).masseDroite = MASSE;
 		printf("ERREUR systemeInitialiseMasse(%f) ; ", masse);
+		printf("(*systeme).masseDroite = %f\n", (*systeme).masseDroite);
 		}
-
-	printf("(*systeme).masseDroite = %f\n", (*systeme).masseDroite);
 
 	return 1;
 	}
@@ -122,6 +122,7 @@ int systemeInitialiseMasseGauche(systemeT * systeme, float masse)
 	if(masse>=MASSE_MIN && masse<=MASSE_MAX)
 		{
 		(*systeme).masseGauche = masse;
+		printf("(*systeme).masseGauche = %f\n", (*systeme).masseGauche);
 		return 0;
 		}
 	else
@@ -129,8 +130,6 @@ int systemeInitialiseMasseGauche(systemeT * systeme, float masse)
 		(*systeme).masseGauche = MASSE;
 		printf("ERREUR systemeInitialiseMasse(%f) ; ", masse);
 		}
-
-	printf("(*systeme).masseGauche = %f\n", (*systeme).masseGauche);
 
 	return 1;
 	}
@@ -242,6 +241,80 @@ int systemeInitialiseEquation(systemeT * systeme, int equation)
 	return 1;
 	}
 
+int systemeInitialise(systemeT * systeme)
+	{
+	// Initialisation des pendules
+	systemeInitialisePendule(systeme);
+
+	// Extrémité absorbante
+	systemeInitialiseLimiteInfini(systeme);
+
+	return 0;
+	}
+
+int systemeInitialisePosition(systemeT * systeme, int forme)
+	{
+	int i;
+
+		switch(forme)	//	
+			{
+			case 0: // Initialise
+				for(i=0;i<(*systeme).nombre;i++)
+					{
+					penduleInitialisePosition(&(*systeme).pendule[i], 0.0, 0.0);
+					};break;
+			case 1: // Initialise
+				for(i=0;i<(*systeme).nombre;i++)
+					{
+					penduleInitialisePosition(&(*systeme).pendule[i], 0.3*sin(i*0.1), 0.301*sin(i*0.1));
+					};break;
+			default:
+				;
+			}
+	return 0;
+	}
+
+void systemeInitialisePendule(systemeT * systeme)
+	{
+	float m=(*systeme).masseGauche;
+	float l=(*systeme).longueur;
+	float d=(*systeme).dissipation;
+	float c=(*systeme).couplage;
+	float g=(*systeme).gravitation;
+	float t=(*systeme).moteurs.dt;
+
+	int i;
+
+	for(i=0;i<(*systeme).nombre;i++)
+		{
+		penduleInitialiseParametre(&(*systeme).pendule[i], m, l, d);
+		penduleInitialiseExterieur(&(*systeme).pendule[i], c, g, t);
+		penduleInitialisePosition(&(*systeme).pendule[i], 0.0, 0.0);
+		penduleInitialiseDephasage(&(*systeme).pendule[i], 0.0);
+		}
+
+	penduleInitialiseDephasage(&(*systeme).pendule[0], (*systeme).dephasage);
+
+	return;
+	}
+
+void systemeInitialiseLimiteInfini(systemeT * systeme)
+	{
+	int i;
+
+	for(i=0;i<(*systeme).nombre;i++)
+		{
+		(*systeme).pendule[i].absorbance = 0.0;
+		}
+
+	for(i=1;i<(*systeme).nombre/6;i++)
+		{
+		(*systeme).pendule[(*systeme).nombre-i].absorbance = 1.0-(float)i/((float)(*systeme).nombre/6.0);
+		}
+
+	return;
+	}
+
 
 /*----------------JAUGE ET NORMALISATION-------------------*/
 
@@ -309,61 +382,6 @@ double systemeMoyenne(systemeT * systeme)
 	return ( moyenne / (*systeme).nombre );
 	}
 
-int systemeInitialise(systemeT * systeme)
-	{
-	// Initialisation des pendules
-	systemeInitialisePendule(systeme);
-
-	// Initialise les conditions aux limites
-	//systemeChangeLimite(systeme);
-
-	// Extrémité absorbante
-	systemeInitialiseLimiteInfini(systeme);
-/*
-	// Dissipation initiale Corde
-	if((*systeme).equation == 3 || (*systeme).equation == 4)
-		{
-		changeFormeDissipation(systeme, 2);
-		}
-*/
-
-	// Masse initiale Dioptre
-/*
-	if((*systeme).equation == 4)
-		{
-	int i;
-			for(i=(*systeme).nombre/2;i<(*systeme).nombre;i++)
-				{
-				penduleReinitialiseMasse(&(*systeme).pendule[i], (*systeme).masseDroite, (*systeme).moteurs.dt);
-				}
-		}
-	//printf("Systeme initialisé\n");
-*/
-	return 0;
-	}
-
-int systemeInitialisePosition(systemeT * systeme, int forme)
-	{
-	int i;
-
-		switch(forme)	//	
-			{
-			case 0: // Initialise
-				for(i=0;i<(*systeme).nombre;i++)
-					{
-					penduleInitialisePosition(&(*systeme).pendule[i], 0.0, 0.0);
-					};break;
-			case 1: // Initialise
-				for(i=0;i<(*systeme).nombre;i++)
-					{
-					penduleInitialisePosition(&(*systeme).pendule[i], 0.3*sin(i*0.1), 0.301*sin(i*0.1));
-					};break;
-			default:
-				;
-			}
-	return 0;
-	}
-
 /*------------------------  ÉVOLUTION TEMPORELLE  -------------------------*/
 
 int systemeEvolution(systemeT * systeme, int duree)
@@ -407,47 +425,6 @@ int systemeEvolution(systemeT * systeme, int duree)
 	return 0;
 	}
 */
-void systemeInitialisePendule(systemeT * systeme)
-	{
-	float m=(*systeme).masseGauche;
-	float l=(*systeme).longueur;
-	float d=(*systeme).dissipation;
-	float c=(*systeme).couplage;
-	float g=(*systeme).gravitation;
-	float t=(*systeme).moteurs.dt;
-
-	int i;
-
-	for(i=0;i<(*systeme).nombre;i++)
-		{
-		penduleInitialiseParametre(&(*systeme).pendule[i], m, l, d);
-		penduleInitialiseExterieur(&(*systeme).pendule[i], c, g, t);
-		penduleInitialisePosition(&(*systeme).pendule[i], 0.0, 0.0);
-		penduleInitialiseDephasage(&(*systeme).pendule[i], 0.0);
-		}
-
-	penduleInitialiseDephasage(&(*systeme).pendule[0], (*systeme).dephasage);
-
-	return;
-	}
-
-void systemeInitialiseLimiteInfini(systemeT * systeme)
-	{
-	int i;
-
-	for(i=0;i<(*systeme).nombre;i++)
-		{
-		(*systeme).pendule[i].absorbance = 0.0;
-		}
-
-	for(i=1;i<(*systeme).nombre/6;i++)
-		{
-		(*systeme).pendule[(*systeme).nombre-i].absorbance = 1.0-(float)i/((float)(*systeme).nombre/6.0);
-		}
-
-
-	return;
-	}
 
 void systemeCouplage(systemeT * systeme)
 	{//	Calcul des forces de couplage

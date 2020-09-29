@@ -132,3 +132,11 @@ Le fait que vous puissiez accéder à cet en-tête signifie que vous avez
 pris connaissance de la licence CeCILL, et que vous en avez accepté les
 termes.
 
+MEMO
+
+z vient de j
+t vient de k
+u vient de m
+o vient de d ou f ou s ou q
+
+

@@ -189,6 +189,8 @@ int controleurClavierMaj(controleurT * controleur)
         //      Réinitialisation du système
         //          Fichiers utilisateur
 
+	int reinitialisation = 1;
+
 	switch ((*controleur).interface.evenement.key.keysym.sym)
 		{
 		case SDLK_a:
@@ -244,16 +246,19 @@ int controleurClavierMaj(controleurT * controleur)
 		case SDLK_n:
 			fichierLecture(&(*controleur).systeme, &(*controleur).fourier, &(*controleur).graphes, "n");break;
 		default:
-			;
+			{
+			reinitialisation = 0;
+			}break;
 		}
 
-	return (*controleur).sortie;
+	return reinitialisation;
 	}
 
 int controleurClavierCtrl(controleurT * controleur)
 	{
         //      Réinitialisation du système 
         //          Fichiers original
+	int reinitialisation = 1;
 
 	switch ((*controleur).interface.evenement.key.keysym.sym)
 		{
@@ -310,10 +315,12 @@ int controleurClavierCtrl(controleurT * controleur)
 		case SDLK_n:
 			fichierLecture(&(*controleur).systeme, &(*controleur).fourier, &(*controleur).graphes, "nn");break;
 		default:
-			;
+			{
+			reinitialisation = 0;
+			}break;
 		}
 
-	return (*controleur).sortie;
+	return reinitialisation;
 	}
 
 int controleurClavierCtrlMaj(controleurT * controleur)

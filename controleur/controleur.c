@@ -43,6 +43,7 @@ int controleurConstructionGraphique(controleurT * controleur);
 int controleurTraiteEvenement(controleurT * controleur);
 
 int controleurKEYDOWN(controleurT * controleur);
+void controleurReinitialisationFichiers(controleurT * controleur);
 
 int controleurInitialiseParametres(controleurT * controleur, int forme);
 int controleurInitialiseFluxons(controleurT * controleur);
@@ -220,6 +221,7 @@ int controleurKEYDOWN(controleurT * controleur)
 	{
 	int Maj = 0;
 	int ctrl = 0;
+	//int reinitialisation = 0; // Pour dessiner les spectres 
 
 	if ((((*controleur).interface.evenement.key.keysym.mod & KMOD_LSHIFT) == KMOD_LSHIFT)
 	|| (((*controleur).interface.evenement.key.keysym.mod & KMOD_RSHIFT) == KMOD_RSHIFT))
@@ -245,17 +247,38 @@ int controleurKEYDOWN(controleurT * controleur)
 			{
 			if(Maj == 1 )
 				{
-				return controleurClavierMaj(controleur);
+				if (controleurClavierMaj(controleur) == 1)
+					{
+					controleurReinitialisationFichiers(controleur);
+					}
 				}
 			else
 				{
-				return controleurClavierCtrl(controleur);
+				if (controleurClavierCtrl(controleur) == 1)
+					{
+					controleurReinitialisationFichiers(controleur);
+					}
 				}
 			}
 		}
 
 	return (*controleur).sortie;
 	}
+
+void controleurReinitialisationFichiers(controleurT * controleur)
+	{
+		fprintf(stderr, "Projection du système sur les spectres\n");
+	projectionSystemeFourier(&(*controleur).systeme, &(*controleur).fourier);
+		fprintf(stderr, "Calcul des spectres\n");
+	fourierCalcule(&(*controleur).fourier);
+		//fprintf(stderr, "Mise à jour des observables\n");
+	//observablesMiseAJour(&(*controleur).observables, &(*controleur).systeme);
+		fprintf(stderr, "Remise à zéro des observables temporelles\n");
+	observablesInitialise(&(*controleur).observables);
+
+	return;
+	}
+
 
 void controleurChangeMode(controleurT * controleur)
 	{

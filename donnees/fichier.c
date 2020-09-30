@@ -64,7 +64,7 @@ int fichierLecture(systemeT * systeme, fourierT * fourier, graphesT * graphes, c
 		fprintf(stderr, "Initialisation des paramètres %s\n", nom);
 	fichierLectureParametre(systeme, nom);
 
-		fprintf(stderr, "Initialisation du système %s\n", nom);
+		fprintf(stderr, "Initialisation du système \n");
 	fichierInitialiseSysteme(systeme, fourier, graphes);
 
 		fprintf(stderr, "Initialisation des positions %s\n", nom);
@@ -84,6 +84,7 @@ int fichierInitialiseSysteme(systemeT * systeme, fourierT * fourier, graphesT * 
 	changeConditionsLimites(systeme, (*systeme).libreFixe);
 
 	graphesInitialiseNombre(graphes, (*systeme).nombre);
+
 	fourierInitialise(fourier, (*systeme).nombre);
 
 	return 0;
@@ -199,7 +200,7 @@ int fichierLectureParametre(systemeT * systeme, char * nom)
 	if(fichier == NULL)
 		{
 		printf("Erreur d'ouverture du fichier d'enregistrement\n");
-		printf("	Vérifier le répertoire donnees/enregistrement\n");
+		printf("	le fichier donnees/enregistrement/parametre_%s.sicf est absent\n", nom);
 		}
 	else
 		{
@@ -327,7 +328,7 @@ int fichierLecturePosition(systemeT * systeme, char * nom)
 	if(fichier == NULL)
 		{
 		printf("Erreur d'ouverture du fichier d'enregistrement\n");
-		printf("	Vérifier le répertoire donnees/enregistrement\n");
+		printf("	le fichier donnees/enregistrement/position_%s.sicf est absent\n", nom);
 		}
 	else
 		{

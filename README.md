@@ -134,9 +134,9 @@ termes.
 
 MEMO
 
-z vient de j
-t vient de k
-u vient de m
-o vient de d ou f ou s ou q
+r vient de e qui vient de z qui vient de j
+y vient de t qui vient de k
+i vient de u qui vient de m
+p vient de o qui vient de d ou f ou s ou q
 
 

@@ -48,6 +48,8 @@ int controleurClavier(controleurT * controleur)
 			controleurChangeMode(controleur);break;
 		case SDLK_BACKSPACE:
 			controleurChangeMode(controleur);break;
+		case SDLK_SPACE:
+			controleurEvolutionSysteme(controleur);break;
 
 	// Vitesse de la simulation
 		case SDLK_KP_PLUS:

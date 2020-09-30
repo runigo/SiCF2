@@ -79,6 +79,9 @@ typedef struct ControleurT controleurT;
 
 int controleurSimulationGraphique(controleurT * control);
 
+
+int controleurEvolutionSysteme(controleurT * controleur);
+
 void controleurChangeMode(controleurT * controleur);
 void controleurChangeVitesse(controleurT * controleur, float facteur);
 void controleurInitialiseVitesse(controleurT * controleur, int duree);

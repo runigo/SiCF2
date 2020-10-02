@@ -37,7 +37,7 @@ termes.
 int controleurEvolution(controleurT * controleur);
 
 int controleurProjection(controleurT * controleur);
-//int controleurEvolutionSysteme(controleurT * controleur);
+
 int controleurConstructionGraphique(controleurT * controleur);
 
 int controleurTraiteEvenement(controleurT * controleur);
@@ -129,7 +129,6 @@ int controleurProjection(controleurT * controleur)
 		graphesInitialiseLongueur(&(*controleur).graphes, largeur, hauteur);
 		commandesInitialiseBoutons(&(*controleur).commandes, largeur, hauteur);
 		capteursMiseAJourLongueur(&(*controleur).capteurs, largeur, hauteur);
-			//fprintf(stderr, "Réinitialisation de la taille de la fenêtre dans la projection\n");
 		projectionInitialiseLongueurs(&(*controleur).projection, hauteur, largeur);
 		}
 

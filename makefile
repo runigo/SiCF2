@@ -29,7 +29,7 @@
 # termes.
 
 CC=gcc
-EXEC=SiCF2
+EXEC=SiCF2.out
 CFLAGS= -Wall -Wextra -Werror --std=c99
 #SDLFKAGS= `sdl-config --libs`
 #LDFLAGS= -Wall -Wextra -Werror --std=c99 -lm -lpthread

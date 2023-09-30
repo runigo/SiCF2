@@ -34,6 +34,7 @@ termes.
 
 float projectionValeurAbsolue(float valeur);
 
+	//-----------------    INITIALISATION      -----------------------//
 int projectionInitialise(projectionT * projection)
 	{
 	(*projection).logCouplage = 1.0 / log( (COUPLAGE_MAX/COUPLAGE_MIN) );
@@ -251,8 +252,10 @@ int projectionSystemeCommandes(systemeT * systeme, projectionT * projection, com
 	return 0;
 	}
 
-int projectionObservablesCapteurs(observablesT * observables, projectionT * projection, capteursT * capteurs)
-	{
+int projectionObservablesCapteurs(observablesT * observables, projectionT * projection, capteursT * capteurs) {
+
+		//	Projette les observables sur les capteurs
+
 	(void)projection;
 	float a;
 	int i, k, y0;

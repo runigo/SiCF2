@@ -35,7 +35,7 @@ int main(int nb, char *opt[])
 	{
 	controleurT control;
 
-	fprintf(stderr, "\nDémarrage de SiCP2\n");
+	fprintf(stderr, "\nDémarrage de SiCF2\n");
 
 	fprintf(stderr, "\nInitialisations des options\n");
 	assert(donneesOptions(&control.options)==0);
@@ -55,7 +55,7 @@ int main(int nb, char *opt[])
 	fprintf(stderr, "\nSuppression du controleur\n");
 	assert(controleurDestruction(&control)==0);
 
-	fprintf(stderr, "\nSortie de SiCP2\n");
+	fprintf(stderr, "\nSortie de SiCF2\n");
 
 	return 0;
 	}

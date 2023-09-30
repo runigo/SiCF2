@@ -55,9 +55,11 @@ typedef struct ProjectionT projectionT;
 
 		};
 
+	//-----------------    INITIALISATION      -----------------------//
 int projectionInitialise(projectionT * projection);
 int projectionInitialiseLongueurs(projectionT * projection, int largeur, int hauteur);
 
+	//-----------------    PROJECTION      -----------------------//
 int projectionSystemeFourier(systemeT * systeme, fourierT * fourier);
 
 int projectionSystemeGraphe(systemeT * systeme, projectionT * projection, graphesT * graphes);
@@ -65,5 +67,6 @@ int projectionFourierGraphe(fourierT * fourier, projectionT * projection, graphe
 int projectionObservablesCapteurs(observablesT * observables, projectionT * projection, capteursT * capteurs);
 int projectionSystemeCommandes(systemeT * systeme, projectionT * projection, commandesT * commandes, int duree, int mode);
 
+	//-----------------    AFFICHAGE      -----------------------//
 int projectionAffichePointDeVue(projectionT * projection);
 #endif

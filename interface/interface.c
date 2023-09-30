@@ -45,7 +45,7 @@ int interfaceInitialisationSDL(void)
 	return 0;
 	}
 
-int interfaceInitialisation(interfaceT * interface)
+int interfaceCreation(interfaceT * interface)
 	{
 		// Imitialisation de l'interface
 	(*interface).continu = 1;
